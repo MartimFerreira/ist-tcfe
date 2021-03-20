@@ -1,0 +1,53 @@
+*
+* NGSPICE simulation script
+*
+
+* forces current values to be saved
+.options savecurrents
+
+* supply voltage
+Va 1 0 DC 5.17979967502
+
+R1 1 2 1039.30068064 
+R2 2 3 2010.9087471 
+R3 2 4 3041.24242148 
+R4 0 4 4183.83562625 
+R5 4 5 3095.83437009 
+R6 0 6 2021.17084711 
+R7 8 7 1022.26630661
+Id 7 5 DC 0.00100439545365 
+
+*Ib renamed to Gb 
+Gb 5 3 2 4 0.00708750963899
+
+*Ic renamed to Hc, Vi is an imaginary voltage source to measure controlling current
+Vi 6 8 DC 0
+Hc 4 7 Vi 8185.75062147
+
+
+.control
+
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
+op
+
+echo "********************************************"
+echo  "Operating point"
+echo "********************************************"
+
+echo  "op_TAB"
+print all
+echo  "op_END"
+
+quit
+.endc
+
+.end

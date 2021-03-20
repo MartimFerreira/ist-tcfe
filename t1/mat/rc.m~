@@ -1,0 +1,56 @@
+close all
+clear all
+
+%%EXAMPLE SYMBOLIC COMPUTATIONS
+
+pkg load symbolic
+
+
+R1 = 1033.97815852;
+R2 = 2004.11947307;
+R3 = 3110.09473864;
+R4 = 4055.77443628; 
+R5 = 3073.85893503; 
+R6 = 2054.48146991; 
+R7 = 1012.00303478; 
+Va = 5.2137883272; 
+Id = 0.00100717978447; 
+Kb = 0.00700041439025; 
+Kc = 8135.66553844; 
+%Vb; not known
+%Vc; not known
+%Ib; not known
+%Ic; not known
+
+%Mesh Currents
+%I1; not known
+%I2; not known
+%I3; not known
+%I4; not known
+
+%mesh analysis
+
+%  R6*I3 + R7*I3 - Vc + R4*(I3-I1) == 0;
+%  Va - R4*(I3-I1) - Vb + R1*I1 == 0;
+%  Vc == Kc*Ic;
+%  Ib == Kb*Vb;
+%  I3 == Ic;
+%  I4 == Id;
+%  (I2-I1)*R3 == Vb;
+%  I2 == Ib;
+
+M = [0, -1, 0, 0, -R4, 0, R4+R6+R7, 0;
+      -1, 0, 0, 0, R1+R4, 0, -R4, 0;
+      0, 1, 0, -Kc, 0, 0, 0, 0;
+      -Kb, 0, 1, 0, 0, 0, 0, 0;
+      0, 0, 0, 1, 0, 0, -1, 0;
+      0, 0, 0, 0, 0, 0, 0, 1;
+      -1, 0, 0, 0, -R3, R3, 0, 0;
+      0, 0, -1, 0, 0, 1, 0, 0];
+b = [0; -Va; 0; 0; 0; Id; 0; 0];
+
+x = M \ b
+
+
+  
+%R2*I2 + Vb - R5*(-I2+I4) + Ib == 0
