@@ -5,40 +5,40 @@ clear all
 
 pkg load symbolic
 
-printf("Dados:\n")
-R1 = 1039.30068064
-R2 = 2010.9087471
-R3 = 3041.24242148 
-R4 = 4183.83562625
-R5 = 3095.83437009
-R6 = 2021.17084711
-R7 = 1022.26630661
-Va = 5.17979967502
-Id = 0.00100439545365 
-Kb = 0.00708750963899 
-Kc = 8185.75062147
+printf("Dados:\n");
+R1 = 1039.30068064;
+R2 = 2010.9087471;
+R3 = 3041.24242148; 
+R4 = 4183.83562625;
+R5 = 3095.83437009;
+R6 = 2021.17084711;
+R7 = 1022.26630661;
+Va = 5.17979967502;
+Id = 0.00100439545365; 
+Kb = 0.00708750963899;
+Kc = 8185.75062147;
 
 
-%V1; not known
-%V2; not known
-%V3; not known
-%V4; not known
-%V5; not known
-%V6; not known
-%V7; not known
+%Node Analysis results:
+%V1; 
+%V2; 
+%V3; 
+%V4; 
+%V5;
+%V6; 
+%V7; 
 
-%Vb; not known
-%Vc; not known
-%Ib; not known
-%Ic; not known
+%Mesh Analysis results:
+%Vb; 
+%Vc; 
+%Ib; 
+%Ic; 
+%I1;
+%I2; 
+%I3; 
+%I4; 
 
-%Mesh Currents
-%I1; not known
-%I2; not known
-%I3; not known
-%I4; not known
-
-%mesh analysis
+%Mesh Analysis Equations
 
 %  R6*I3 + R7*I3 - Vc + R4*(I3-I1) == 0;
 %  Va - R4*(I3-I1) - Vb + R1*I1 == 0;
@@ -69,7 +69,9 @@ Vb = x(1);
     I2 = x(6);
     I3 = x(7);
     I4 = x(8);
-  
+
+%Testes
+
     V0 = 0;
 V1 = Va + V0;
 V6 = V0 - R6 * Ic;
@@ -86,7 +88,7 @@ V3 = V2 + Ib*R2;
 SomaIno4 = I3 + I5 + Ic-Id - (Ic-I1);
 SomaIno0 = I1 -Ic + Ic - I1;
 SomaIno2 = Ibteste - I1 - I3;
-
+ 
 
 printf("\nResultados:\n")
 printf ("V0 = %f\n", V0)
@@ -135,15 +137,6 @@ Mn = [ 1, 0, 0, 0, 0, 0, 0;
        0, (1/R3), 0, -(1/R3) - (1/R4) - (1/R5), (1/R5), (1/R7), -(1/R7)];
 bn = [Va; 0; 0; 0; Id; 0; Id];
 
-%{{1, 0, 0, 0, 0, 0, 0},
- % { -(1/R1), (1/R1) + (1/R2) + (1/R3), -(1/R2), -(1/R3), 0, 0, 0},
-  %{0, -(1/R2) - Kb, (1/R2), Kb, 0, 0, 0},
-  %{0, 0, 0, 0, 0, -(1/R6) - (1/R7), 1/R7},
-  %{0, Kb, 0, -Kb - (1/R5), (1/R5), 0, 0},
-  %{0, 0, 0, 1, 0, (Kc/R6), -1},
-  %{0, (1/R3), 0, -(1/R3) - (1/R4) - (1/R5), (1/R5), (1/R7), -(1/R7)}},
- %{Va, 0, 0, 0, Id , 0, Id}]
-
 xn = Mn \ bn;
 
 V0n= 0; 
@@ -165,3 +158,17 @@ printf ("V4n = %f\n", V4n)
 printf ("V5n = %f\n", V5n)
 printf ("V6n = %f\n", V6n)
 printf ("V7n = %f\n", V7n)
+
+
+%Write Tables
+
+node_tab = fopen("octave_node_tab.tex", "w");
+
+fprintf(node_tab, "$V_0$ & %f \\\\ \\hline", V0n);
+fprintf(node_tab, "$V_1$ & %f \\\\ \\hline", V1n);
+fprintf(node_tab, "$V_2$ & %f \\\\ \\hline", V2n);
+fprintf(node_tab, "$V_3$ & %f \\\\ \\hline", V3n);
+fprintf(node_tab, "$V_4$ & %f \\\\ \\hline", V4n);
+fprintf(node_tab, "$V_5$ & %f \\\\ \\hline", V5n);
+fprintf(node_tab, "$V_6$ & %f \\\\ \\hline", V6n);
+fprintf(node_tab, "$V_7$ & %f \\\\ \\hline", V7n);

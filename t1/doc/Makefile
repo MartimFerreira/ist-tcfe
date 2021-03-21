@@ -13,7 +13,7 @@ all: $(FILE).pdf
 
 $(FILE).pdf: $(wildcard *.tex) $(LODFIGS)
 	export TEXINPUTS=$(TEXINPUTS)
-	cp -f ../mat/*.eps .
+	cp -f ../mat/*.tex .
 	pdflatex  $(FILE).tex
 	pdflatex  $(FILE).tex
 	pdflatex  $(FILE).tex
@@ -26,6 +26,7 @@ $(FILE).pdf: $(wildcard *.tex) $(LODFIGS)
 clean:
 	@rm -rf *.aux *.bbl *.blg *.glg *.glo *.gls *.ilg *.ist *.lof
 	@rm -rf *.log *.lot *.nlo *.nls *.out *.toc *~ *.*% ./*.pdf ./*.eps
+	@rm -rf octave_*_*.tex
 
 .PHONY: all clean
 
