@@ -1,6 +1,5 @@
 \section{Theoretical Analysis}
 \label{sec:analysis}
-
 \subsection{Mesh Method}
 \par
 In the mesh method, equations are written for essential meshes, using Kirchhoff's voltage law (KVL), which states that "the directed sum of the potential differences (voltages) around any closed loop is zero". There are also additional equations.
@@ -12,63 +11,61 @@ In this method, as well as in the next one, Ohm's Law, $V=RI \Leftrightarrow I =
 
 \begin{equation}
 \begin{cases}
-R_6 I_3 + R_7 I_3 - V_c + R_4(I_3-I_1) = 0 & \mbox{KVL for mesh $C$}\\
-V_a - R_4 (I_3-I_1) - V_b + R_1 I_1 = 0 & \mbox{KVL for mesh $A$}\\
-V_c = K_c I_c & \mbox{as given for voltage source $V_c$} \\
-I_b = K_b V_b & \mbox{as given for current source $I_b$} \\
-I_3 = I_c & \mbox{by inspection in mesh $C$}\\
-I_4 = I_d & \mbox{by inspection in mesh $D$}\\
-(I_2-I_1) R_3 = V_b & \mbox{Ohm's Law for resistor $R_3$}\\
-I_2 = I_b & \mbox{by inspection in mesh $B$}\\
+R_6 I_3 + R_7 I_3 - V_c + R_4(I_3-I_1) = 0 & \mbox{$(1)$}\\
+V_a - R_4 (I_3-I_1) - V_b + R_1 I_1 = 0 & \mbox{$(2)$}\\
+V_c = K_c I_c & \mbox{$(3)$} \\
+I_b = K_b V_b & \mbox{$(4)$} \\
+I_3 = I_c & \mbox{$(5)$}\\
+I_4 = I_d & \mbox{$(6)$}\\
+I_2 = I_b & \mbox{$(7)$}\\
+(I_2-I_1) R_3 = V_b & \mbox{$(8)$}\\
 \end{cases}
 \end{equation}
 
-\par
-\textcolor{red}{\textbf{maybe explaining these equations a little better??}}
-\par
-\textcolor{red}{\textbf{show system with matrix?}}
+%\begin{equation}
+%\begin{cases}
+%R_6 I_3 + R_7 I_3 - V_c + R_4(I_3-I_1) = 0 & \mbox{KVL for mesh $C$}\\
+%V_a - R_4 (I_3-I_1) - V_b + R_1 I_1 = 0 & \mbox{KVL for mesh $A$}\\
+%V_c = K_c I_c & \mbox{as given for voltage source $V_c$} \\
+%I_b = K_b V_b & \mbox{as given for current source $I_b$} \\
+%I_3 = I_c & \mbox{by inspection in mesh $C$}\\
+%I_4 = I_d & \mbox{by inspection in mesh $D$}\\
+%(I_2-I_1) R_3 = V_b & \mbox{Ohm's Law for resistor $R_3$}\\
+%I_2 = I_b & \mbox{by inspection in mesh $B$}\\
+%\end{cases}
+%\end{equation}
 
-
-
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{../mat/octave_mesh_tab.tex}
+  \end{tabular}
+  \caption{Operating point. A variable preceded by @ is of type {\em current}
+    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
+    Volt.}
+  \label{tab:op}
+\end{table}
 
 
 \subsection{Nodal Method}
 \par
 In the nodal method, a set of equation is written based on Kirchhoff's current law (KCL), according to which "the algebraic sum of currents in a network of conductors meeting at a point is zero", which means that the sum of currents flowing into that node is equal to the sum of currents flowing out of that node. Plus, there are some additional equations.
 
-\par
-\textcolor{red}{\textbf{mentioning the concept of super node?}}
-
-
 
 \begin{equation}
 \begin{cases}
-V_0 = 0 & \mbox{since $N_0$ is the ground node} \\
-V_1-V_0 = V_a & \mbox{by inspection in voltage source $V_a$}  \\
-\frac{V_2-V_1}{R_1} + \frac{V_2-V_4}{R_3} + \frac{V_3-V_2}{R_2} = 0 & \mbox{KCL for node $N_2$} \\
-\frac{V_3-V_2}{R_2} - (V_2-V_4) K_b = 0 & \mbox{KCL for node $N_3$} \\
-\frac{V_0-V_6}{R_6} - \frac{V_6-V_7}{R_7} = 0 & \mbox{KCL for node $N_6$}\\
-\frac{V_5-V_4}{R_5} + K_b (V_2 - V_4) - I_d = 0 & \mbox{KCL for node $N_5$}\\
-V_4-V_7 = K_c \frac{V_0-V_6}{R_6} & \mbox{by inspection in voltage source $V_c$} \\
-\frac{V_2-V_4}{R_3} + \frac{V_5-V_4}{R_5} +  \frac{V_6-V_7}{R_7} - \frac{V_4-V_0}{R_4} - I_d = 0 & \mbox{KCL for node $N_4$} \textcolor{red}{\textbf{     is actually a supernode!}}
+V_0 = 0 & \mbox{$(1)$} \\
+V_1-V_0 = V_a & \mbox{$(2)$}  \\
+\frac{V_2-V_1}{R_1} + \frac{V_2-V_4}{R_3} + \frac{V_3-V_2}{R_2} = 0 & \mbox{$(3)$} \\
+\frac{V_3-V_2}{R_2} - (V_2-V_4) K_b = 0 & \mbox{$(4)$} \\
+\frac{V_0-V_6}{R_6} - \frac{V_6-V_7}{R_7} = 0 & \mbox{$(5)$}\\
+\frac{V_5-V_4}{R_5} + K_b (V_2 - V_4) - I_d = 0 & \mbox{$(6)$}\\
+V_4-V_7 = K_c \frac{V_0-V_6}{R_6} & \mbox{$(7)$} \\
+\frac{V_2-V_4}{R_3} + \frac{V_5-V_4}{R_5} +  \frac{V_6-V_7}{R_7} - \frac{V_4-V_0}{R_4} - I_d = 0 & \mbox{$(8)$}
 \end{cases}
 \end{equation}
-
-\par
-\textcolor{red}{\textbf{maybe explaining these equations a little better??}}
-\par
-\textcolor{red}{\textbf{show system with matrix?}}
-
-
-
-
-
-
-\subsection{Results}
-\par
-After solving a linear system of equations with Octave, it was found out that:
-\par
-\textcolor{red}{\textbf{present values of V1 to V7, Ib, Ic, I1 to I4, Vb and Vc}}
 
 
 \begin{table}[h]
@@ -84,3 +81,23 @@ After solving a linear system of equations with Octave, it was found out that:
   \label{tab:op}
 \end{table}
 
+%\begin{equation}
+%\begin{cases}
+%(1)V_0 = 0 & \mbox{since $N_0$ is the ground node} \\
+%(2)V_1-V_0 = V_a & \mbox{by inspection in voltage source $V_a$}  \\
+%(3)\frac{V_2-V_1}{R_1} + \frac{V_2-V_4}{R_3} + \frac{V_3-V_2}{R_2} = 0 & \mbox{KCL for node $N_2$} \\
+%(4)\frac{V_3-V_2}{R_2} - (V_2-V_4) K_b = 0 & \mbox{KCL for node $N_3$} \\
+%(5)\frac{V_0-V_6}{R_6} - \frac{V_6-V_7}{R_7} = 0 & \mbox{KCL for node $N_6$}\\
+%(6)\frac{V_5-V_4}{R_5} + K_b (V_2 - V_4) - I_d = 0 & \mbox{KCL for node $N_5$}\\
+%(7)V_4-V_7 = K_c \frac{V_0-V_6}{R_6} & \mbox{by inspection in voltage source $V_c$} \\
+%(8)\frac{V_2-V_4}{R_3} + \frac{V_5-V_4}{R_5} +  \frac{V_6-V_7}{R_7} - \frac{V_4-V_0}{R_4} - I_d = 0 & \mbox{KCL for node $N_4$} \textcolor{red}{\textbf{     is actually a supernode!}}
+%\end{cases}
+%\end{equation}
+
+\par
+\textcolor{red}{\textbf{maybe explaining these equations a little better??}}
+
+
+\subsection{Comparing both methods}
+\par
+After solving a linear system of equations with Octave, it was found out that. 
