@@ -5,6 +5,12 @@
 \par
 The aim of this laboratory assignment is to study a circuit composed exclusively by voltage sources ($V_a$ and $V_c$), current sources ($I_b$ and $I_d$), as well as resistors ($R_1$, $R_2$, $R_4$, $R_5$, $R_6$ and $R_7$). That being said, this circuit, which is shown in the image below, contains only linear components.
 
+\begin{figure}[h] \centering
+\includegraphics[width=0.6\linewidth]{rc.pdf}
+\caption{The circuit in study}
+\label{fig:rc}
+\end{figure}
+
 \par
 It was known beforehand that:
 $R_1 = 1039.3 \ \Omega$,
@@ -19,18 +25,10 @@ $I_d = 0.0010044 \ A$,
 $K_b = 0.0070875 \ A/V$ and
 $K_c = 8185.8 \ V/A$.
 
-\par
-Therefore, the objective was to find the values of: $V_0$, $V_1$, $V_2$, $V_3$, $V_4$, $V_5$, $V_6$, $V_7$, $I_b$, $I_c$, $I_1$, $I_2$, $I_3$, $I_4$, $V_b$ and $V_c$.
-
-\begin{figure}[h] \centering
-\includegraphics[width=0.8\linewidth]{rc.pdf}
-\caption{The circuit in study}
-\label{fig:rc}
-\end{figure}
 
 \par
-In order to make it easier to analyse the circuit, both meshes and nodes were labelled. $N_0$ was chosen as the ground node, $V_0 = 0 \ V$. $V_i$ is the voltage in node $N_i$ and $I_1$ is the current that goes through mesh $A$ counterclockwise. Likewise, $I_2$ goes through $B$, $I_3$ through $C$ and $I_4$ through $D$, all anticlockwise. Besides that, in each resistance the direction of the current was arbitrarily chosen.
+$N_0$ was chosen as the ground node, $V_0 = 0 \ V$. $V_i$ is the voltage in node $N_i$ and $I_i$ ($i=1, 2, ..., 7$) is the current that goes through mesh $i$ counterclockwise ($i=A, B, C, D$).
 
 \par
-In Section~\ref{sec:analysis}, a theoretical analysis of the circuit is presented following two of the most common methods: the mesh method and the nodal method. In Section~\ref{sec:simulation}, the circuit is analysed by simulation. Finally, the  comparison between both types of analysis and the conclusions of this study are in Section~\ref{sec:conclusion}.
+In Section~\ref{sec:analysis}, a theoretical analysis of the circuit is presented following two of the most common methods: the mesh method and the nodal method (in the former the objective was to find the values of the current in each essential mesh, whereas in the latter it was to find the potential in each node). In Section~\ref{sec:simulation}, the circuit is analysed by simulation. Finally, the  comparison between both types of analysis and the conclusions of this study are in Section~\ref{sec:conclusion}.
 
