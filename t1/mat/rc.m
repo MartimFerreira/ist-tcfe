@@ -72,19 +72,19 @@ Vb = x(1);
 
 %Testes
 
-    V0 = 0;
+V0 = 0;
 V1 = Va + V0;
 V6 = V0 - R6 * Ic;
 V7 = V6 - R7 * Ic;
 V4 = V7 + Kc*Ic;
-    I1teste = Ic - (V4 - V0)/R4;
+I1teste = Ic - (V4 - V0)/R4;
 V2 = V1 + I1teste*R1;
-      Vbteste = V2 - V4;
+Vbteste = V2 - V4;
 Ibteste = Kb*Vbteste;
 I5 = Id - Ibteste;
 V5 = V4 + I5*R5;
 V3 = V2 + Ib*R2;
-      I3 = Vbteste/R3;
+I3 = Vbteste/R3;
 SomaIno4 = I3 + I5 + Ic-Id - (Ic-I1);
 SomaIno0 = I1 -Ic + Ic - I1;
 SomaIno2 = Ibteste - I1 - I3;
@@ -141,13 +141,28 @@ xn = Mn \ bn;
 
 V0n= 0; 
 V1n = xn(1);
-    V2n = xn(2);
-    V3n = xn(3);
-    V4n = xn(4);
-    V5n= xn(5);
-    V6n= xn(6);
-    V7n= xn(7);
-  
+V2n = xn(2);
+V3n = xn(3);
+V4n = xn(4);
+V5n= xn(5);
+V6n= xn(6);
+V7n= xn(7);
+
+    %Testes2
+
+ImalhaA= (V2n-V1n)/R1; 
+ImalhaB= (V2n-V3n)/R2;
+ImalhaC1= (V6n)/R6;
+ImalhaC2= (V6n-V7n)/R7;
+ImalhaD= (V5n-V4n)/R5;
+
+
+SomaVmalhaA=(V4n-V0n)+(V2n-V4n)+(V1n-V2n)+(V0n-V1n); 
+SomaVmalhaB=(V3n-V5n)+(V2n-V3n)+(V4n-V2n)+(V5n-V4n); 
+SomaVmalhaC=(V6n-V0n)+(V7n-V6n)+(V4n-V7n)+(V0n-V4n); 
+SomaVmalhaD=(V5n-V7n)+(V4n-V5n)+(V7n-V4n);
+
+
 
 printf("\nResultados nós:\n")
 printf ("V0n = %f\n", V0n)
@@ -159,6 +174,23 @@ printf ("V5n = %f\n", V5n)
 printf ("V6n = %f\n", V6n)
 printf ("V7n = %f\n", V7n)
 
+printf("\nTestes 2:\n")
+printf("Soma V malha A = %f\n", SomaVmalhaA)
+printf("Soma V malha B= %f\n", SomaVmalhaB)
+printf("Soma V malha C= %f\n", SomaVmalhaC)
+printf("Soma V malha D = %f\n", SomaVmalhaD)
+
+
+printf("\n I malha A teste = %f\n", ImalhaA)
+printf(" I malha B teste = %f\n", ImalhaB)
+printf(" I malha C teste = %f\n", ImalhaC1)
+printf(" I malha C teste = %f\n", ImalhaC2)
+printf(" I malha D teste = %f\n", ImalhaD)
+
+printf ("\nImalhaA = %f\n", I1)
+printf ("ImalhaB = %f\n", I2)
+printf ("ImalhaC = %f\n", I3)
+printf ("ImalhaD = %f\n", I4)
 
 %Write Tables
 
@@ -182,3 +214,4 @@ fprintf(mesh_tab, "$I_A$ & %f \\\\ \\hline", I1);
 fprintf(mesh_tab, "$I_B$ & %f \\\\ \\hline", I2);
 fprintf(mesh_tab, "$I_C$ & %f \\\\ \\hline", I3);
 fprintf(mesh_tab, "$I_D$ & %f \\\\ \\hline", I4);
+
