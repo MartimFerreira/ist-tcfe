@@ -10,6 +10,7 @@ In this method, as well as in the next one, Ohm's Law, $V=RI \Leftrightarrow I =
 
 % explain how we got to each equation
 
+\begin{equation}
 \begin{cases}
 R_6 I_3 + R_7 I_3 - V_c + R_4(I_3-I_1) = 0 & \mbox{KVL for mesh $C$}\\
 V_a - R_4 (I_3-I_1) - V_b + R_1 I_1 = 0 & \mbox{KVL for mesh $A$}\\
@@ -20,6 +21,7 @@ I_4 = I_d & \mbox{by inspection in mesh $D$}\\
 (I_2-I_1) R_3 = V_b & \mbox{Ohm's Law for resistor $R_3$}\\
 I_2 = I_b & \mbox{by inspection in mesh $B$}\\
 \end{cases}
+\end{equation}
 
 \par
 \textcolor{red}{\textbf{maybe explaining these equations a little better??}}
@@ -53,7 +55,7 @@ In the nodal method, a set of equation is written based on Kirchhoff's current l
 \end{table}
 
 
-
+\begin{equation}
 \begin{cases}
 V_0 = 0 & \mbox{since $N_0$ is the ground node} \\
 V_1-V_0 = V_a & \mbox{by inspection in voltage source $V_a$}  \\
@@ -64,6 +66,7 @@ V_1-V_0 = V_a & \mbox{by inspection in voltage source $V_a$}  \\
 V_4-V_7 = K_c \frac{V_0-V_6}{R_6} & \mbox{by inspection in voltage source $V_c$} \\
 \frac{V_2-V_4}{R_3} + \frac{V_5-V_4}{R_5} + \frac{V_6-V_7}{R_7} - \frac{V_4-V_0}{R_4} - I_d = 0 & \mbox{KCL for node $N_4$} \textcolor{red}{\textbf{     is actually a supernode!}}
 \end{cases}
+\end{equation}
 
 \par
 \textcolor{red}{\textbf{maybe explaining these equations a little better??}}
