@@ -22,6 +22,9 @@ I_2 = I_b & \mbox{$(7)$}\\
 \end{cases}
 \end{equation}
 
+\par
+KVL was used for meshes $C$ and $A$ in equations (1) and (2) respectively. As for equations (3) and (4), they were based on the information given for voltage source $V_c$ and current source $I_b$. Equations (5), (6) and (7) were by inspection meshes $C$ and $D$. Lastly, in equation (8) it was known that the difference of potential between the terminals of resistor $R_3$ was $V_b$, but because of Ohm's law it is also equal to $(I_2-I_1) R_3$, $(I_2-I_1)$ being the current that goes through that same resistor.
+
 %\begin{equation}
 %\begin{cases}
 %R_6 I_3 + R_7 I_3 - V_c + R_4(I_3-I_1) = 0 & \mbox{KVL for mesh $C$}\\
@@ -49,6 +52,10 @@ I_2 = I_b & \mbox{$(7)$}\\
 \end{table}
 
 
+
+
+
+
 \subsection{Nodal Method}
 \par
 In the nodal method, a set of equation is written based on Kirchhoff's current law (KCL), according to which "the algebraic sum of currents in a network of conductors meeting at a point is zero", which means that the sum of currents flowing into that node is equal to the sum of currents flowing out of that node. Plus, there are some additional equations.
@@ -67,6 +74,8 @@ V_4-V_7 = K_c \frac{V_0-V_6}{R_6} & \mbox{$(7)$} \\
 \end{cases}
 \end{equation}
 
+\par
+Equation (1) refers to $N_0$ being the ground node and equation (2) is reached by inspection in voltage source $V_a$. In equations (3), (4), (5) and (6) we have KCL for nodes $N_2$, $N_3$, $N_6$ and $N_5$, respectively.  Using Ohm's law, one knows that $\frac{V_2 - V_1}{R_1} is the current that goes through resistor $R_1$, \frac{V_3-V_2}{R_2} the one that goes through $R_2$, \frac{V_2-V_4}{R_3} through $R_3$, \frac{V_5-V_4}{R_5} through $R_5$, \frac{V_0-V_6}{R_6} through $R_6$, \frac{V_6-V_7}{R_7} through $R_7$
 
 \begin{table}[h]
   \centering
