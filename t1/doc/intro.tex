@@ -2,12 +2,43 @@
 \label{sec:introduction}
 
 % state the learning objective 
-The objective of this laboratory assignment is to study a circuit containing a
-sinusoidal voltage source $V_I$ connected to a resistor $R$ and a capacitor $C$
-in series. The circuit can be seen if Figure~\ref{fig:rc}.
+\par
+The aim of this laboratory assignment is to study a circuit composed exclusively by voltage sources ($V_a$ and $V_c$), current sources ($I_b$ and $I_d$), as well as resistors ($R_1$, $R_2$, $R_4$, $R_5$, $R_6$ and $R_7$). That being said, this circuit, which is shown in the image below, contains only linear components.
 
-\lipsum[1-1]
+\par
+It was known beforehand that:
+$R_1 = 1039.3 \ \Omega$,
+$R_2 = 2010.9 \ \Omega$,
+$R_3 = 30411.2 \ \Omega$,
+$R_4 = 4183.8 \ \Omega$,
+$R_5 = 3095.8 \ \Omega$,
+$R_6 = 2021.2 \ \Omega$,
+$R_7 = 1022.3 \ \Omega$,
+$V_a = 5.1798 \ V$,
+$I_d = 0.0010044 \ A$,
+$K_b = 0.0070875 \ A/V$ and
+$K_c = 8185.8 \ V/A$.
 
+\par
+Therefore, the objective was to find the values of: $V_0$, $V_1$, $V_2$, $V_3$, $V_4$, $V_5$, $V_6$, $V_7$, $I_b$, $I_c$, $I_1$, $I_2$, $I_3$, $I_4$, $V_b$ and $V_c$.
+
+\par
+\textcolor{red}{\textbf{identify variables for each of the methods: mesh vs nodal method???}}
+\par
+\textcolor{red}{\textbf{change the name of the meshes to A, B, C, D?}}
+\par
+\textcolor{red}{\textbf{FIGURE - the circuit in study}}
+
+\par
+In order to make it easier to analyse the circuit, both meshes and nodes were labelled. $N_0$ was chosen as the ground node, $V_0 = 0 \ V$. $V_i$ is the voltage in node $N_i$ and $I_1$ is the current that goes through mesh $A$ counterclockwise. Likewise, $I_2$ goes through $B$, $I_3$ through $C$ and $I_4$ through $D$, all anticlockwise. Besides that, in each resistance the direction of the current was arbitrarily chosen.
+
+\par
+In Section 2, a theoretical analysis of the circuit is presented following two of the most common methods: the mesh method and the nodal method. In Section 3, the circuit is analysed by simulation and, in Section 4, both types of analysis are compared. Finally, the conclusions of this study are in Section 5.
+
+
+
+
+%---------------use these references..................
 In Section~\ref{sec:analysis}, a theoretical analysis of the circuit is
 presented. In Section~\ref{sec:simulation}, the circuit is analysed by
 simulation, and the results are compared to the theoretical results obtained in
