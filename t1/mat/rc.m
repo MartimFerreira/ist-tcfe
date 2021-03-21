@@ -17,6 +17,16 @@ Va = 5.17979967502
 Id = 0.00100439545365 
 Kb = 0.00708750963899 
 Kc = 8185.75062147
+
+
+%V1; not known
+%V2; not known
+%V3; not known
+%V4; not known
+%V5; not known
+%V6; not known
+%V7; not known
+
 %Vb; not known
 %Vc; not known
 %Ib; not known
@@ -103,3 +113,55 @@ printf("\nTestes:\n")
 printf("Soma I no no4 = %f\n", SomaIno4)
 printf("Soma I no no0 = %f\n", SomaIno0)
 printf("Soma I no no2 = %f\n", SomaIno2)
+
+
+%node analysis
+
+%  (V2-V1)/R1 +(V2-V4)/R3 -(V3-V2)/R2 == 0; (node 2)
+%  (V3-V2)/R2 - (v2-v4)*Kb == 0;            (node 3)
+%  (V0-V6)/R6 -(V6-V7)/R7  == 0;            (node 6)
+%  (V5-V4)/R5 + Kb(V2-V4)*Kb ==0;           (node 5)
+%  (V4-V7) - Kc(V0-V6)/R6 ==0;              (super node)
+%  (V2-V4)/R3 +(V5-V4)/R5 -(V6-V7)/R7 -(V4-V0)/R4== 0; (node 4)
+%  V1-V0 == Va;
+%  V0 == 0;
+
+Mn = [ 1, 0, 0, 0, 0, 0, 0;
+       -(1/R1), (1/R1) + (1/R2) + (1/R3), -(1/R2), -(1/R3), 0, 0, 0;
+       0, -(1/R2) - Kb, (1/R2), Kb, 0, 0, 0;
+       0, 0, 0, 0, 0, -(1/R6) - (1/R7), 1/R7;
+       0, Kb, 0, -Kb - (1/R5), (1/R5), 0, 0;
+       0, 0, 0, 1, 0, (Kc/R6), -1;
+       0, (1/R3), 0, -(1/R3) - (1/R4) - (1/R5), (1/R5), (1/R7), -(1/R7)];
+bn = [Va; 0; 0; 0; Id; 0; Id];
+
+%{{1, 0, 0, 0, 0, 0, 0},
+ % { -(1/R1), (1/R1) + (1/R2) + (1/R3), -(1/R2), -(1/R3), 0, 0, 0},
+  %{0, -(1/R2) - Kb, (1/R2), Kb, 0, 0, 0},
+  %{0, 0, 0, 0, 0, -(1/R6) - (1/R7), 1/R7},
+  %{0, Kb, 0, -Kb - (1/R5), (1/R5), 0, 0},
+  %{0, 0, 0, 1, 0, (Kc/R6), -1},
+  %{0, (1/R3), 0, -(1/R3) - (1/R4) - (1/R5), (1/R5), (1/R7), -(1/R7)}},
+ %{Va, 0, 0, 0, Id , 0, Id}]
+
+xn = Mn \ bn;
+
+V0n= 0; 
+V1n = xn(1);
+    V2n = xn(2);
+    V3n = xn(3);
+    V4n = xn(4);
+    V5n= xn(5);
+    V6n= xn(6);
+    V7n= xn(7);
+  
+
+printf("\nResultados nós:\n")
+printf ("V0n = %f\n", V0n)
+printf ("V1n = %f\n", V1n)
+printf ("V2n = %f\n", V2n)
+printf ("V3n = %f\n", V3n)
+printf ("V4n = %f\n", V4n)
+printf ("V5n = %f\n", V5n)
+printf ("V6n = %f\n", V6n)
+printf ("V7n = %f\n", V7n)
