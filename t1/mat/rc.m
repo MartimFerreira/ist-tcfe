@@ -172,3 +172,13 @@ fprintf(node_tab, "$V_4$ & %f \\\\ \\hline", V4n);
 fprintf(node_tab, "$V_5$ & %f \\\\ \\hline", V5n);
 fprintf(node_tab, "$V_6$ & %f \\\\ \\hline", V6n);
 fprintf(node_tab, "$V_7$ & %f \\\\ \\hline", V7n);
+
+fclose(node_tab);
+
+
+mesh_tab = fopen("octave_mesh_tab.tex", "w");
+
+fprintf(mesh_tab, "$I_A$ & %f \\\\ \\hline", I1);
+fprintf(mesh_tab, "$I_B$ & %f \\\\ \\hline", I2);
+fprintf(mesh_tab, "$I_C$ & %f \\\\ \\hline", I3);
+fprintf(mesh_tab, "$I_D$ & %f \\\\ \\hline", I4);
