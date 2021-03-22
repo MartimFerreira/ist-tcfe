@@ -5,30 +5,40 @@
 \par
 The aim of this laboratory assignment is to study the circuit shown below assuming the lumped-elements approximation. It is composed of voltage sources (an independent one, $V_a$, and a linear current-controlled one, $V_c$), current sources (an independent one, $I_d$, and a linear voltage-controlled one, $I_b$) and resistors ($R_1$, $R_2$, $R_3$, $R_4$, $R_5$, $R_6$ and $R_7$). All components of this circuit are linear and time-invariant.
 
-\begin{figure}[h] \centering
-\includegraphics[width=0.6\linewidth]{rc.pdf}
-\caption{The circuit in analysis}
-\label{fig:rc}
-\end{figure}
+The original data that was received had 11 significant digits, however, both Octave and Ngspice software work with an approximation of 5 significant digits. With this new approximation the results still present high precision and the uncertainty range is still bellow 1\%. The table \ref{tab:ap} has all the original values and the values that are considered by the software used. 
 
-\par
-It was known beforehand that:
-$R_1 = 1039.3 \ \Omega$,
-$R_2 = 2010.9 \ \Omega$,
-$R_3 = 3041.2 \ \Omega$,
-$R_4 = 4183.8 \ \Omega$,
-$R_5 = 3095.8 \ \Omega$,
-$R_6 = 2021.2 \ \Omega$,
-$R_7 = 1022.3 \ \Omega$,
-$V_a = 5.1798 \ V$,
-$I_d = 0.0010044 \ A$,
-$K_b = 0.0070875 \ S$ and
-$K_c = 8185.8 \ \Omega$.
+
+\begin{table}[hbt!]
+\centering
+\begin{tabular}{||c|c|c||}
+\hline
+        &           Original Values         & Approximate Values (Octave e Ngspice) \\ \hline
+ $R_1 (\Omega)$   &  $   1.03930068064   $     & $1039.3$\\ \hline
+ $R_2 (\Omega)$   &  $   2.0109087471    $      & $2010.9$\\ \hline
+ $R_3 (\Omega)$   &  $   3.04124242148   $    & $3041.2$\\ \hline
+ $R_4 (\Omega)$   &  $   4.18383562625   $     & $4183.8$\\ \hline
+ $R_5 (\Omega)$   &  $   3.09583437009   $     & $3095.8$\\ \hline
+ $R_6 (\Omega)$   &  $   2.02117084711   $     & $2021.2$\\ \hline
+ $R_7 (\Omega)$   &  $   1.02226630661   $     & $1022.3$\\\hline
+ $V_a (V)$   &  $   5.17979967502   $     & $5.1798$\\ \hline
+ $I_d (A)$   &  $    1.00439545365     $     & $0.0010044$\\ \hline
+ $K_b (S)$   &  $    7.08750963899     $     & $0.0070875$\\ \hline
+ $K_c (\Omega)$   &     $8.18575062147    $     & $8185.8$\\ \hline
+\end{tabular}
+\caption{Significant figures considered by Octave and Ngsipe- approximation} 
+\label{tab:ap}
+\end{table}
 
 
 \par
 $N_0$ was chosen as the ground node, $V_0 = 0 \ V$. $V_i$ is the voltage in node $N_i$ ($i=1, 2, ..., 7$) and $I_i$  is the current that goes through mesh $i$ counterclockwise ($i=A, B, C, D$).
 
+
 \par
 In Section~\ref{sec:analysis}, a theoretical analysis of the circuit is presented following two of the most common methods: the mesh method and the nodal method (whereas in the latter it is to find the potential in each node). In the mesh method, the goal is to find the values of the currents in each essential mesh. The equations written in order to do this are applications of Kirchhoff's voltage law, or KVL (which states that "the directed sum of the potential differences (voltages) around any closed loop is zero'') to essential meshes or determined by inspection of the circuit. If more equations are needed (because KVL couldn't be applied to one of the meshes), a super-mesh equation is written. In the nodal method, the goal is to determine all node potentials, with the set of equations written being based on Kirchhoff's current law, or KCL, (''the algebraic sum of currents in a network of conductors meeting at a point is zero'') applied to the nodes. If more equations are needed, super-node equations are used. In this part, Octave was used to solve all systems of (linear) equations. In Section~\ref{sec:simulation}, the circuit is analysed by simulation using ngspice. The declaration of all components in ngspice is very straightforward, with the exception of the current-controlled voltage source, which requires that an independent voltage source through which the control current passes be indicated. So, an imaginary 0V voltage source must be added in between $R_6$ and $R_7$ (positive terminal connected to $R_6$, negative to $R_7$), since through it would pass the control current $I_c$. Finally, the comparison between both types of analysis and the conclusions of this study are in Section~\ref{sec:conclusion}.
 
+\begin{figure}[h] \centering
+\includegraphics[width=0.6\linewidth]{rc.pdf}
+\caption{The circuit in analysis}
+\label{fig:rc}
+\end{figure}
