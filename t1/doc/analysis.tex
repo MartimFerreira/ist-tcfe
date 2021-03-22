@@ -111,18 +111,18 @@ Equation (8) is KCL for a super node -------------------> explain better
 
 \subsection{Comparing both methods}
 \par
-%\begin{table}[hbt!]
-%  \centering
-%  \begin{tabular}{|c|c|}
-%    \hline    
-%    {\bf Name} & {\bf Value [A or V]} \\ \hline
-%    \input{../mat/octave_comparation_tab.tex}
-%  \end{tabular}
-%  \caption{Operating point. A variable preceded by @ is of type {\em current}
-%    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
-%    Volt.}
-%  \label{tab:op}
-%\end{table}
+\begin{table}[hbt!]
+  \centering
+  \begin{tabular}{|l|r|r|}
+    \hline    
+    {\bf Mesh Current} & {\bf Mesh Method [A]} & {\bf Method Comparison Equations [A]} \\ \hline
+    \input{../mat/octave_comparison_tab.tex}
+  \end{tabular}
+  \caption{Operating point. A variable preceded by @ is of type {\em current}
+    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
+    Volt.}
+  \label{tab:op}
+\end{table}
 After solving a linear system of equations with Octave, it was found out that. 
 
 
