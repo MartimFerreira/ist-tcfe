@@ -157,10 +157,11 @@ ImalhaD= -(V4n-V5n)/R5 +ImalhaB;
 
 Itorco12= (V2n-V1n)/R1 
 Itorco23= (V3n-V2n)/R2
-Itorco24= (V4n-V2n)/R3
+Itorco24= (V2n-V4n)/R3
 Itorco45= (V4n-V5n)/R5 
 Itorco67= (V6n-V7n)/R7 
 Itorco06= (V0n-V6n)/R6
+Itorco04= (V0n-V4n)/R4
 
 
 
@@ -246,10 +247,22 @@ fprintf(mesh_tab, "$I_D$ & %f \\\\ \\hline", I4);
 fclose(mesh_tab)
 
 comp_tab = fopen("octave_comparison_tab.tex", "w");
-
-fprintf(comp_tab, "$I_A$ & %f & %f  \\\\ \\hline", I1, ImalhaA);
-fprintf(comp_tab, "$I_B$ & %f & %f \\\\ \\hline", I2, ImalhaB);
-fprintf(comp_tab, "$I_C$ & %f & %f \\\\ \\hline", I3, ImalhaC);
-fprintf(comp_tab, "$I_D$ & %f & %f \\\\ \\hline", I4, ImalhaD);
+%%%%%%%%%%%%%%%%%%%name & mesh & node
+fprintf(comp_tab, "$I_{R_1}$ & %f & %f \\\\ \\hline", I1, ImalhaA);
+fprintf(comp_tab, "$I_{R_2}$ & %f & %f \\\\ \\hline", I2, ImalhaB);
+fprintf(comp_tab, "$I_{R_3}$ & %f & %f \\\\ \\hline", I2-I1, Itorco24);
+fprintf(comp_tab, "$I_{R_4}$ & %f & %f \\\\ \\hline", I1-I3, Itorco04);
+fprintf(comp_tab, "$I_{R_5}$ & %f & %f \\\\ \\hline", I4-I2, ImalhaD-ImalhaB);
+fprintf(comp_tab, "$I_{R_6}$ & %f & %f \\\\ \\hline", I3, Itorco06);
+fprintf(comp_tab, "$I_{R_7}$ & %f & %f \\\\ \\hline", I3, ImalhaC);
+fprintf(comp_tab, "$I_{b}$ & %f & %f \\\\ \\hline", Ib,);
+fprintf(comp_tab, "$V_0$ & %f & %f \\\\ \\hline", V0, V0n);
+fprintf(comp_tab, "$V_1$ & %f & %f \\\\ \\hline", V1, V1n);
+fprintf(comp_tab, "$V_2$ & %f & %f \\\\ \\hline", V2, V2n);
+fprintf(comp_tab, "$V_3$ & %f & %f \\\\ \\hline", V3, V3n);
+fprintf(comp_tab, "$V_4$ & %f & %f \\\\ \\hline", V4, V4n);
+fprintf(comp_tab, "$V_5$ & %f & %f \\\\ \\hline", V5, V5n);
+fprintf(comp_tab, "$V_6$ & %f & %f \\\\ \\hline", V6, V6n);
+fprintf(comp_tab, "$V_7$ & %f & %f \\\\ \\hline", V7, V7n);
 
 fclose(comp_tab)
