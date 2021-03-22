@@ -155,6 +155,14 @@ ImalhaB= (V3n-V2n)/R2;
 ImalhaC= -(V7n-V6n)/R7;
 ImalhaD= -(V4n-V5n)/R5 +ImalhaB;
 
+Itorco12= (V2n-V1n)/R1 
+Itorco23= (V3n-V2n)/R2
+Itorco24= (V4n-V2n)/R3
+Itorco45= (V4n-V5n)/R5 
+Itorco67= (V6n-V7n)/R7 
+Itorco06= (V0n-V6n)/R6
+
+
 
 SomaVmalhaA=(V4n-V0n)+(V2n-V4n)+(V1n-V2n)+(V0n-V1n); 
 SomaVmalhaB=(V3n-V5n)+(V2n-V3n)+(V4n-V2n)+(V5n-V4n); 
@@ -190,6 +198,27 @@ printf ("\nImalhaA = %f\n", I1)
 printf ("ImalhaB = %f\n", I2)
 printf ("ImalhaC = %f\n", I3)
 printf ("ImalhaD = %f\n", I4)
+
+
+printf("\nCorrentes - através dos potenciais dos nós:\n")
+printf ("\nItorco12 = %f\n", Itorco12)
+printf ("Itorco23 = %f\n", Itorco23)
+printf ("Itorco24 = %f\n", Itorco24)
+printf ("Itorco24_c = %f\n", (I1-I2))
+printf ("Itorco45_c = %f\n", (I2-I4))
+printf ("Itorco45= %f\n", Itorco45)
+printf ("Itorco67= %f\n", Itorco67)
+printf ("Itorco06= %f\n", Itorco06)
+
+printf("\n Potenciais - através das correntes nas malhas:\n")
+printf ("V0 = %f\n", V0)
+printf ("V1 = %f\n", V1)
+printf ("V2 = %f\n", V2)
+printf ("V3 = %f\n", V3)
+printf ("V4 = %f\n", V4)
+printf ("V5 = %f\n", V5)
+printf ("V6 = %f\n", V6)
+printf ("V7 = %f\n", V7)
 
 %Write Tables
 
