@@ -1,8 +1,13 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
+
 \par
-The aforementioned circuit was simulated using the ngspice simulator, which returned the values in the table below:
+The aforementioned circuit was simulated using ngspice.
+\par
+The declaration of all components is very straightforward, with the exception of the current-controlled voltage source, which requires that an independent voltage source through which the control current passes be indicated. So, an imaginary 0V voltage source must be added in between $R_6$ and $R_7$ (positive terminal connected to $R_6$, negative to $R_7$), since through it would pass the control current $I_c$.
+\par
+The simulation returned the values in the table below:
 \par
 
 \begin{table}[h]
