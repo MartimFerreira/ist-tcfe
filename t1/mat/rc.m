@@ -49,6 +49,16 @@ Kc = 8185.75062147;
 %  (I2-I1)*R3 == Vb;
 %  I2 == Ib;
 
+%M = [0, -1, 0, 0, -R4, 0, R4+R6+R7, 0;
+%      -1, 0, 0, 0, R1+R4, 0, -R4, 0;
+%     0, 1, 0, -Kc, 0, 0, 0, 0;
+%      -Kb, 0, 1, 0, 0, 0, 0, 0;
+%      0, 0, 0, 1, 0, 0, -1, 0;
+%      0, 0, 0, 0, 0, 0, 0, 1;
+%      0, 0, -1, 0, 0, 1, 0, 0;
+%     ];
+%b = [0; -Va; 0; 0; 0; Id; 0];
+
 M = [0, -1, 0, 0, -R4, 0, R4+R6+R7, 0;
       -1, 0, 0, 0, R1+R4, 0, -R4, 0;
       0, 1, 0, -Kc, 0, 0, 0, 0;
@@ -84,7 +94,7 @@ Ibteste = Kb*Vbteste;
 I5 = Id - Ibteste;
 V5 = V4 + I5*R5;
 V3 = V2 + Ib*R2;
-I3 = Vbteste/R3;
+%I3 = Vbteste/R3;
 SomaIno4 = I3 + I5 + Ic-Id - (Ic-I1);
 SomaIno0 = I1 -Ic + Ic - I1;
 SomaIno2 = Ibteste - I1 - I3;
@@ -151,10 +161,9 @@ V7n= xn(7);
     %Testes2
 
 ImalhaA= (V2n-V1n)/R1; 
-ImalhaB= (V2n-V3n)/R2;
-ImalhaC1= (V6n)/R6;
-ImalhaC2= (V6n-V7n)/R7;
-ImalhaD= (V5n-V4n)/R5;
+ImalhaB= (V3n-V2n)/R2;
+ImalhaC= -(V7n-V6n)/R7;
+ImalhaD= -(V4n-V5n)/R5 +ImalhaB;
 
 
 SomaVmalhaA=(V4n-V0n)+(V2n-V4n)+(V1n-V2n)+(V0n-V1n); 
@@ -174,6 +183,7 @@ printf ("V5n = %f\n", V5n)
 printf ("V6n = %f\n", V6n)
 printf ("V7n = %f\n", V7n)
 
+
 printf("\nTestes 2:\n")
 printf("Soma V malha A = %f\n", SomaVmalhaA)
 printf("Soma V malha B= %f\n", SomaVmalhaB)
@@ -183,8 +193,7 @@ printf("Soma V malha D = %f\n", SomaVmalhaD)
 
 printf("\n I malha A teste = %f\n", ImalhaA)
 printf(" I malha B teste = %f\n", ImalhaB)
-printf(" I malha C teste = %f\n", ImalhaC1)
-printf(" I malha C teste = %f\n", ImalhaC2)
+printf(" I malha C teste = %f\n", ImalhaC)
 printf(" I malha D teste = %f\n", ImalhaD)
 
 printf ("\nImalhaA = %f\n", I1)
@@ -214,4 +223,11 @@ fprintf(mesh_tab, "$I_A$ & %f \\\\ \\hline", I1);
 fprintf(mesh_tab, "$I_B$ & %f \\\\ \\hline", I2);
 fprintf(mesh_tab, "$I_C$ & %f \\\\ \\hline", I3);
 fprintf(mesh_tab, "$I_D$ & %f \\\\ \\hline", I4);
+
+mesh_tab = fopen("octave_comparation_tab.tex", "w");
+
+fprintf(mesh_tab, "$I_A_test$ & %f \\\\ \\hline", ImalhaA);
+fprintf(mesh_tab, "$I_B_test$ & %f \\\\ \\hline", ImalhaB);
+fprintf(mesh_tab, "$I_C_test$ & %f \\\\ \\hline", ImalhaC);
+fprintf(mesh_tab, "$I_D_test$ & %f \\\\ \\hline", ImalhaD);
 
