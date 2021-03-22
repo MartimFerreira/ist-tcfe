@@ -218,7 +218,7 @@ fclose(mesh_tab)
 
 comp_tab = fopen("octave_comparison_tab.tex", "w");
 
-fprintf(comp_tab, "$I_A$ & %f & %f \\\\ \\hline", I1, ImalhaA);
+fprintf(comp_tab, "$I_A$ & %f & %f  \\\\ \\hline", I1, ImalhaA);
 fprintf(comp_tab, "$I_B$ & %f & %f \\\\ \\hline", I2, ImalhaB);
 fprintf(comp_tab, "$I_C$ & %f & %f \\\\ \\hline", I3, ImalhaC);
 fprintf(comp_tab, "$I_D$ & %f & %f \\\\ \\hline", I4, ImalhaD);
