@@ -68,7 +68,7 @@ KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respective
 \end{equation}
 
 \par
- In equations (1), (2), (3) and (4) we have KCL applied to nodes $N_2$, $N_3$, $N_5$ and $N_6$, respectively.  Using Ohm's law, one knows that $\frac{V_2 - V_1}{R_1}$ is the current that goes through resistor $R_1$, $\frac{V_3-V_2}{R_2}$ the one that goes through $R_2$, $\frac{V_2-V_4}{R_3}$ is the one through $R_3$, $\frac{V_5-V_4}{R_5}$ is the current through $R_5$, $\frac{V_0-V_6}{R_6}$ is the one through $R_6$ and $\frac{V_6-V_7}{R_7}$ the one through $R_7$. $I_d$ is the current imposed by current source $I_d$ while $V_2-V_4)K_b$ is the one imposed by $I_b$. KCL can't be applied to nodes $N_0$, $N_1$, $N_4$ and $N_7$. Instead, equations (5) to (8) are written. Equation (5) refers to $N_0$ being chosen as the ground node and equation (6) is reached by inspection in voltage source $V_a$. Equation (7) is determined by inspection in voltage source $V_c$, with $V_c = K_c I_c$ being the voltage imposed by voltage source $V_c$, and $I_c$ being the current that goes through resistor $R_6$, hence it is equal to $\frac{V_0 - V_6}{R_6}$. Besides that, $V_c = V_4-V_7$. Finally, because nodes $N_4$ and $N_7$ are connected by a current source, a super-node equation can be written by algebraically summing all currents flowing into or out of these nodes except the current related to the aforementioned source that connects these two nodes.
+ In equations (1), (2), (3) and (4) we have KCL applied to nodes $N_2$, $N_3$, $N_5$ and $N_6$, respectively.  Using Ohm's law, one knows that $\frac{V_2 - V_1}{R_1}$ is the current that goes through resistor $R_1$, $\frac{V_3-V_2}{R_2}$ the one that goes through $R_2$, $\frac{V_2-V_4}{R_3}$ is the one through $R_3$, $\frac{V_5-V_4}{R_5}$ is the current through $R_5$, $\frac{V_0-V_6}{R_6}$ is the one through $R_6$ and $\frac{V_6-V_7}{R_7}$ the one through $R_7$. $I_d$ is the current imposed by current source $I_d$ while $V_2-V_4)K_b$ is the one imposed by $I_b$. KCL can't be applied to nodes $N_0$, $N_1$, $N_4$ and $N_7$. Instead, equations (5) to (8) are written. Equation (5) refers to $N_0$ being chosen as the ground node and equation (6) is reached by inspection in voltage source $V_a$. Equation (7) is determined by inspection in voltage source $V_c$, with $V_c = K_c I_c$ being the voltage imposed by voltage source $V_c$, and $I_c$ being the current that goes through resistor $R_6$, hence it is equal to $\frac{V_0 - V_6}{R_6}$. Besides that, $V_c = V_4-V_7$. Finally, because nodes $N_4$ and $N_7$ are connected by a current source, a super-node equation, (8), can be written by algebraically summing all currents flowing into or out of these nodes except the current related to the aforementioned source that connects these two nodes.
 
 
 
@@ -109,8 +109,23 @@ KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respective
   \caption{Mesh Currents determined through mesh analysis (same as in table \ref{tab:mesh}) and through the comparison equations based on the nodal potentials determined by nodal analysis}
   \label{tab:comp}
 \end{table}
-After solving a linear system of equations with Octave, it was found out that. 
 
 
 
+\par
+After solving a linear system of equations with Octave, it was found out that the results obtained through both methods match. This confirms that they are equivalent.
 
+\begin{equation}
+\begin{cases}
+I_A= \frac{V_2-V_1}{R_1} & \mbox{$(1)$}\\
+I_B= \frac{V_3-V_2}{R_2} & \mbox{$(2)$}\\
+I_C= -\frac{V_7-V_6}{R_7} & \mbox{$(3)$}\\
+I_D= -\frac{V_4-V_5}{R_5} +I_B & \mbox{$(4)$}
+\end{cases}
+\end{equation}
+
+\par
+Using the values obtained through the nodal analysis for the potentials, the value for the current through each essential mesh was calculated and then compared to the one obtained through the mesh method as shown in the table below.
+
+\par
+In the previous equations Ohm's law is applied to a resistor in the respective essential mesh. In equation (4), since resistor $R_5$ belongs to two essential meshes, $B$ and $D$, the current that goes through it is the difference between the current in each of those meshes.
