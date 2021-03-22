@@ -3,6 +3,8 @@
 \subsection{Mesh Method}
 
 \par
+In the mesh method, the goal is to find the values of the currents in each essential mesh. The equations written in order to do this are applications of Kirchhoff's voltage law to essential meshes or determined by inspection of the circuit. If more equations are needed (because KVL couldn't be applied to one of the meshes), a super-mesh equation is written.
+\par
 In this method, as well as in the next one, Ohm's Law, $V=RI \Leftrightarrow I = \frac{V}{R}$, is implicitly used several times.
 
 % explain how we got to each equation
@@ -52,7 +54,7 @@ KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respective
 \subsection{Nodal Method}
 \par
 
-
+In the nodal method, the goal is to determine all node potentials, with the set of equations written being based on Kirchhoff's current law applied to the nodes. If more equations are needed, super-node equations are used.
 
 \begin{equation}
   \begin{cases}
@@ -113,9 +115,6 @@ KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respective
 
 
 
-\par
-After solving a linear system of equations with Octave, it was found out that the results obtained through both methods match. This confirms that they are equivalent.
-
 \begin{equation}
 \begin{cases}
 I_A= \frac{V_2-V_1}{R_1} & \mbox{$(1)$}\\
@@ -130,3 +129,6 @@ Using the values obtained through the nodal analysis for the potentials, the val
 
 \par
 In the previous equations Ohm's law is applied to a resistor in the respective essential mesh. In equation (4), since resistor $R_5$ belongs to two essential meshes, $B$ and $D$, the current that goes through it is the difference between the current in each of those meshes.
+
+\par
+After solving a linear system of equations with Octave, it was found out that the results obtained through both methods match. This confirms that they are equivalent.
