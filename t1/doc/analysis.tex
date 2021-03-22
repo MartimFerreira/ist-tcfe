@@ -1,41 +1,37 @@
 \section{Theoretical Analysis}
 \label{sec:analysis}
 \subsection{Mesh Method}
-\par
-In the mesh method, equations are written for essential meshes, using Kirchhoff's voltage law (KVL), which states that "the directed sum of the potential differences (voltages) around any closed loop is zero". There are also additional equations.
 
 \par
-In this method, as well as in the next one, Ohm's Law, $V=RI \Leftrightarrow I = \frac{V}{R}$, was used several times.
+In this method, as well as in the next one, Ohm's Law, $V=RI \Leftrightarrow I = \frac{V}{R}$, is implicitly used several times.
 
 % explain how we got to each equation
 
 \begin{equation}
-\begin{cases}
-R_6 I_3 + R_7 I_3 - V_c + R_4(I_3-I_1) = 0 & \mbox{$(1)$}\\
-V_a - R_4 (I_3-I_1) - V_b + R_1 I_1 = 0 & \mbox{$(2)$}\\
-V_c = K_c I_c & \mbox{$(3)$} \\
-I_b = K_b V_b & \mbox{$(4)$} \\
-I_3 = I_c & \mbox{$(5)$}\\
-I_4 = I_d & \mbox{$(6)$}\\
-I_2 = I_b & \mbox{$(7)$}\\
-(I_2-I_1) R_3 = V_b & \mbox{$(8)$}\\
-\end{cases}
+  \begin{cases}
+    V_a - R_4 (I_3-I_1) - V_b + R_1 I_1 = 0 & \mbox{$(1)$}\\
+    R_6 I_3 + R_7 I_3 - V_c + R_4(I_3-I_1) = 0 & \mbox{$(2)$}\\
+    I_2 = I_b & \mbox{$(3)$}\\
+    I_4 = I_d & \mbox{$(4)$}\\
+    V_c = K_c I_c & \mbox{$(5)$} \\
+    I_b = K_b V_b & \mbox{$(6)$} \\
+    I_3 = I_c & \mbox{$(7)$}\\
+    (I_2-I_1) R_3 = V_b & \mbox{$(8)$}\\
+  \end{cases}
 \end{equation}
 
 \par
-KVL was used for meshes $C$ and $A$ in equations (1) and (2) respectively. As for equations (3) and (4), they were based on the information given for voltage source $V_c$ and current source $I_b$. Equations (5), (6) and (7) were by inspection meshes $C$ and $D$. Lastly, in equation (8) it was known that the difference of potential between the terminals of resistor $R_3$ was $V_b$, but because of Ohm's law it is also equal to $(I_2-I_1) R_3$, $(I_2-I_1)$ being the current that goes through that same resistor.
+KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respectively. KVL can't be applied to meshes B and D, due to the current sources, so instead equations (3) and (4) were written, by direct inspection. Because the previous equations involve dependent sources, equations (5) to (8) were determined, allowing us to relate the output of said sources to the mesh currents. Equations (5) and (6) are given, equation (7) is determined by inspection of mesh $C$ and, lastly, equation (8) is the application of Ohm's law to $R_3$, with $(I_2-I_1)$ being the current that goes through that same resistor.
 
 \begin{table}[hbt!]
   \centering
   \begin{tabular}{|c|c|}
     \hline    
-    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    {\bf Mesh Currents} & {\bf Value [A]} \\ \hline
     \input{../mat/octave_mesh_tab.tex}
   \end{tabular}
-  \caption{Operating point. A variable preceded by @ is of type {\em current}
-    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
-    Volt.}
-  \label{tab:op}
+  \caption{Mesh Current values determined through mesh analysis. The results or positive or negative depending on if the currents go in the direction indicated in the introductory drawing or not}
+  \label{tab:mesh}
 \end{table}
 
 %\begin{equation}
@@ -55,27 +51,24 @@ KVL was used for meshes $C$ and $A$ in equations (1) and (2) respectively. As fo
 
 \subsection{Nodal Method}
 \par
-In the nodal method, a set of equation is written based on Kirchhoff's current law (KCL), according to which "the algebraic sum of currents in a network of conductors meeting at a point is zero", which means that the sum of currents flowing into that node is equal to the sum of currents flowing out of that node. Plus, there are some additional equations.
+
 
 
 \begin{equation}
-\begin{cases}
-V_0 = 0 & \mbox{$(1)$} \\
-V_1-V_0 = V_a & \mbox{$(2)$}  \\
-\frac{V_2-V_1}{R_1} + \frac{V_2-V_4}{R_3} + \frac{V_3-V_2}{R_2} = 0 & \mbox{$(3)$} \\
-\frac{V_3-V_2}{R_2} - (V_2-V_4) K_b = 0 & \mbox{$(4)$} \\
-\frac{V_0-V_6}{R_6} - \frac{V_6-V_7}{R_7} = 0 & \mbox{$(5)$}\\
-\frac{V_5-V_4}{R_5} + K_b (V_2 - V_4) - I_d = 0 & \mbox{$(6)$}\\
-V_4-V_7 = K_c \frac{V_0-V_6}{R_6} & \mbox{$(7)$} \\
-\frac{V_2-V_4}{R_3} + \frac{V_5-V_4}{R_5} +  \frac{V_6-V_7}{R_7} - \frac{V_4-V_0}{R_4} - I_d = 0 & \mbox{$(8)$}
-\end{cases}
+  \begin{cases}
+    \frac{V_2-V_1}{R_1} + \frac{V_2-V_4}{R_3} + \frac{V_3-V_2}{R_2} = 0 & \mbox{$(1)$} \\
+    \frac{V_3-V_2}{R_2} - (V_2-V_4) K_b = 0 & \mbox{$(2)$} \\
+    \frac{V_5-V_4}{R_5} + K_b (V_2 - V_4) - I_d = 0 & \mbox{$(3)$}\\
+    \frac{V_0-V_6}{R_6} - \frac{V_6-V_7}{R_7} = 0 & \mbox{$(4)$}\\
+    V_0 = 0 & \mbox{$(5)$} \\
+    V_1-V_0 = V_a & \mbox{$(6)$}  \\
+    V_4-V_7 = K_c \frac{V_0-V_6}{R_6} & \mbox{$(7)$} \\
+    \frac{V_2-V_4}{R_3} + \frac{V_5-V_4}{R_5} +  \frac{V_6-V_7}{R_7} - \frac{V_4-V_0}{R_4} - I_d = 0 & \mbox{$(8)$}
+  \end{cases}
 \end{equation}
 
 \par
-Equation (1) refers to $N_0$ being the ground node and equation (2) is reached by inspection in voltage source $V_a$. In equations (3), (4), (5) and (6) we have KCL for nodes $N_2$, $N_3$, $N_6$ and $N_5$, respectively.  Using Ohm's law, one knows that $\frac{V_2 - V_1}{R_1}$ is the current that goes through resistor $R_1$, $\frac{V_3-V_2}{R_2}$ the one that goes through $R_2$, $\frac{V_2-V_4}{R_3} = I_b = K_b V_b = (V_2-V_4)K_b$ through $R_3$, $\frac{V_5-V_4}{R_5}$ through $R_5$, $\frac{V_0-V_6}{R_6}$ through $R_6$, $\frac{V_6-V_7}{R_7}$ through $R_7$. $I_d$ is the current imposed by current source $I_d$. Equation (7) is by inspection in voltage source $V_c$. $V_c = K_c I_c$ is the voltage imposed by voltage source $V_c$. $I_c$ is also the current that goes through resistor $R_6$, hence it is equal to $\frac{V_0 - V_6}{R_6}$. Besides that, $V_c = V_4-V_7$.
-
-Equation (8) is KCL for a super node -------------------> explain better
-
+ In equations (1), (2), (3) and (4) we have KCL applied to nodes $N_2$, $N_3$, $N_5$ and $N_6$, respectively.  Using Ohm's law, one knows that $\frac{V_2 - V_1}{R_1}$ is the current that goes through resistor $R_1$, $\frac{V_3-V_2}{R_2}$ the one that goes through $R_2$, $\frac{V_2-V_4}{R_3}$ is the one through $R_3$, $\frac{V_5-V_4}{R_5}$ is the current through $R_5$, $\frac{V_0-V_6}{R_6}$ is the one through $R_6$ and $\frac{V_6-V_7}{R_7}$ the one through $R_7$. $I_d$ is the current imposed by current source $I_d$ while $V_2-V_4)K_b$ is the one imposed by $I_b$. KCL can't be applied to nodes $N_0$, $N_1$, $N_4$ and $N_7$. Instead, equations (5) to (8) are written. Equation (5) refers to $N_0$ being chosen as the ground node and equation (6) is reached by inspection in voltage source $V_a$. Equation (7) is determined by inspection in voltage source $V_c$, with $V_c = K_c I_c$ being the voltage imposed by voltage source $V_c$, and $I_c$ being the current that goes through resistor $R_6$, hence it is equal to $\frac{V_0 - V_6}{R_6}$. Besides that, $V_c = V_4-V_7$. Finally, because nodes $N_4$ and $N_7$ are connected by a current source, a super-node equation can be written by algebraically summing all currents flowing into or out of these nodes except the current related to the aforementioned source that connects these two nodes.
 
 
 
@@ -83,13 +76,11 @@ Equation (8) is KCL for a super node -------------------> explain better
   \centering
   \begin{tabular}{|c|c|}
     \hline    
-    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    {\bf Node Potential} & {\bf Value [V]} \\ \hline
     \input{../mat/octave_node_tab.tex}
   \end{tabular}
-  \caption{Operating point. A variable preceded by @ is of type {\em current}
-    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
-    Volt.}
-  \label{tab:op}
+  \caption{Node potentials determined through nodal analysis.}
+  \label{tab:node}
 \end{table}
 
 %\begin{equation}
@@ -105,9 +96,6 @@ Equation (8) is KCL for a super node -------------------> explain better
 %\end{cases}
 %\end{equation}
 
-\par
-\textcolor{red}{\textbf{maybe explaining these equations a little better??}}
-
 
 \subsection{Comparing both methods}
 \par
@@ -118,10 +106,8 @@ Equation (8) is KCL for a super node -------------------> explain better
     {\bf Mesh Current} & {\bf Mesh Method [A]} & {\bf Method Comparison Equations [A]} \\ \hline
     \input{../mat/octave_comparison_tab.tex}
   \end{tabular}
-  \caption{Operating point. A variable preceded by @ is of type {\em current}
-    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
-    Volt.}
-  \label{tab:op}
+  \caption{Mesh Currents determined through mesh analysis (same as in table \ref{tab:mesh}) and through the comparison equations based on the nodal potentials determined by nodal analysis}
+  \label{tab:comp}
 \end{table}
 After solving a linear system of equations with Octave, it was found out that. 
 
