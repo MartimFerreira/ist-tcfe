@@ -244,7 +244,15 @@ fprintf(mesh_tab, "$I_B$ & %f \\\\ \\hline", I2);
 fprintf(mesh_tab, "$I_C$ & %f \\\\ \\hline", I3);
 fprintf(mesh_tab, "$I_D$ & %f \\\\ \\hline", I4);
 
-fclose(mesh_tab)
+
+meshextra_tab = fopen("octave_meshextra_tab.tex", "w");
+
+fprintf(meshextra_tab, "$V_c$ & %f \\\\ \\hline", Vc);
+fprintf(meshextra_tab, "$I_b$ & %f \\\\ \\hline", Ib);
+fprintf(meshextra_tab, "$I_c$ & %f \\\\ \\hline", Ic);
+fprintf(meshextra_tab, "$V_b$ & %f \\\\ \\hline", Vb);
+
+fclose(meshextra_tab)
 
 comp_tab = fopen("octave_comparison_tab.tex", "w");
 %%%%%%%%%%%%%%%%%%%name & mesh & node
@@ -255,7 +263,7 @@ fprintf(comp_tab, "$I_{R_4}$ & %f & %f \\\\ \\hline", I1-I3, Itorco04);
 fprintf(comp_tab, "$I_{R_5}$ & %f & %f \\\\ \\hline", I4-I2, ImalhaD-ImalhaB);
 fprintf(comp_tab, "$I_{R_6}$ & %f & %f \\\\ \\hline", I3, Itorco06);
 fprintf(comp_tab, "$I_{R_7}$ & %f & %f \\\\ \\hline", I3, ImalhaC);
-fprintf(comp_tab, "$I_{b}$ & %f & %f \\\\ \\hline", Ib,);
+fprintf(comp_tab, "$I_{b}$ & %f & %f \\\\ \\hline", Ib,ImalhaB);
 fprintf(comp_tab, "$V_0$ & %f & %f \\\\ \\hline", V0, V0n);
 fprintf(comp_tab, "$V_1$ & %f & %f \\\\ \\hline", V1, V1n);
 fprintf(comp_tab, "$V_2$ & %f & %f \\\\ \\hline", V2, V2n);
