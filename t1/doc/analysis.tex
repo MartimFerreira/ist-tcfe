@@ -109,8 +109,23 @@ KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respective
   \caption{Mesh Currents determined through mesh analysis (same as in table \ref{tab:mesh}) and through the comparison equations based on the nodal potentials determined by nodal analysis}
   \label{tab:comp}
 \end{table}
-After solving a linear system of equations with Octave, it was found out that. 
 
 
 
+\par
+After solving a linear system of equations with Octave, it was found out that the results obtained through both methods match. This confirms that they are equivalent.
 
+\begin{equation}
+\begin{cases}
+I_A= \frac{V_2-V_1}{R_1} & \mbox{$(1)$}\\
+I_B= \frac{V_3-V_2}{R_2} & \mbox{$(2)$}\\
+I_C= -\frac{V_7-V_6}{R_7} & \mbox{$(3)$}\\
+I_D= -\frac{V_4-V_5}{R_5} +I_B & \mbox{$(4)$}
+\end{cases}
+\end{equation}
+
+\par
+Using the values obtained through the nodal analysis for the potentials, the value for the current through each essential mesh was calculated and then compared to the one obtained through the mesh method as shown in the table below.
+
+\par
+In the previous equations Ohm's law is applied to a resistor in the respective essential mesh. In equation (4), since resistor $R_5$ belongs to two essential meshes, $B$ and $D$, the current that goes through it is the difference between the current in each of those meshes.
