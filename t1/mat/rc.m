@@ -263,7 +263,6 @@ fprintf(comp_tab, "$I_{R_4}$ & %f & %f \\\\ \\hline", I1-I3, Itorco04);
 fprintf(comp_tab, "$I_{R_5}$ & %f & %f \\\\ \\hline", I4-I2, ImalhaD-ImalhaB);
 fprintf(comp_tab, "$I_{R_6}$ & %f & %f \\\\ \\hline", I3, Itorco06);
 fprintf(comp_tab, "$I_{R_7}$ & %f & %f \\\\ \\hline", I3, ImalhaC);
-fprintf(comp_tab, "$I_{b}$ & %f & %f \\\\ \\hline", Ib,ImalhaB);
 fprintf(comp_tab, "$V_0$ & %f & %f \\\\ \\hline", V0, V0n);
 fprintf(comp_tab, "$V_1$ & %f & %f \\\\ \\hline", V1, V1n);
 fprintf(comp_tab, "$V_2$ & %f & %f \\\\ \\hline", V2, V2n);
@@ -272,5 +271,9 @@ fprintf(comp_tab, "$V_4$ & %f & %f \\\\ \\hline", V4, V4n);
 fprintf(comp_tab, "$V_5$ & %f & %f \\\\ \\hline", V5, V5n);
 fprintf(comp_tab, "$V_6$ & %f & %f \\\\ \\hline", V6, V6n);
 fprintf(comp_tab, "$V_7$ & %f & %f \\\\ \\hline", V7, V7n);
+fprintf(comp_tab, "$I_{b}$ & %f & %f \\\\ \\hline", Ib,ImalhaB);
+fprintf(comp_tab, "$I_{c}$ & %f & %f \\\\ \\hline", Ic, Itorco06);
+fprintf(comp_tab, "$V_{b}$ & %f & %f \\\\ \\hline", Vb, V2n-V4n);
+fprintf(comp_tab, "$V_{c}$ & %f & %f \\\\ \\hline", Vc, V4n-V7n);
 
 fclose(comp_tab)
