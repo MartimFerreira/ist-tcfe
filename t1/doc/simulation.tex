@@ -3,11 +3,9 @@
 
 
 \par
-The aforementioned circuit was simulated using ngspice.
+The declaration of all components in ngspice is very straightforward, with the exception of the current-controlled voltage source, which requires that an independent voltage source through which the control current passes be indicated. So, an imaginary 0V voltage source must be added in between $R_6$ and $R_7$ (positive terminal connected to $R_6$, negative to $R_7$), since through it would pass the control current $I_c$.
 \par
-The declaration of all components is very straightforward, with the exception of the current-controlled voltage source, which requires that an independent voltage source through which the control current passes be indicated. So, an imaginary 0V voltage source must be added in between $R_6$ and $R_7$ (positive terminal connected to $R_6$, negative to $R_7$), since through it would pass the control current $I_c$.
-\par
-The simulation returned the values in the table below:
+The simulation returned the values in table \ref{tab:sim}, where ``@gb[i]'' refers to the current imposed by current source $I_b$ and v(8) refers to the potential in the node 8, an imaginary node that was created when the imaginary 0V voltage source was defined. Because this voltage source has 0V and it was defined as being between node $N_6$ and the imaginary node 8, node 8 is expected to have the same potential as $N_6$, as is the case.
 \par
 
 \begin{table}[h]
@@ -21,6 +19,6 @@ The simulation returned the values in the table below:
   \label{tab:sim}
 \end{table}
 
-In the above table, ``@gb[i]'' refers to the current imposed by current source $I_b$ and v(8) refers to the potential in the node 8, an imaginary node that was created when the imaginary 0V voltage source was defined (as explained in the introduction). Because this voltage source has 0V and it was defined as being between node $N_6$ and the imaginary node 8, node 8 is expected to have the same potential as $N_6$, as is the case.
+
 
 

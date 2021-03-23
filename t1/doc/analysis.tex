@@ -23,7 +23,7 @@ In this method, as well as in the next one, Ohm's Law, $V=RI \Leftrightarrow I =
 \end{equation}
 
 \par
-KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respectively. KVL can't be applied to meshes B and D, due to the current sources, so instead equations (3) and (4) were written, by direct inspection. Because the previous equations involve dependent sources, equations (5) to (8) were determined, allowing us to relate the output of said sources to the mesh currents. These could have been substituted directly into the first four equations, but we chose to show them explicitly. Equations (5) and (6) are given, equation (7) is determined by inspection of mesh $C$ and, lastly, equation (8) is the application of Ohm's law to $R_3$, with $(I_B-I_A)$ being the current that goes through that same resistor.
+KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respectively. KVL can't be applied to meshes $B$ and $D$, due to the current sources, so instead equations (3) and (4) were written, by direct inspection. Because the previous equations involve dependent sources, equations (5) to (8) were determined, allowing us to relate the output of said sources to the mesh currents. These could have been substituted directly into the first four equations, but we chose to show them explicitly. Equations (5) and (6) are given, equation (7) is determined by inspection of mesh $C$ and, lastly, equation (8) is the application of Ohm's law to $R_3$, with $(I_B-I_A)$ being the current that goes through that same resistor.
 
 \begin{table}[hbt!]
   \centering
@@ -32,7 +32,7 @@ KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respective
     {\bf Mesh Currents} & {\bf Value [A]} \\ \hline
     \input{../mat/octave_mesh_tab.tex}
   \end{tabular}
-  \caption{Mesh Current values determined through mesh analysis. The results or positive or negative depending on if the currents go in the direction indicated in the introductory drawing or not}
+  \caption{Mesh current values determined through mesh analysis. The results are positive or negative depending on if the currents go in the direction indicated in the introductory drawing or not}
   \label{tab:mesh}
 \end{table}
 
@@ -43,7 +43,7 @@ KVL was applied to meshes $A$ and $C$ to obtain equations (1) and (2) respective
     {\bf Name} & {\bf Value [A or V]} \\ \hline
     \input{../mat/octave_meshextra_tab.tex}
   \end{tabular}
-  \caption{Extra results obtained from solving the equation systems due to us explicitly showing equations (5) to (8). These will be useful during the method comparison.}
+  \caption{Extra results obtained from solving the equation system due to us explicitly showing equations (5) to (8). These will be useful during the method comparison.}
   \label{tab:mesh}
 \end{table}
 
@@ -69,7 +69,7 @@ In the nodal method, the goal is to determine all node potentials, with the set 
 
 \begin{equation}
   \begin{cases}
-    \frac{V_2-V_1}{R_1} + \frac{V_2-V_4}{R_3} + \frac{V_3-V_2}{R_2} = 0 & \mbox{$(1)$} \\
+    \frac{V_2-V_1}{R_1} + \frac{V_2-V_4}{R_3} + \frac{V_2-V_3}{R_2} = 0 & \mbox{$(1)$} \\
     \frac{V_3-V_2}{R_2} - (V_2-V_4) K_b = 0 & \mbox{$(2)$} \\
     \frac{V_5-V_4}{R_5} + K_b (V_2 - V_4) - I_d = 0 & \mbox{$(3)$}\\
     \frac{V_0-V_6}{R_6} - \frac{V_6-V_7}{R_7} = 0 & \mbox{$(4)$}\\
@@ -81,7 +81,7 @@ In the nodal method, the goal is to determine all node potentials, with the set 
 \end{equation}
 
 \par
- In equations (1), (2), (3) and (4) we have KCL applied to nodes $N_2$, $N_3$, $N_5$ and $N_6$, respectively.  Using Ohm's law, one knows that $\frac{V_2 - V_1}{R_1}$ is the current that goes through resistor $R_1$, $\frac{V_3-V_2}{R_2}$ the one that goes through $R_2$, $\frac{V_2-V_4}{R_3}$ is the one through $R_3$, $\frac{V_5-V_4}{R_5}$ is the current through $R_5$, $\frac{V_0-V_6}{R_6}$ is the one through $R_6$ and $\frac{V_6-V_7}{R_7}$ the one through $R_7$. $I_d$ is the current imposed by current source $I_d$ while $V_2-V_4)K_b$ is the one imposed by $I_b$. KCL can't be applied to nodes $N_0$, $N_1$, $N_4$ and $N_7$. Instead, equations (5) to (8) are written. Equation (5) refers to $N_0$ being chosen as the ground node and equation (6) is reached by inspection in voltage source $V_a$. Equation (7) is determined by inspection in voltage source $V_c$, with $V_c = K_c I_c$ being the voltage imposed by voltage source $V_c$, and $I_c$ being the current that goes through resistor $R_6$, hence it is equal to $\frac{V_0 - V_6}{R_6}$. Besides that, $V_c = V_4-V_7$. Finally, because nodes $N_4$ and $N_7$ are connected by a current source, a super-node equation, (8), can be written by algebraically summing all currents flowing into or out of these nodes except the current related to the aforementioned source that connects these two nodes.
+ In equations (1), (2), (3) and (4) we have KCL applied to nodes $N_2$, $N_3$, $N_5$ and $N_6$, respectively.  Using Ohm's law, one knows that $\frac{V_2 - V_1}{R_1}$ is the current that goes through resistor $R_1$, $\frac{V_2-V_3}{R_2}$ the one that goes through $R_2$, $\frac{V_2-V_4}{R_3}$ is the one through $R_3$, $\frac{V_5-V_4}{R_5}$ is the current through $R_5$, $\frac{V_0-V_6}{R_6}$ is the one through $R_6$ and $\frac{V_6-V_7}{R_7}$ the one through $R_7$. $I_d$ is the current imposed by current source $I_d$ while $(V_2-V_4)K_b$ is the one imposed by $I_b$. KCL can't be applied to nodes $N_0$, $N_1$, $N_4$ and $N_7$. Instead, equations (5) to (8) are written. Equation (5) refers to $N_0$ being chosen as the ground node and equation (6) is reached by inspection in voltage source $V_a$. Equation (7) is determined by inspection in voltage source $V_c$, with $V_c = K_c I_c$ being the voltage imposed by voltage source $V_c$, and $I_c$ being the current that goes through resistor $R_6$, hence it is equal to $\frac{V_0 - V_6}{R_6}$. Besides that, $V_c = V_4-V_7$. Finally, because nodes $N_4$ and $N_7$ are connected by a current source, a super-node equation, (8), can be written by algebraically summing all currents flowing into or out of these nodes (except the current imposed by the aforementioned source that connects these two nodes).
 
 
 
@@ -109,9 +109,23 @@ In the nodal method, the goal is to determine all node potentials, with the set 
 %\end{cases}
 %\end{equation}
 
-
+\newpage
 \subsection{Comparing both methods}
 \label{sec:comparison}
+\par
+
+
+\begin{table}[hbtp!]
+  \centering
+  \begin{tabular}{|l|r|r|}
+    \hline    
+    {\bf Compared Voltages/Currents} & {\bf Mesh Method [V/A]} & {\bf Nodal Method [V/A]} \\ \hline
+    \input{../mat/octave_comparison_tab.tex}
+  \end{tabular}
+  \caption{Comparison of all node potentials, currents through resistors as well as voltages and currents imposed by dependent sources and control voltages and currents calculated from both methods}
+  \label{tab:comp}
+\end{table}
+
 \par
 
 %\begin{equation}
@@ -145,7 +159,7 @@ In the nodal method, the goal is to determine all node potentials, with the set 
 %}
 
 
-In order to confirm that both methods lead to the same results, all nodal potentials and currents through resistors (as well as $V_b$, $V_c$, $I_b$ and $I_c$) were calculated using both methods. Some of these results come directly from solving the previously mentioned equation systems while others result from the application of Ohm's law to the resistors or of KCL to nodes connected to just 2 branches. The values obtained can be seen below.
+In order to confirm that both methods lead to the same results, all nodal potentials and currents through resistors (as well as $V_b$, $V_c$, $I_b$ and $I_c$) were calculated using both methods. Some of these results come directly from solving the previously mentioned equation systems while others result from the application of Ohm's law to the resistors or of KCL to nodes connected to just 2 branches. As can be seen in table \ref{tab:comp}, both methods lead to the same results, proving their equivalence.
 
 %\par
 %Using the values obtained through the nodal analysis for the potentials, the value for the current through each essentia%l mesh was calculated and then compared to the one obtained through the mesh method as shown in the table below.
@@ -153,16 +167,7 @@ In order to confirm that both methods lead to the same results, all nodal potent
 %\par
 %In the previous equations Ohm's law is applied to a resistor in the respective essential mesh. In equation (4), since resistor $R_5$ belongs to two essential meshes, $B$ and $D$, the current that goes through it is the difference between the current in each of those meshes.
 
-\begin{table}[hbt!]
-  \centering
-  \begin{tabular}{|l|r|r|}
-    \hline    
-    {\bf Compared Voltages/Currents} & {\bf Mesh Method [V/A]} & {\bf Nodal Method [V/A]} \\ \hline
-    \input{../mat/octave_comparison_tab.tex}
-  \end{tabular}
-  \caption{Comparison of all node potentials, currents through resistors as well as voltages and currents imposed by dependent sources and control voltages and currents calculated from both methods}
-  \label{tab:comp}
-\end{table}
 
-\par
-As can be seen above, both methods lead to the same results, proving their equivalence.
+
+
+
