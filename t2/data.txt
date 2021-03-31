@@ -1,0 +1,22 @@
+
+
+Please enter the lowest student number in your group: 
+
+
+Units for the values: V, mA, kOhm, mS and uF
+
+
+Values:  R1 = 1.03930068064 
+R2 = 2.0109087471 
+R3 = 3.04124242148 
+R4 = 4.18383562625 
+R5 = 3.09583437009 
+R6 = 2.02117084711 
+R7 = 1.02226630661 
+Vs = 5.17979967502 
+C = 1.00439545365 
+Kb = 7.08750963899 
+Kd = 8.18575062147 
+
+
+
