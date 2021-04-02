@@ -5,6 +5,7 @@
 # ------------------------------------------------------------
 
 all:
+	$ printf "96536" | ./t2_datagen.py > data.txt
 	make -C mat
 	make -C sim
 	make -C doc
