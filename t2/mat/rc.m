@@ -116,7 +116,52 @@ fC = fC/1000000;
 fKb = fKb/1000;
 fKd = fKd*1000;
 
+M = [ 1, 0, 0, -1, 0, 0, 0, 0;
+      -(1/fR1), (1/fR1) + (1/fR2) + (1/fR3), -(1/fR2),0,  -(1/fR3), 0, 0, 0;
+      0, -(1/fR2) - fKb, (1/fR2), fKb, 0, 0, 0;
+      0, 0, 0, 1, 0, 0, 0, 0; 
+      0, -fKb, 0, 0, fKb - (1/fR5), (1/fR5), 0, 0; 
+      0, 0, 0, (1/fR6), 0, 0, -(1/fR6) - (1/fR7), (1/fR7); 
+      0, 0, 0, -fKd/fR6, 1, 0, fKd/fR6, -1; 
+      0, (1/fR3), 0, (1/fR4),-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5),(1/fR7),-(1/fR7);
+
+b = [fVs, 0, 0, 0, 0, 0, 0, 0];
+
+x = M \ b;
+ 
+V1 = x(1)
+V2 = x(2)
+V3 = x(3)
+V4 = x(4)
+V5 = x(5)
+V6 = x(6)
+V7 = x(7)
+V8 = x(8)
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ngspice_1_input = fopen("../sim/ngspice_1_input.txt", "w");
+
+fprintf(ngspice_1_input,"R1 1 2 %f", fR1);
+fprintf(ngspice_1_input,"R2 2 3 %f", fR2);
+fprintf(ngspice_1_input,"R3 2 5 %f", fR3);
+fprintf(ngspice_1_input,"R4 0 5 %f", fR4);
+fprintf(ngspice_1_input,"R5 5 6 %f", fR5);
+fprintf(ngspice_1_input,"R6 0 7 %f", fR6);
+
+%Fonte de tensão imaginária
+fprintf(ngspice_1_input,"Vi 7 im %f",0); 
+
+fprintf(ngspice_1_input,"R7 im 8 %f", fR7);
+fprintf(ngspice_1_input,"Vs 0 1 %f", fVs);
+fprintf(ngspice_1_input,"Gb 6 3 2 5 %f", fKb);
+fprintf(ngspice_1_input,"Hd 5 8 Vi %f", fKd);
+
+fclose(ngspice_1_input);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 ngspice_2_input = fopen("../sim/ngspice_2_input.txt", "w");
 
