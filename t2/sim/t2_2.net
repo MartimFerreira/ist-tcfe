@@ -9,8 +9,6 @@
 
 .include ./ngspice_2_input.txt
 
-.end
-
 .control
 
 op
@@ -23,5 +21,7 @@ echo  "op_TAB"
 print all
 echo  "op_END"
 
+quit
 .endc
 
+.end
