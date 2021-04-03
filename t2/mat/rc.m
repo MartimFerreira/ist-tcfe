@@ -68,7 +68,6 @@ V8 = x(8)
 Vx= V6-V8; 
 
 
-
 %%%%%% t = 0
 M0 = [(1/fR1) + (1/fR2) + (1/fR3), -(1/fR2), -(1/fR3), 0, 0, 0, 0;
       1/fR2 - fKb, 1/fR2, fKb, 0, 0, 0, 0;
@@ -92,6 +91,67 @@ V80 = x0(6)
 Ix  = x0(7)
 
 Req= Vx/Ix
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea4
+
+Vsp= 1; 
+f=1000; 
+w= 2*pi*f;
+Zc = 1/(j*w*fC); 
+
+
+Mp = [ 1, 0, 0, 0, 0, 0, 0;                                                           %no1
+      -(1/fR1), (1/fR1) + (1/fR2) + (1/fR3), -(1/fR2),0,  -(1/fR3), 0, 0;             %no2
+      0, -(1/fR2) - fKb, (1/fR2), 0, fKb, 0, 0;                                       %no3
+      0, fKb, 0,-fKb - (1/fR5), (1/fR5)+(1/Zc), 0,-(1/Zc);                            %no6
+      0, 0, 0, 0, 0, -(1/fR6) - (1/fR7), (1/fR7);                                     %no7 
+      0, 0, 0, 1, 0, fKd/fR6, -1;                                                     %no8
+      0, (1/fR3), 0,-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5)-(1/Zc),(1/fR7),-(1/fR7)+(1/Zc);] %supernode
+
+bp = [Vsp; 0; 0; 0; 0; 0; 0];
+xp = Mp \ bp;
+
+V1p = xp(1)
+V2p = xp(2)
+V3p = xp(3)
+V5p = xp(4)
+V6p = xp(5)
+V7p = xp(6)
+V8p = xp(7)
+
+AV1p= abs(V1p)
+AV2p= abs(V2p)
+AV3p= abs(V3p)
+AV5p= abs(V5p)
+AV6p= abs(V6p)
+AV7p= abs(V7p)
+AV8p= abs(V8p)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea5
+
+t=0:1e-6:20e-3;
+
+ct=exp(j*w*t); 
+
+V1s= imag(ct*V1p); 
+V2s= imag(ct*V2p);
+V3s= imag(ct*V3p);
+V5s= imag(ct*V5p);
+V6s= imag(ct*V6p);
+V7s= imag(ct*V7p);
+V8s= imag(ct*V8p);
+
+vfinal_plot = figure ();
+plot (t*1000, V6s, "g");
+hold on;
+plot (t*1000, V1s, "b");
+
+xlabel ("t[ms]");
+ylabel ("v6(t), vs(t) [V]");
+print (vfinal_plot, "vfinal_plot.eps", "-depsc");
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
