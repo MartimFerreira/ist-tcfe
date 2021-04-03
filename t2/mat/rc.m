@@ -204,7 +204,7 @@ fprintf(ngspice_2_input,"R6 0 7 %f\n", fR6);
 fprintf(ngspice_2_input,"Vi 7 im %f\n", 0); 
 
 fprintf(ngspice_2_input,"R7 im 8 %f\n", fR7);
-fprintf(ngspice_2_input,"Vs 2 3 %f\n", 0);
+fprintf(ngspice_2_input,"Vs 1 0 %f\n", 0);
 fprintf(ngspice_2_input,"Vx 6 8 %f\n", V6-V8);
 fprintf(ngspice_2_input,"Gb 6 3 2 5 %f\n", fKb);
 fprintf(ngspice_2_input,"Hd 5 8 Vi %f\n", fKd);
@@ -226,7 +226,7 @@ fprintf(ngspice_3_input,"R6 0 7 %f\n", fR6);
 fprintf(ngspice_3_input,"Vi 7 im %f\n", 0); 
 
 fprintf(ngspice_3_input,"R7 im 8 %f\n", fR7);
-fprintf(ngspice_3_input,"Vs 2 3 %f\n", 0);
+fprintf(ngspice_3_input,"Vs 1 0 %f\n", 0);
 fprintf(ngspice_3_input,"C1 6 8 %f\n", fC);
 fprintf(ngspice_3_input,"Gb 6 3 2 5 %f\n", fKb);
 fprintf(ngspice_3_input,"Hd 5 8 Vi %f\n", fKd);
@@ -249,7 +249,7 @@ fprintf(ngspice_4_input,"R6 0 7 %f\n", fR6);
 fprintf(ngspice_4_input,"Vi 7 im %f\n", 0); 
 
 fprintf(ngspice_4_input,"R7 im 8 %f\n", fR7);
-fprintf(ngspice_4_input,"Vs 2 3 SIN(0.0 0.0 1000.0) AC\n");
+fprintf(ngspice_4_input,"Vs 1 0 SIN(0.0 1.0 1000.0) AC 1.0 0.0\n");
 fprintf(ngspice_4_input,"C1 6 8 %f\n", fC);
 fprintf(ngspice_4_input,"Gb 6 3 2 5 %f\n", fKb);
 fprintf(ngspice_4_input,"Hd 5 8 Vi %f\n", fKd);

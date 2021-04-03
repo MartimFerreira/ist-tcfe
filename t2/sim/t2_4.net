@@ -8,7 +8,6 @@
 
 .include ngspice_4_input.txt
 
-.end
 
 .control
 
@@ -29,6 +28,7 @@ echo "********************************************"
 tran 1e-5 20e-3
 
 hardcopy trans_4.ps v(1) v(6)
+echo trans_4_FIG
 
 
 
@@ -39,6 +39,9 @@ echo "********************************************"
 ac dec 10 0.1 1MEG
 
 hardcopy freq_4.ps db(v(6)) db(v(1))
+echo freq_4_FIG
 
+quit
 .endc
 
+.end
