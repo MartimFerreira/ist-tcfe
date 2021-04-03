@@ -8,6 +8,8 @@
 
 .include ngspice_3_input.txt
 
+.op
+
 .end
 
 .control
@@ -28,7 +30,8 @@ echo  "Transient analysis"
 echo "********************************************"
 tran 1e-5 20e-3
 
-hardcopy trans_3.ps v(coll) v(base)
+hardcopy trans_3.ps v(6) v(1)
+echo trans_3_FIG
 
 
 .endc
