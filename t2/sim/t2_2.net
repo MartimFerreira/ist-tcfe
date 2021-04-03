@@ -17,9 +17,9 @@ echo "********************************************"
 echo  "Operating point"
 echo "********************************************"
 
-echo  "op_TAB"
+echo  "op2_TAB"
 print all
-echo  "op_END"
+echo  "op2_END"
 
 quit
 .endc
