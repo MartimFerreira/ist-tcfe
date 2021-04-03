@@ -76,7 +76,7 @@ illustrated in Figure~\ref{fig:forced}.
 
 
 
-\subsection{Circuit when $t<0$}
+\subsection{Circuit when $t<0$} % ---> alínea 1
 For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c$, since during this time the capacitor is charging and eventually when it is fully charged the current stops. Taking this into account it was possible to determine the voltages in all of the nodes using the nodal method. The equations obtained were the following oones:
 
 
@@ -108,16 +108,31 @@ Solving this system of equations in \textit{Octave} the value of the voltage in 
 
 
 
-\subsection{Circuit when $t=0$}
+\subsection{Circuit when $t=0$} % ---> alínea 2
 Making $V_S=0$ and replacing the capacitor with a voltage source $V_X=V_6-V_8$, $V_6$ and $V_8$ being, respectively, the voltage in nodes 6 and 8 obtained for $t<0$.
 Using once again the nodal analysis the value of $I_X$, the current that goes through $V_X$, was found out. Because the value of $V_X$ was already known, the equivalent resistor $R_{eq} = \frac{V_X}{I_X}$ was computed, as well as the time constant $\tau = R_{eq}C$.
-The reason for adopting this procedure was that the capacitor's terminals are connected to nodes 6 and 8 and, even the though the values of $V_6$ and $V_8$ may change when $t=0$, the electric potential difference, $V_6-V_8$, has to remain the same. There has to be continuity regarding what happens when $t<0$ and in instant $t=0$. Besides that, as learnt in the theoretical lectures, to compute the equivalent resistor as seen by the capacitor (and later the time constant), one has to consider that all independent sources are switched off. However, the only independent source in the given circuit is $V_S$ and, for this point, it had already been assumed that $V_S=0$. The remaing sources are all dependent so the traditional analysis using the fact that the resistors were either in series or in parallel to simplify the circuit could not be applied here.
+The reason for adopting this procedure was that the capacitor's terminals are connected to nodes 6 and 8 and, even the though the values of $V_6$ and $V_8$ may change when $t=0$, the electric potential difference, $V_6-V_8$, has to remain the same. There has to be continuity regarding what happens when $t<0$ and in instant $t=0$. Besides that, as learnt in the theory classes, to compute the equivalent resistor as seen by the capacitor (and later the time constant), one has to consider that all independent sources are switched off. However, the only independent source in the given circuit is $V_S$ and, for this point, it had already been assumed that $V_S=0$. The remaing sources are all dependent so the traditional analysis using the fact that the resistors were either in series or in parallel to simplify the circuit could not be applied here.
 
 % * apresentar sistema de equações
 % * tabela com os resultados
 
 
 \subsection{Circuit when $t>0$}
+
+% * escrever equação diferencial e dizer que solução = natural + forçada? como no t0
+
+\subsubsection{Natural solution}  % ---> alínea 3
+As learnt in lectures, the natural solution is of the form $v_{6_{n}}(t) = A e^{-\frac{t}{R_{eq}C}}$, where $A$ is an integration constant.
+
+% * use the capacitor voltage V_X for t<0 as the initial condition
+% * plot for [0, 20] ms, idetify axes, display signals and units
+
+
+\subsubsection{Forced solution}  % ---> alínea 4
+
+\subsubsection{Final solution}  % ---> alínea 5
+
+\subsubsection{Frequency respnses}  % ---> alínea 6
 
 \lipsum[1-1]
 
