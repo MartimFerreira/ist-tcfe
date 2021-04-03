@@ -36,6 +36,6 @@ ngspice_4.log: ./t2_4.net ./ngspice_4_input.txt
 
 
 clean:
-	@rm -f *.log *.tex *.pdf *.ps *~
+	@rm -f *.log *.tex *.pdf *.ps *~ *.txt
 
 .PHONY: all clean
