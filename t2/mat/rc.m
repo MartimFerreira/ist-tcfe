@@ -51,7 +51,7 @@ M = [ 1, 0, 0, -1, 0, 0, 0, 0;
       0, fKb, 0, 0, -fKb - (1/fR5), (1/fR5), 0, 0; 
       0, 0, 0, (1/fR6), 0, 0, -(1/fR6) - (1/fR7), (1/fR7); 
       0, 0, 0, -fKd/fR6, 1, 0, fKd/fR6, -1; 
-      0, (1/fR3), 0, (1/fR4),-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5),(1/fR7),-(1/fR7);]
+      0, (1/fR3), 0, (1/fR4),-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5),(1/fR7),-(1/fR7);];
 
 b = [fVs; 0; 0; 0; 0; 0; 0; 0];
 x = M \ b;
@@ -75,7 +75,7 @@ M0 = [(1/fR1) + (1/fR2) + (1/fR3), -(1/fR2), -(1/fR3), 0, 0, 0, 0;
       0, 0, 0, 0, -1/fR6 - 1/fR7, 1/fR7, 0; 
       0, 0, 1, 0, fKd/fR6, -1, 0; 
       0, 0, 0, 1, 0, -1, 0; 
-      1/fR3, 0, -1/fR3 - 1/fR4 - 1/fR5, 1/fR5, 1/fR7, -1/fR7, 0;]
+      1/fR3, 0, -1/fR3 - 1/fR4 - 1/fR5, 1/fR5, 1/fR7, -1/fR7, 0;];
 
 
 b0 = [0; 0; 0; 0; 0; Vx; 0];
@@ -107,7 +107,7 @@ Mp = [ 1, 0, 0, 0, 0, 0, 0;                                                     
       0, fKb, 0,-fKb - (1/fR5), (1/fR5)+(1/Zc), 0,-(1/Zc);                            %no6
       0, 0, 0, 0, 0, -(1/fR6) - (1/fR7), (1/fR7);                                     %no7 
       0, 0, 0, 1, 0, fKd/fR6, -1;                                                     %no8
-      0, (1/fR3), 0,-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5)-(1/Zc),(1/fR7),-(1/fR7)+(1/Zc);] %supernode
+      0, (1/fR3), 0,-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5)-(1/Zc),(1/fR7),-(1/fR7)+(1/Zc);]; %supernode
 
 bp = [Vsp; 0; 0; 0; 0; 0; 0];
 xp = Mp \ bp;
@@ -150,10 +150,86 @@ plot (t*1000, V1s, "b");
 
 xlabel ("t[ms]");
 ylabel ("v6(t), vs(t) [V]");
+legenda= legend("V6(t)" , "Vs(t)"); 
 print (vfinal_plot, "vfinal_plot.eps", "-depsc");
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea6
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+k=5
+cont=1; 
+freq=logspace(-1,6,7*k);
+
+
+V1f =linspace(1,1,7*k);
+V2f =linspace(1,1,7*k);
+V3f =linspace(1,1,7*k);
+V5f =linspace(1,1,7*k);
+V6f =linspace(1,1,7*k);
+V7f =linspace(1,1,7*k);
+V8f =linspace(1,1,7*k);
+
+Vsf= 1; 
+
+for i= freq
+      wf = 2*pi*i;
+
+      Zcf = 1/(j*wf*fC)
+
+
+      Mf = [ 1, 0, 0, 0, 0, 0, 0;                                                           %no1
+            -(1/fR1), (1/fR1) + (1/fR2) + (1/fR3), -(1/fR2),0,  -(1/fR3), 0, 0;             %no2
+            0, -(1/fR2) - fKb, (1/fR2), 0, fKb, 0, 0;                                       %no3
+            0, fKb, 0,-fKb - (1/fR5), (1/fR5)+(1/Zcf), 0,-(1/Zcf);                          %no6
+            0, 0, 0, 0, 0, -(1/fR6) - (1/fR7), (1/fR7);                                     %no7 
+            0, 0, 0, 1, 0, fKd/fR6, -1;                                                     %no8
+            0, (1/fR3), 0,-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5)-(1/Zcf),(1/fR7),-(1/fR7)+(1/Zcf);] %supernode
+
+      bf = [Vsf; 0; 0; 0; 0; 0; 0];
+      xf = Mf \ bf
+
+      V1f(cont) = xf(1);
+      V2f(cont) = xf(2);
+      V3f(cont) = xf(3);
+      V5f(cont) = xf(4);
+      V6f(cont) = xf(5);
+      V7f(cont) = xf(6);
+      V8f(cont) = xf(7);
+      cont++;
+
+endfor
+
+
+V1f_mag =abs(V1f);
+V2f_mag =abs(V2f);
+V3f_mag =abs(V3f);
+V5f_mag =abs(V5f);
+V6f_mag =abs(V6f);
+V7f_mag =abs(V7f);
+V8f_mag =abs(V8f);
+
+V1f_phase =angle(V1f);
+V2f_phase =angle(V2f);
+V3f_phase =angle(V3f);
+V5f_phase =angle(V5f);
+V6f_phase =angle(V6f);
+V7f_phase =angle(V7f);
+V8f_phase =angle(V8f);
+
+vphase_plot = figure ();
+semilogx (freq, V6f_phase*(180/pi), "g");
+hold on;
+semilogx (freq, V1f_phase*(180/pi), "b");
+hold on;
+semilogx (freq, (V6f_phase-V8f_phase)*(180/pi), "r");
+
+xlabel ("f[Hz]");
+ylabel ("v6, vs, vc [Degree]");
+legenda= legend("phase of V6" , "phase of Vs", "phase of Vc" ); 
+print (vphase_plot, "vphase_plot.eps", "-depsc");
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ngspice_1_input = fopen("../sim/ngspice_1_input.txt", "w");
 
