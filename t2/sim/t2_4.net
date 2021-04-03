@@ -27,7 +27,7 @@ echo  "Transient analysis"
 echo "********************************************"
 tran 1e-5 20e-3
 
-hardcopy trans_4.ps v(1) v(6)
+hardcopy trans_4.ps v(6) v(1)
 echo trans_4_FIG
 
 
@@ -38,8 +38,11 @@ echo "********************************************"
 
 ac dec 10 0.1 1MEG
 
-hardcopy freq_4.ps db(v(6)) db(v(1))
-echo freq_4_FIG
+hardcopy mag_4.ps db(v(6)) db(v(1))
+echo mag_4_FIG
+
+hardcopy phase_4.ps vp(6)*180/pi vp(1)*180/pi
+echo phase_4_FIG
 
 quit
 .endc
