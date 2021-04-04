@@ -5,7 +5,7 @@
 
 Table \ref{tab:t<0_sim} shows the results of the simulation of the circuit in study for t<0. For this time condition, $v_s = V_s$.
 
-\begin{table}[h]
+\begin{table}[H]
   \centering
   \begin{tabular}{|l|r|}
     \hline    
@@ -23,7 +23,7 @@ Table \ref{tab:t<0_sim} shows the results of the simulation of the circuit in st
 
 Table \ref{tab:t=0_sim} shows the results of the simulation of the circuit in study for t=0. For this simulation, the capacitor was replaced by a voltage source with voltage equal to the difference in electric potential between the terminals of the capacitor for t<0 (that is, $V_6 - V_8$, with $V_6$ and $V_8$ being taken from the previous analysis). This was done because the electric tension between terminals of a capacitor must always be continuous (since a capacitor takes time to charge and discharge), which means the tension between terminals of the capacitor in $t=0$ must be the same it was in our $t<0$ steady-state analysis (even if $V_6$ and $V_8$ had instantaneous variations). The way to ensure this continuity is by doing the aforementioned replacement.
 
-\begin{table}[h]
+\begin{table}[H]
   \centering
   \begin{tabular}{|l|r|}
     \hline    
@@ -43,7 +43,7 @@ Table \ref{tab:t=0_sim} shows the results of the simulation of the circuit in st
 
 The following graph shows the evolution in time of the natural solution component of the voltage in node 6 according to the simulation that was run. In order to simulate the natural response of the circuit, the voltage source $v_s$ was set to $0$V, and the voltages in nodes 6 and 8 calculated for $t=0$ were used as boundary conditions.
 
-\begin{figure}[h] \centering
+\begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{../sim/trans_3.pdf}
 \caption{Natural responde in node 6}
 \label{fig:natural_sim}
@@ -53,7 +53,7 @@ The following graph shows the evolution in time of the natural solution componen
 
 The following graph shows the simulated evolution in time of the voltage in node 6 when the voltage source provides a sinusoidal input with frequency $1$kHz. The evolution in time of the voltage source stimulus can also be seen.
 
-\begin{figure}[h] \centering
+\begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{../sim/trans_4.pdf}
 \caption{Evolution of stimulus (Vs) and voltage in node 6 (V6) with time}
 \label{fig:final_sim}
@@ -63,14 +63,14 @@ The following graph shows the simulated evolution in time of the voltage in node
 
 The following graphs show the simulated evolution with frequency of the magnitude and phase of the voltage in node 6 as well as of the sinusoidal input from the voltage source for frequencies between $0.1$Hz and $1$MHz.
 
-\begin{figure}[h] \centering
+\begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{../sim/mag_4.pdf}
 \caption{Magnitude of frequency response in node 6 and stimulus}
 \label{fig:mag_sim}
 \end{figure}
 
 
-\begin{figure}[h] \centering
+\begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{../sim/phase_4.pdf}
 \caption{Phase of frequency response in node 6 and stimulus}
 \label{fig:phase_sim}
