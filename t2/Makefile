@@ -9,7 +9,8 @@ all:
 	make -C mat
 	make -C sim
 	make -C doc
-	cp doc/report.pdf .
+	cp doc/report.pdf RC_circuit_analysis_report.pdf
+	evince RC_circuit_analysis_report.pdf &
 
 clean:
 	make -C mat clean

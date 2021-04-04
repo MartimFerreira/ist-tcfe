@@ -11,6 +11,8 @@
 
 .control
 
+set numdgt = 12
+
 *makes plots in color
 set hcopypscolor=0
 set color0=white

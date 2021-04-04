@@ -33,16 +33,17 @@ fclose(data);
 
 %%%%%%%%%%%%%%%%%%%%%%% MAIN CALCULATIONS %%%%%%%%%%%%%%%%555
 
-fR1 = fR1 * 1000;
-fR2 = fR2 * 1000;
-fR3 = fR3 * 1000;
-fR4 = fR4 * 1000;
-fR5 = fR5 * 1000;
-fR6 = fR6 * 1000;
-fR7 = fR7 * 1000;
-fC = fC/1000000;
-fKb = fKb/1000;
-fKd = fKd*1000;
+fR1 = fR1 * 1000
+fR2 = fR2 * 1000
+fR3 = fR3 * 1000
+fR4 = fR4 * 1000
+fR5 = fR5 * 1000
+fR6 = fR6 * 1000
+fR7 = fR7 * 1000
+fVs = fVs
+fC = fC/1000000
+fKb = fKb/1000
+fKd = fKd*1000
 
 
 %%%%%%%%% t < 0
@@ -294,20 +295,21 @@ print (vmag_plot, "vmag_plot.eps", "-depsc");
 
 ngspice_1_input = fopen("../sim/ngspice_1_input.txt", "w");
 
-fprintf(ngspice_1_input,"R1 1 2 %f\n", fR1);
-fprintf(ngspice_1_input,"R2 2 3 %f\n", fR2);
-fprintf(ngspice_1_input,"R3 2 5 %f\n", fR3);
-fprintf(ngspice_1_input,"R4 0 5 %f\n", fR4);
-fprintf(ngspice_1_input,"R5 5 6 %f\n", fR5);
-fprintf(ngspice_1_input,"R6 0 7 %f\n", fR6);
+fprintf(ngspice_1_input,"R1 1 2 %.12f\n", fR1);
+fprintf(ngspice_1_input,"R2 2 3 %.12f\n", fR2);
+fprintf(ngspice_1_input,"R3 2 5 %.12f\n", fR3);
+fprintf(ngspice_1_input,"R4 0 5 %.12f\n", fR4);
+fprintf(ngspice_1_input,"R5 5 6 %.12f\n", fR5);
+fprintf(ngspice_1_input,"R6 0 7 %.12f\n", fR6);
 
 %Fonte de tensão imaginária
-fprintf(ngspice_1_input,"Vi 7 im %f\n",0); 
+fprintf(ngspice_1_input,"Vi 7 im %.12f\n",0); 
 
-fprintf(ngspice_1_input,"R7 im 8 %f\n", fR7);
-fprintf(ngspice_1_input,"Vs 1 0 %f\n", fVs);
-fprintf(ngspice_1_input,"Gb 6 3 2 5 %f\n", fKb);
-fprintf(ngspice_1_input,"Hd 5 8 Vi %f\n", fKd);
+fprintf(ngspice_1_input,"R7 im 8 %.12f\n", fR7);
+fprintf(ngspice_1_input,"C1 6 8 %.12f\n", fC);
+fprintf(ngspice_1_input,"Vs 1 0 %.12f\n", fVs);
+fprintf(ngspice_1_input,"Gb 6 3 2 5 %.12f\n", fKb);
+fprintf(ngspice_1_input,"Hd 5 8 Vi %.12f\n", fKd);
 
 fclose(ngspice_1_input);
 
@@ -317,21 +319,21 @@ fclose(ngspice_1_input);
 
 ngspice_2_input = fopen("../sim/ngspice_2_input.txt", "w");
 
-fprintf(ngspice_2_input,"R1 1 2 %f\n", fR1);
-fprintf(ngspice_2_input,"R2 2 3 %f\n", fR2);
-fprintf(ngspice_2_input,"R3 2 5 %f\n", fR3);
-fprintf(ngspice_2_input,"R4 0 5 %f\n", fR4);
-fprintf(ngspice_2_input,"R5 5 6 %f\n", fR5);
-fprintf(ngspice_2_input,"R6 0 7 %f\n", fR6);
+fprintf(ngspice_2_input,"R1 1 2 %.12f\n", fR1);
+fprintf(ngspice_2_input,"R2 2 3 %.12f\n", fR2);
+fprintf(ngspice_2_input,"R3 2 5 %.12f\n", fR3);
+fprintf(ngspice_2_input,"R4 0 5 %.12f\n", fR4);
+fprintf(ngspice_2_input,"R5 5 6 %.12f\n", fR5);
+fprintf(ngspice_2_input,"R6 0 7 %.12f\n", fR6);
 
 %Fonte de tensão imaginária
-fprintf(ngspice_2_input,"Vi 7 im %f\n", 0); 
+fprintf(ngspice_2_input,"Vi 7 im %.12f\n", 0); 
 
-fprintf(ngspice_2_input,"R7 im 8 %f\n", fR7);
-fprintf(ngspice_2_input,"Vs 1 0 %f\n", 0);
-fprintf(ngspice_2_input,"Vx 6 8 %f\n", Vx);
-fprintf(ngspice_2_input,"Gb 6 3 2 5 %f\n", fKb);
-fprintf(ngspice_2_input,"Hd 5 8 Vi %f\n", fKd);
+fprintf(ngspice_2_input,"R7 im 8 %.12f\n", fR7);
+fprintf(ngspice_2_input,"Vs 1 0 %.12f\n", 0);
+fprintf(ngspice_2_input,"Vx 6 8 %.12f\n", Vx);
+fprintf(ngspice_2_input,"Gb 6 3 2 5 %.12f\n", fKb);
+fprintf(ngspice_2_input,"Hd 5 8 Vi %.12f\n", fKd);
 
 fclose(ngspice_2_input);
 
@@ -339,22 +341,22 @@ fclose(ngspice_2_input);
 
 ngspice_3_input = fopen("../sim/ngspice_3_input.txt", "w");
 
-fprintf(ngspice_3_input,"R1 1 2 %f\n", fR1);
-fprintf(ngspice_3_input,"R2 2 3 %f\n", fR2);
-fprintf(ngspice_3_input,"R3 2 5 %f\n", fR3);
-fprintf(ngspice_3_input,"R4 0 5 %f\n", fR4);
-fprintf(ngspice_3_input,"R5 5 6 %f\n", fR5);
-fprintf(ngspice_3_input,"R6 0 7 %f\n", fR6);
+fprintf(ngspice_3_input,"R1 1 2 %.12f\n", fR1);
+fprintf(ngspice_3_input,"R2 2 3 %.12f\n", fR2);
+fprintf(ngspice_3_input,"R3 2 5 %.12f\n", fR3);
+fprintf(ngspice_3_input,"R4 0 5 %.12f\n", fR4);
+fprintf(ngspice_3_input,"R5 5 6 %.12f\n", fR5);
+fprintf(ngspice_3_input,"R6 0 7 %.12f\n", fR6);
 
 %Fonte de tensão imaginária
-fprintf(ngspice_3_input,"Vi 7 im %f\n", 0); 
+fprintf(ngspice_3_input,"Vi 7 im %.12f\n", 0); 
 
-fprintf(ngspice_3_input,"R7 im 8 %f\n", fR7);
-fprintf(ngspice_3_input,"Vs 1 0 %f\n", 0);
-fprintf(ngspice_3_input,"C1 6 8 %f\n", fC);
-fprintf(ngspice_3_input,"Gb 6 3 2 5 %f\n", fKb);
-fprintf(ngspice_3_input,"Hd 5 8 Vi %f\n", fKd);
-fprintf(ngspice_3_input,".ic v(6) = %f v(8) = %f\n", V60, V80);
+fprintf(ngspice_3_input,"R7 im 8 %.12f\n", fR7);
+fprintf(ngspice_3_input,"Vs 1 0 %.12f\n", 0);
+fprintf(ngspice_3_input,"C1 6 8 %.12f\n", fC);
+fprintf(ngspice_3_input,"Gb 6 3 2 5 %.12f\n", fKb);
+fprintf(ngspice_3_input,"Hd 5 8 Vi %.12f\n", fKd);
+fprintf(ngspice_3_input,".ic v(6) = %.12f v(8) = %.12f\n", V60, V80);
 
 fclose(ngspice_3_input);
 
@@ -362,22 +364,22 @@ fclose(ngspice_3_input);
 
 ngspice_4_input = fopen("../sim/ngspice_4_input.txt", "w");
 
-fprintf(ngspice_4_input,"R1 1 2 %f\n", fR1);
-fprintf(ngspice_4_input,"R2 2 3 %f\n", fR2);
-fprintf(ngspice_4_input,"R3 2 5 %f\n", fR3);
-fprintf(ngspice_4_input,"R4 0 5 %f\n", fR4);
-fprintf(ngspice_4_input,"R5 5 6 %f\n", fR5);
-fprintf(ngspice_4_input,"R6 0 7 %f\n", fR6);
+fprintf(ngspice_4_input,"R1 1 2 %.12f\n", fR1);
+fprintf(ngspice_4_input,"R2 2 3 %.12f\n", fR2);
+fprintf(ngspice_4_input,"R3 2 5 %.12f\n", fR3);
+fprintf(ngspice_4_input,"R4 0 5 %.12f\n", fR4);
+fprintf(ngspice_4_input,"R5 5 6 %.12f\n", fR5);
+fprintf(ngspice_4_input,"R6 0 7 %.12f\n", fR6);
 
 %Fonte de tensão imaginária
-fprintf(ngspice_4_input,"Vi 7 im %f\n", 0); 
+fprintf(ngspice_4_input,"Vi 7 im %.12f\n", 0); 
 
-fprintf(ngspice_4_input,"R7 im 8 %f\n", fR7);
+fprintf(ngspice_4_input,"R7 im 8 %.12f\n", fR7);
 fprintf(ngspice_4_input,"Vs 1 0 SIN(0.0 1.0 1000.0) AC 1.0 0.0\n");
-fprintf(ngspice_4_input,"C1 6 8 %f\n", fC);
-fprintf(ngspice_4_input,"Gb 6 3 2 5 %f\n", fKb);
-fprintf(ngspice_4_input,"Hd 5 8 Vi %f\n", fKd);
-fprintf(ngspice_4_input,".ic v(6) = %f v(8) = %f\n", V60, V80);
+fprintf(ngspice_4_input,"C1 6 8 %.12f\n", fC);
+fprintf(ngspice_4_input,"Gb 6 3 2 5 %.12f\n", fKb);
+fprintf(ngspice_4_input,"Hd 5 8 Vi %.12f\n", fKd);
+fprintf(ngspice_4_input,".ic v(6) = %.12f v(8) = %.12f\n", V60, V80);
 
 fclose(ngspice_4_input);
 
@@ -389,50 +391,50 @@ fclose(ngspice_4_input);
 
 negative_time_tab = fopen("octave_negative_time_tab.tex", "w");
 
-fprintf(negative_time_tab, "$I_{R_1}$ & %f \\\\ \\hline\n", I1);
-fprintf(negative_time_tab, "$I_{R_2}$ & %f \\\\ \\hline\n", I2);
-fprintf(negative_time_tab, "$I_{R_3}$ & %f \\\\ \\hline\n", I3);
-fprintf(negative_time_tab, "$I_{R_4}$ & %f \\\\ \\hline\n", I4);
-fprintf(negative_time_tab, "$I_{R_5}$ & %f \\\\ \\hline\n", I5);
-fprintf(negative_time_tab, "$I_{R_6}$ & %f \\\\ \\hline\n", I6);
-fprintf(negative_time_tab, "$I_{R_7}$ & %f \\\\ \\hline\n", I7);
-fprintf(negative_time_tab, "$V_0$ & %f \\\\ \\hline\n", V4);
-fprintf(negative_time_tab, "$V_1$ & %f \\\\ \\hline\n", V1);
-fprintf(negative_time_tab, "$V_2$ & %f \\\\ \\hline\n", V2);
-fprintf(negative_time_tab, "$V_3$ & %f \\\\ \\hline\n", V3);
-fprintf(negative_time_tab, "$V_5$ & %f \\\\ \\hline\n", V5);
-fprintf(negative_time_tab, "$V_6$ & %f \\\\ \\hline\n", V6);
-fprintf(negative_time_tab, "$V_7$ & %f \\\\ \\hline\n", V7);
-fprintf(negative_time_tab, "$V_8$ & %f \\\\ \\hline\n", V8);
+fprintf(negative_time_tab, "$I_{R_1}$ & %.12f \\\\ \\hline\n", I1);
+fprintf(negative_time_tab, "$I_{R_2}$ & %.12f \\\\ \\hline\n", I2);
+fprintf(negative_time_tab, "$I_{R_3}$ & %.12f \\\\ \\hline\n", I3);
+fprintf(negative_time_tab, "$I_{R_4}$ & %.12f \\\\ \\hline\n", I4);
+fprintf(negative_time_tab, "$I_{R_5}$ & %.12f \\\\ \\hline\n", I5);
+fprintf(negative_time_tab, "$I_{R_6}$ & %.12f \\\\ \\hline\n", I6);
+fprintf(negative_time_tab, "$I_{R_7}$ & %.12f \\\\ \\hline\n", I7);
+fprintf(negative_time_tab, "$V_0$ & %.12f \\\\ \\hline\n", V4);
+fprintf(negative_time_tab, "$V_1$ & %.12f \\\\ \\hline\n", V1);
+fprintf(negative_time_tab, "$V_2$ & %.12f \\\\ \\hline\n", V2);
+fprintf(negative_time_tab, "$V_3$ & %.12f \\\\ \\hline\n", V3);
+fprintf(negative_time_tab, "$V_5$ & %.12f \\\\ \\hline\n", V5);
+fprintf(negative_time_tab, "$V_6$ & %.12f \\\\ \\hline\n", V6);
+fprintf(negative_time_tab, "$V_7$ & %.12f \\\\ \\hline\n", V7);
+fprintf(negative_time_tab, "$V_8$ & %.12f \\\\ \\hline\n", V8);
 
 fclose(negative_time_tab);
 
 zero_time_tab = fopen("octave_zero_time_tab.tex", "w");
 
-fprintf(zero_time_tab, "$V_0$ & %f \\\\ \\hline\n", 0);
-fprintf(zero_time_tab, "$V_1$ & %f \\\\ \\hline\n", 0);
-fprintf(zero_time_tab, "$V_2$ & %f \\\\ \\hline\n", V20);
-fprintf(zero_time_tab, "$V_3$ & %f \\\\ \\hline\n", V30);
-fprintf(zero_time_tab, "$V_5$ & %f \\\\ \\hline\n", V50);
-fprintf(zero_time_tab, "$V_6$ & %f \\\\ \\hline\n", V60);
-fprintf(zero_time_tab, "$V_7$ & %f \\\\ \\hline\n", V70);
-fprintf(zero_time_tab, "$V_8$ & %f \\\\ \\hline\n", V80);
-fprintf(zero_time_tab, "$V_x$ & %f \\\\ \\hline\n", Vx);
-fprintf(zero_time_tab, "$I_x$ & %f \\\\ \\hline\n", Ix);
-fprintf(zero_time_tab, "$R_{eq}$ & %f \\\\ \\hline\n", Req);
+fprintf(zero_time_tab, "$V_0$ & %.12f \\\\ \\hline\n", 0);
+fprintf(zero_time_tab, "$V_1$ & %.12f \\\\ \\hline\n", 0);
+fprintf(zero_time_tab, "$V_2$ & %.12f \\\\ \\hline\n", V20);
+fprintf(zero_time_tab, "$V_3$ & %.12f \\\\ \\hline\n", V30);
+fprintf(zero_time_tab, "$V_5$ & %.12f \\\\ \\hline\n", V50);
+fprintf(zero_time_tab, "$V_6$ & %.12f \\\\ \\hline\n", V60);
+fprintf(zero_time_tab, "$V_7$ & %.12f \\\\ \\hline\n", V70);
+fprintf(zero_time_tab, "$V_8$ & %.12f \\\\ \\hline\n", V80);
+fprintf(zero_time_tab, "$V_x$ & %.12f \\\\ \\hline\n", Vx);
+fprintf(zero_time_tab, "$I_x$ & %.12f \\\\ \\hline\n", Ix);
+fprintf(zero_time_tab, "$R_{eq}$ & %.12f \\\\ \\hline\n", Req);
 
 fclose(zero_time_tab);
 
 
 complex_tab = fopen("octave_complex_tab.tex", "w");
 
-fprintf(complex_tab, "$A_{V_1}$ & %f \\\\ \\hline\n", AV1p);
-fprintf(complex_tab, "$A_{V_2}$ & %f \\\\ \\hline\n", AV2p);
-fprintf(complex_tab, "$A_{V_3}$ & %f \\\\ \\hline\n", AV3p);
-fprintf(complex_tab, "$A_{V_5}$ & %f \\\\ \\hline\n", AV5p);
-fprintf(complex_tab, "$A_{V_6}$ & %f \\\\ \\hline\n", AV6p);
-fprintf(complex_tab, "$A_{V_7}$ & %f \\\\ \\hline\n", AV7p);
-fprintf(complex_tab, "$A_{V_8}$ & %f \\\\ \\hline\n", AV8p);
+fprintf(complex_tab, "$A_{V_1}$ & %.12f \\\\ \\hline\n", AV1p);
+fprintf(complex_tab, "$A_{V_2}$ & %.12f \\\\ \\hline\n", AV2p);
+fprintf(complex_tab, "$A_{V_3}$ & %.12f \\\\ \\hline\n", AV3p);
+fprintf(complex_tab, "$A_{V_5}$ & %.12f \\\\ \\hline\n", AV5p);
+fprintf(complex_tab, "$A_{V_6}$ & %.12f \\\\ \\hline\n", AV6p);
+fprintf(complex_tab, "$A_{V_7}$ & %.12f \\\\ \\hline\n", AV7p);
+fprintf(complex_tab, "$A_{V_8}$ & %.12f \\\\ \\hline\n", AV8p);
 
 fclose(complex_tab);
 

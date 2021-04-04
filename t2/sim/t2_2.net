@@ -11,6 +11,8 @@
 
 .control
 
+set numdgt = 12
+
 op
 
 echo "********************************************"
@@ -18,7 +20,15 @@ echo  "Operating point"
 echo "********************************************"
 
 echo  "op2_TAB"
-print all
+print v(1)
+print v(2)
+print v(3)
+print v(5)
+print v(6)
+print v(7)
+print v(8)
+print v(6)-v(8)
+print @vx[i]
 echo  "op2_END"
 
 quit
