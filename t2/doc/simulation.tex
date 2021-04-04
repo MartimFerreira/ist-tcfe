@@ -1,7 +1,7 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
-\subsection{Operating Point Analysis}
+\subsection{Circuit when $t<0$}
 
 Table~\ref{tab:op} shows the simulated operating point results for the circuit
 under analysis. Compared to the theoretical analysis results, one notices the
@@ -17,71 +17,73 @@ following differences: describe and explain the differences.
   \caption{Operating point. A variable preceded by @ is of type {\em current}
     and expressed in Ampere; other variables are of type {\it voltage} and expressed in
     Volt.}
-  \label{tab:op}
+  \label{tab:t<0_sim}
 \end{table}
 
-\lipsum[1-1]
+
+\subsection{Circuit when $t=0$}
+
+Table~\ref{tab:op} shows the simulated operating point results for the circuit
+under analysis. Compared to the theoretical analysis results, one notices the
+following differences: describe and explain the differences.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{../sim/op2_tab}
+  \end{tabular}
+  \caption{Operating point. A variable preceded by @ is of type {\em current}
+    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
+    Volt.}
+  \label{tab:t=0_sim}
+\end{table}
 
 
-\subsection{Transient Analysis}
+\subsection{Circuit when $t>0$}
+
+\subsubsection{Natural Solution}
 
 Figure~\ref{fig:trans} shows the simulated transient analysis results for the
 circuit under analysis. Compared to the theoretical analysis results, one
 notices the following differences: describe and explain the differences.
 
 \begin{figure}[h] \centering
-\includegraphics[width=0.6\linewidth]{trans.pdf}
-\caption{Transient output voltage}
-\label{fig:trans}
+\includegraphics[width=0.6\linewidth]{../sim/trans_3.pdf}
+\caption{Natural responde in node 6}
+\label{fig:natural_sim}
 \end{figure}
 
-\lipsum[1-1]
-
-
-
-\subsection{Frequency Analysis}
-
-\subsubsection{Magnitude Response}
+\subsubsection{Final Solution}
 
 Figure~\ref{fig:acm} shows the magnitude of the frequency response for the
 circuit under analysis. Compared to the theoretical analysis results, one
 notices the following differences: describe and explain the differences.
 
 \begin{figure}[h] \centering
-\includegraphics[width=0.6\linewidth]{acm.pdf}
-\caption{Magnitude response}
-\label{fig:acm}
+\includegraphics[width=0.6\linewidth]{../sim/trans_4.pdf}
+\caption{Evolution of stimulus (Vs) and voltage in node 6 (V6) with time}
+\label{fig:final_sim}
 \end{figure}
 
 \lipsum[1-1]
 
-\subsubsection{Phase Response}
+\subsubsection{Frequency Response}
 
 Figure~\ref{fig:acp} shows the magnitude of the frequency response for the
 circuit under analysis. Compared to the theoretical analysis results, one
 notices the following differences: describe and explain the differences.
 
 \begin{figure}[h] \centering
-\includegraphics[width=0.6\linewidth]{acp.pdf}
-\caption{Phase response}
-\label{fig:acp}
+\includegraphics[width=0.6\linewidth]{../sim/mag_4.pdf}
+\caption{Magnitude of frequency response in node 6 and stimulus}
+\label{fig:mag_sim}
 \end{figure}
 
-\lipsum[1-1]
-
-\subsubsection{Input Impedance}
-
-Figure~\ref{fig:zim} shows the magnitude of the frequency response for the
-circuit under analysis. Compared to the theoretical analysis results, one
-notices the following differences: describe and explain the differences.
 
 \begin{figure}[h] \centering
-\includegraphics[width=0.6\linewidth]{zim.pdf}
-\caption{Input impedance}
-\label{fig:zim}
+\includegraphics[width=0.6\linewidth]{../sim/phase_4.pdf}
+\caption{Phase of frequency response in node 6 and stimulus}
+\label{fig:phase_sim}
 \end{figure}
-
-\lipsum[1-1]
-
-
-

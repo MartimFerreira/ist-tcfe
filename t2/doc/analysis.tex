@@ -51,17 +51,6 @@ illustrated in Figure~\ref{fig:forced}.
   \label{eq:vo_for}
 \end{equation}
 
-\lipsum[1-1]
-
-
-\begin{figure}[h] \centering
-\includegraphics[width=0.8\linewidth]{forced.eps}
-\caption{Forced sinusoidal response.}
-\label{fig:forced}
-\end{figure}
-
-
-\section{Frequency response}
 
 
 
@@ -69,8 +58,7 @@ illustrated in Figure~\ref{fig:forced}.
 
 
 
-
----------- Início da nossa análise (deixei o resto pelo sim e pelo não) ----------
+---------- Início da nossa análise (deixei o resto pelo sim pelo não) ----------
 % MUITO IMPORTANTE: LER OS COMENTÁRIOS
 
 
@@ -84,7 +72,7 @@ For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c=0$, since 
 
 \begin{equation}
   \begin{cases}
-  V_0 = 0 & \mbox{node 0}\\
+  V_0 = 0 & \mbox{$node 0$}\\
   V_1-V_0 = V_S & \mbox{node 1} \\
   \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
   (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
@@ -143,6 +131,11 @@ Using the initial condition $v_{6_{n}}(t=0) = V_X$, which is the capacitor volta
 % *** plot v_6_n(t) for [0, 20] ms, idetify axes, display signals and units
 
 
+\begin{figure}[h] \centering
+\includegraphics[width=0.8\linewidth]{v6natural_plot.eps}
+\caption{Natural response voltage in node 6.}
+\label{fig:natural}
+\end{figure}
 
 
 \subsubsection{Forced solution}  % ---> alínea 4
@@ -151,17 +144,17 @@ To determine the forced solution, $v_{6_{f}}(t)$, in the same interval with $f=1
 
 \begin{equation}
   \begin{cases}
-  Ṽ_0 = 0 & \mbox{node 0} \\
-   Ṽ_1 = Ṽ_S & \mbox{node 1} \\
-  \frac{Ṽ_2-Ṽ_1}{R_1}+\frac{Ṽ_2-Ṽ_3}{R_2}+\frac{Ṽ_2-Ṽ_5}{R_3} = 0 & \mbox{node 2} \\
-  (Ṽ_5-Ṽ_2)K_b + \frac{Ṽ_3-Ṽ_2}{R_2} = 0 & \mbox{node 3} \\
-  (-Ṽ_5+Ṽ_2)K_b + \frac{Ṽ_6-Ṽ_5}{R_5} + \frac{Ṽ_6-Ṽ_8}{Z_c} = 0 & \mbox{node 6} \\
-  \frac{Ṽ_0-Ṽ_7}{R_6} - \frac{Ṽ_7-Ṽ_8}{R_7} = 0 & \mbox{node 7} \\
-  (Ṽ_5-Ṽ_8) = K_d \frac{Ṽ_0-Ṽ_7}{R_6} & \mbox{node 8} \\
-  \frac{Ṽ_2-Ṽ_5}{R_3} + \frac{Ṽ_0-Ṽ_5}{R_4} + \frac{Ṽ_6-Ṽ_5}{R_5} + \frac{Ṽ_7-Ṽ_8}{R_7} - \frac{Ṽ_6-Ṽ_8}{Z_c} = 0 & \mbox{supernode 5-8} \\ 
+  \tilde{V}_0 = 0 & \mbox{node 0} \\
+   \tilde{V}_1 = \tilde{V}_S & \mbox{node 1} \\
+  \frac{\tilde{V}_2-\tilde{V}_1}{R_1}+\frac{\tilde{V}_2-\tilde{V}_3}{R_2}+\frac{\tilde{V}_2-\tilde{V}_5}{R_3} = 0 & \mbox{node 2} \\
+  (\tilde{V}_5-\tilde{V}_2)K_b + \frac{\tilde{V}_3-\tilde{V}_2}{R_2} = 0 & \mbox{node 3} \\
+  (-\tilde{V}_5+\tilde{V}_2)K_b + \frac{\tilde{V}_6-\tilde{V}_5}{R_5} + \frac{\tilde{V}_6-\tilde{V}_8}{Z_c} = 0 & \mbox{node 6} \\
+  \frac{\tilde{V}_0-\tilde{V}_7}{R_6} - \frac{\tilde{V}_7-\tilde{V}_8}{R_7} = 0 & \mbox{node 7} \\
+  (\tilde{V}_5-\tilde{V}_8) = K_d \frac{\tilde{V}_0-\tilde{V}_7}{R_6} & \mbox{node 8} \\
+  \frac{\tilde{V}_2-\tilde{V}_5}{R_3} + \frac{\tilde{V}_0-\tilde{V}_5}{R_4} + \frac{\tilde{V}_6-\tilde{V}_5}{R_5} + \frac{\tilde{V}_7-\tilde{V}_8}{R_7} - \frac{\tilde{V}_6-\tilde{V}_8}{Z_c} = 0 & \mbox{supernode 5-8} \\ 
   \end{cases}
 \end{equation}
-% As soluções são [Ṽ0,Ṽ1,Ṽ2,Ṽ3,Ṽ5,Ṽ6,Ṽ7,Ṽ8]
+% As soluções são [\tilde{V}0,\tilde{V}1,\tilde{V}2,\tilde{V}3,\tilde{V}5,\tilde{V}6,\tilde{V}7,\tilde{V}8]
 
 % dizer explicitamente quais são as incógnitas para cada sistema de equações?
 % explicar melhor como é que se chegou a cada equação?
@@ -182,20 +175,33 @@ To determine the final total solution, $v_6(t)$, one has to convert the phasors 
 % *** plot v_s(t) and v_6(t) for [-5, 20] ms in the same figure
 
 
+\begin{figure}[h] \centering
+\includegraphics[width=0.8\linewidth]{vfinal_plot.eps}
+\caption{Voltage in node 6 and stimulus Vs.}
+\label{fig:final}
+\end{figure}
 
 
-\subsubsection{Frequency respnses}  % ---> alínea 6
+\subsubsection{Frequency response}  % ---> alínea 6
 
 
 
+\begin{figure}[h] \centering
+\includegraphics[width=0.8\linewidth]{vmag_plot.eps}
+\caption{Variation in magnitude of Vs, voltage in node 6 and voltage between the capacitor terminals with frequency.}
+\label{fig:magnitude}
+\end{figure}
 
+
+\begin{figure}[h] \centering
+\includegraphics[width=0.8\linewidth]{vphase_plot.eps}
+\caption{Variation in phase of Vs, voltage in node 6 and voltage between the capacitor terminals with frequency.}
+\label{fig:phase}
+\end{figure}
 
 
 
 
 % ver print screens da aula gravada que estão nas cenas teóricas 04/02/2021 10:16pm
-
-
-\lipsum[1-1]
 
 

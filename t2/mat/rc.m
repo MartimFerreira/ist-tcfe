@@ -155,7 +155,20 @@ V6s= imag(ct*V6p);
 V7s= imag(ct*V7p);
 V8s= imag(ct*V8p);
 
-<<<<<<< HEAD
+
+t_3=0:1e-6:20e-3;
+
+
+A = V60 - imag(V6p);
+
+v6_natural = A * exp(-t_3/(Req*fC));
+
+v6natural_plot = figure ();
+plot (t_3*1000, v6_natural, "g");
+
+xlabel ("t[ms]");
+ylabel ("v6(t) [V]");
+print (v6natural_plot, "v6natural_plot.eps", "-depsc");
 
 
 t_neg= 0:1e-6:5e-03;
@@ -173,26 +186,7 @@ plot((t_neg-5e-03)*1000, V6_vector, "g");
 hold on; 
 plot((t_neg-5e-03)*1000, Vs_vector, "b");
 hold on; 
-plot (t*1000, V6s, "g");
-=======
-t_3=0:1e-6:20e-3;
-
-
-A = V60 - imag(V6p);
-
-v6_natural = A * exp(-t_3/(Req*fC));
-
-v6natural_plot = figure ();
-plot (t_3*1000, v6_natural, "g");
-
-xlabel ("t[ms]");
-ylabel ("v6(t) [V]");
-print (v6natural_plot, "v6natural_plot.eps", "-depsc");
-
-
-vfinal_plot = figure ();
 plot (t*1000, V6s+v6_natural, "g");
->>>>>>> 94e73c2d064b02c9f338a52644048573fb108359
 hold on;
 plot (t*1000, V1s, "b");
 hold on; 
