@@ -434,7 +434,6 @@ fclose(negative_time_tab);
 
 zero_time_tab = fopen("octave_zero_time_tab.tex", "w");
 
-fprintf(zero_time_tab, "$V_0$ & %e \\\\ \\hline\n", 0);
 fprintf(zero_time_tab, "$V_1$ & %e \\\\ \\hline\n", 0);
 fprintf(zero_time_tab, "$V_2$ & %e \\\\ \\hline\n", V20);
 fprintf(zero_time_tab, "$V_3$ & %e \\\\ \\hline\n", V30);
