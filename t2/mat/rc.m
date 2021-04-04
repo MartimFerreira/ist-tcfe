@@ -80,6 +80,10 @@ I4=(-V5)/fR4
 I5=(V5-V6)/fR5 
 I6=(-V7)/fR6
 I7=(V7-V8)/fR7 
+Ib=(V2-V5)*fKb
+IVs=I1
+IVd=I6
+Ic=0; 
 
 
 
@@ -388,53 +392,74 @@ fclose(ngspice_4_input);
 %Tables%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+data_tab = fopen("octave_data_tab.tex", "w");
+
+fprintf(data_tab, "$R_1$ & %f \\\\ \\hline\n", fR1);
+fprintf(data_tab, "$R_2$ & %f \\\\ \\hline\n", fR2);
+fprintf(data_tab, "$R_3$ & %f \\\\ \\hline\n", fR3);
+fprintf(data_tab, "$R_4$ & %f \\\\ \\hline\n", fR4);
+fprintf(data_tab, "$R_5$ & %f \\\\ \\hline\n", fR5);
+fprintf(data_tab, "$R_6$ & %f \\\\ \\hline\n", fR6);
+fprintf(data_tab, "$R_7$ & %f \\\\ \\hline\n", fR7);
+fprintf(data_tab, "$V_s$ & %f \\\\ \\hline\n", fVs);
+fprintf(data_tab, "$C$ &   %f \\\\ \\hline\n", fC);
+fprintf(data_tab, "$K_b$ & %f \\\\ \\hline\n", fKb);
+fprintf(data_tab, "$K_d$ & %f \\\\ \\hline\n", fKd);
+
+fclose(data_tab);
+
 
 negative_time_tab = fopen("octave_negative_time_tab.tex", "w");
 
-fprintf(negative_time_tab, "$I_{R_1}$ & %.12f \\\\ \\hline\n", I1);
-fprintf(negative_time_tab, "$I_{R_2}$ & %.12f \\\\ \\hline\n", I2);
-fprintf(negative_time_tab, "$I_{R_3}$ & %.12f \\\\ \\hline\n", I3);
-fprintf(negative_time_tab, "$I_{R_4}$ & %.12f \\\\ \\hline\n", I4);
-fprintf(negative_time_tab, "$I_{R_5}$ & %.12f \\\\ \\hline\n", I5);
-fprintf(negative_time_tab, "$I_{R_6}$ & %.12f \\\\ \\hline\n", I6);
-fprintf(negative_time_tab, "$I_{R_7}$ & %.12f \\\\ \\hline\n", I7);
-fprintf(negative_time_tab, "$V_0$ & %.12f \\\\ \\hline\n", V4);
-fprintf(negative_time_tab, "$V_1$ & %.12f \\\\ \\hline\n", V1);
-fprintf(negative_time_tab, "$V_2$ & %.12f \\\\ \\hline\n", V2);
-fprintf(negative_time_tab, "$V_3$ & %.12f \\\\ \\hline\n", V3);
-fprintf(negative_time_tab, "$V_5$ & %.12f \\\\ \\hline\n", V5);
-fprintf(negative_time_tab, "$V_6$ & %.12f \\\\ \\hline\n", V6);
-fprintf(negative_time_tab, "$V_7$ & %.12f \\\\ \\hline\n", V7);
-fprintf(negative_time_tab, "$V_8$ & %.12f \\\\ \\hline\n", V8);
+
+fprintf(negative_time_tab, "$I_{R_1}$ & %.12e \\\\ \\hline\n", I1);
+fprintf(negative_time_tab, "$I_{R_2}$ & %.12e \\\\ \\hline\n", I2);
+fprintf(negative_time_tab, "$I_{R_3}$ & %.12e \\\\ \\hline\n", I3);
+fprintf(negative_time_tab, "$I_{R_4}$ & %.12e \\\\ \\hline\n", I4);
+fprintf(negative_time_tab, "$I_{R_5}$ & %.12e \\\\ \\hline\n", I5);
+fprintf(negative_time_tab, "$I_{R_6}$ & %.12e \\\\ \\hline\n", I6);
+fprintf(negative_time_tab, "$I_{R_7}$ & %.12e \\\\ \\hline\n", I7);
+fprintf(negative_time_tab, "$I_{b}$ & %.12e \\\\ \\hline\n", Ib);
+fprintf(negative_time_tab, "$I_{V_s}$ & %.12e \\\\ \\hline\n", I1);
+fprintf(negative_time_tab, "$I_{V_d}$ & %.12e \\\\ \\hline\n", I6);
+fprintf(negative_time_tab, "$I_{c}$ & %.12e \\\\ \\hline\n", Ic);
+
+fprintf(negative_time_tab, "$V_1$ & %.12e \\\\ \\hline\n", V1);
+fprintf(negative_time_tab, "$V_2$ & %.12e \\\\ \\hline\n", V2);
+fprintf(negative_time_tab, "$V_3$ & %.12e \\\\ \\hline\n", V3);
+fprintf(negative_time_tab, "$V_5$ & %.12e \\\\ \\hline\n", V5);
+fprintf(negative_time_tab, "$V_6$ & %.12e \\\\ \\hline\n", V6);
+fprintf(negative_time_tab, "$V_7$ & %.12e \\\\ \\hline\n", V7);
+fprintf(negative_time_tab, "$V_8$ & %.12e \\\\ \\hline\n", V8);
 
 fclose(negative_time_tab);
 
+
 zero_time_tab = fopen("octave_zero_time_tab.tex", "w");
 
-fprintf(zero_time_tab, "$V_0$ & %.12f \\\\ \\hline\n", 0);
-fprintf(zero_time_tab, "$V_1$ & %.12f \\\\ \\hline\n", 0);
-fprintf(zero_time_tab, "$V_2$ & %.12f \\\\ \\hline\n", V20);
-fprintf(zero_time_tab, "$V_3$ & %.12f \\\\ \\hline\n", V30);
-fprintf(zero_time_tab, "$V_5$ & %.12f \\\\ \\hline\n", V50);
-fprintf(zero_time_tab, "$V_6$ & %.12f \\\\ \\hline\n", V60);
-fprintf(zero_time_tab, "$V_7$ & %.12f \\\\ \\hline\n", V70);
-fprintf(zero_time_tab, "$V_8$ & %.12f \\\\ \\hline\n", V80);
-fprintf(zero_time_tab, "$V_x$ & %.12f \\\\ \\hline\n", Vx);
-fprintf(zero_time_tab, "$I_x$ & %.12f \\\\ \\hline\n", Ix);
-fprintf(zero_time_tab, "$R_{eq}$ & %.12f \\\\ \\hline\n", Req);
+fprintf(zero_time_tab, "$V_1$ & %.12e \\\\ \\hline\n", 0);
+fprintf(zero_time_tab, "$V_2$ & %.12e \\\\ \\hline\n", V20);
+fprintf(zero_time_tab, "$V_3$ & %.12e \\\\ \\hline\n", V30);
+fprintf(zero_time_tab, "$V_5$ & %.12e \\\\ \\hline\n", V50);
+fprintf(zero_time_tab, "$V_6$ & %.12e \\\\ \\hline\n", V60);
+fprintf(zero_time_tab, "$V_7$ & %.12e \\\\ \\hline\n", V70);
+fprintf(zero_time_tab, "$V_8$ & %.12e \\\\ \\hline\n", V80);
+fprintf(zero_time_tab, "$V_x$ & %.12e \\\\ \\hline\n", Vx);
+fprintf(zero_time_tab, "$I_x$ & %.12e\\\\ \\hline\n", Ix);
+fprintf(zero_time_tab, "$R_{eq}$ & %.12e \\\\ \\hline\n", Req);
 
 fclose(zero_time_tab);
 
 
 complex_tab = fopen("octave_complex_tab.tex", "w");
 
-fprintf(complex_tab, "$A_{V_1}$ & %.12f \\\\ \\hline\n", AV1p);
-fprintf(complex_tab, "$A_{V_2}$ & %.12f \\\\ \\hline\n", AV2p);
-fprintf(complex_tab, "$A_{V_3}$ & %.12f \\\\ \\hline\n", AV3p);
-fprintf(complex_tab, "$A_{V_5}$ & %.12f \\\\ \\hline\n", AV5p);
-fprintf(complex_tab, "$A_{V_6}$ & %.12f \\\\ \\hline\n", AV6p);
-fprintf(complex_tab, "$A_{V_7}$ & %.12f \\\\ \\hline\n", AV7p);
-fprintf(complex_tab, "$A_{V_8}$ & %.12f \\\\ \\hline\n", AV8p);
+fprintf(complex_tab, "$A_{V_1}$ & %.12e \\\\ \\hline\n", AV1p);
+fprintf(complex_tab, "$A_{V_2}$ & %.12e \\\\ \\hline\n", AV2p);
+fprintf(complex_tab, "$A_{V_3}$ & %.12e \\\\ \\hline\n", AV3p);
+fprintf(complex_tab, "$A_{V_5}$ & %.12e \\\\ \\hline\n", AV5p);
+fprintf(complex_tab, "$A_{V_6}$ & %.12e \\\\ \\hline\n", AV6p);
+fprintf(complex_tab, "$A_{V_7}$ & %.12e \\\\ \\hline\n", AV7p);
+fprintf(complex_tab, "$A_{V_8}$ & %.12e \\\\ \\hline\n", AV8p);
 
 fclose(complex_tab);
 
