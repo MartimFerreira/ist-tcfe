@@ -1,6 +1,8 @@
 close all
 clear all
 
+pkg load control
+
 %%EXAMPLE SYMBOLIC COMPUTATIONS
 
 format long
@@ -95,21 +97,7 @@ Ix  = x0(7)
 Req= Vx/Ix
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea3
-
-t_3=0:1e-6:20e-3;
-
-v6_natural = Vx * exp(-t_3/(Req*fC));
-
-v6natural_plot = figure ();
-plot (t_3*1000, v6_natural, "g");
-
-xlabel ("t[ms]");
-ylabel ("v6(t) [V]");
-print (v6natural_plot, "v6natural_plot.eps", "-depsc");
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea 3, 4 e 5
 
 Vsp= 1; 
 f=1000; 
@@ -144,9 +132,6 @@ AV6p= abs(V6p)
 AV7p= abs(V7p)
 AV8p= abs(V8p)
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea5
-
 t=0:1e-6:20e-3;
 
 ct=exp(j*w*t); 
@@ -155,12 +140,27 @@ V1s= imag(ct*V1p);
 V2s= imag(ct*V2p);
 V3s= imag(ct*V3p);
 V5s= imag(ct*V5p);
-V6s= imag(ct*V6p) + v6_natural;
+V6s= imag(ct*V6p);
 V7s= imag(ct*V7p);
 V8s= imag(ct*V8p);
 
+t_3=0:1e-6:20e-3;
+
+
+A = V60 - imag(V6p);
+
+v6_natural = A * exp(-t_3/(Req*fC));
+
+v6natural_plot = figure ();
+plot (t_3*1000, v6_natural, "g");
+
+xlabel ("t[ms]");
+ylabel ("v6(t) [V]");
+print (v6natural_plot, "v6natural_plot.eps", "-depsc");
+
+
 vfinal_plot = figure ();
-plot (t*1000, V6s, "g");
+plot (t*1000, V6s+v6_natural, "g");
 hold on;
 plot (t*1000, V1s, "b");
 
@@ -193,12 +193,12 @@ for i= freq
 
 
       Mf = [ 1, 0, 0, 0, 0, 0, 0;                                                           %no1
-            -(1/fR1), (1/fR1) + (1/fR2) + (1/fR3), -(1/fR2),0,  -(1/fR3), 0, 0;             %no2
-            0, -(1/fR2) - fKb, (1/fR2), 0, fKb, 0, 0;                                       %no3
+            -(1/fR1), (1/fR1) + (1/fR2) + (1/fR3), -(1/fR2), -(1/fR3), 0, 0, 0;             %no2
+            0, -(1/fR2) - fKb, (1/fR2), fKb, 0, 0, 0;                                       %no3
             0, fKb, 0,-fKb - (1/fR5), (1/fR5)+(1/Zcf), 0,-(1/Zcf);                          %no6
             0, 0, 0, 0, 0, -(1/fR6) - (1/fR7), (1/fR7);                                     %no7 
             0, 0, 0, 1, 0, fKd/fR6, -1;                                                     %no8
-            0, (1/fR3), 0,-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5)-(1/Zcf),(1/fR7),-(1/fR7)+(1/Zcf);] %supernode
+            0, (1/fR3), 0,-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5)+(1/Zcf),(1/fR7),-(1/fR7)-(1/Zcf);] %supernode
 
       bf = [Vsf; 0; 0; 0; 0; 0; 0];
       xf = Mf \ bf
@@ -222,6 +222,7 @@ V5f_mag =abs(V5f);
 V6f_mag =abs(V6f);
 V7f_mag =abs(V7f);
 V8f_mag =abs(V8f);
+Vcf_mag =abs(V6f - V8f);
 
 V1f_phase =angle(V1f);
 V2f_phase =angle(V2f);
@@ -230,18 +231,31 @@ V5f_phase =angle(V5f);
 V6f_phase =angle(V6f);
 V7f_phase =angle(V7f);
 V8f_phase =angle(V8f);
+Vcf_phase =angle(V6f - V8f);
 
 vphase_plot = figure ();
 semilogx (freq, V6f_phase*(180/pi), "g");
 hold on;
 semilogx (freq, V1f_phase*(180/pi), "b");
 hold on;
-semilogx (freq, (V6f_phase-V8f_phase)*(180/pi), "r");
+semilogx (freq, Vcf_phase*(180/pi), "r");
 
 xlabel ("f[Hz]");
 ylabel ("v6, vs, vc [Degree]");
 legenda= legend("phase of V6" , "phase of Vs", "phase of Vc" ); 
 print (vphase_plot, "vphase_plot.eps", "-depsc");
+
+vmag_plot = figure ();
+semilogx (freq, mag2db(V6f_mag), "g");
+hold on;
+semilogx (freq, mag2db(V1f_mag), "b");
+hold on;
+semilogx (freq, mag2db(Vcf_mag), "r");
+
+xlabel ("f[Hz]");
+ylabel ("v6, vs, vc [dB]");
+legenda= legend("magnitude of V6" , "magnitude of Vs", "magnitude of Vc" ); 
+print (vmag_plot, "vmag_plot.eps", "-depsc");
 
 
 
