@@ -114,12 +114,13 @@ To determine the forced solution, $v_{6_{f}}(t)$, in the same interval with $f=1
 
 
 \subsubsection{Final solution}  % ---> alínea 5
-To determine the final total solution, $v_6(t)$, one has to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and the forced solutions.
-In order to do that the voltage phasors had to be multiplied by
+To determine the final total solution, $v_6(t)$, one had to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and the forced solutions.
+In order to do that the voltage phasors had to be multiplied by $e^{i \omega t}$. Because the stimulus in the circuit, $V_S$, had the form of a sine, the imaginary part of the result was used to determine the forced solution as a real time from the respective phasor, as intended.
+Then, summing both the natural and the forced solutions, the final total solution was obtained, $v_6(t) = v_{6_n} (t) + v_{6_f} (t)$.
+In the next figure, there are the plots of $v_s(t)$ and $v_6(t)$ in the interval $[-5, 20] \ ms$.
 
-
-% *** plot v_s(t) and v_6(t) for [-5, 20] ms in the same figure
-
+% usar i ou j?
+% stimulus será a palavra mais correcta?
 
 \begin{figure}[h] \centering
 \includegraphics[width=0.8\linewidth]{vfinal_plot.eps}
@@ -128,9 +129,11 @@ In order to do that the voltage phasors had to be multiplied by
 \end{figure}
 
 
+
+
+
 \subsubsection{Frequency response}  % ---> alínea 6
-
-
+In the previous point $f=1kHz$. However, now the objective is to understand what happens to the phasors for other frequencies. To do that the procedure used for the last point was used for 35 different values of frequency and then the plots of the variation in both magnitude and phase were made for $v_s(f)$, $v_6(f)$ and $v_c(f) = v_6(f)-v_8(f)$, with the frequency ranging between $0.1 \ Hz$ and $1 \ MHz$, using a logarithmic scale.
 
 \begin{figure}[h] \centering
 \includegraphics[width=0.8\linewidth]{vmag_plot.eps}
@@ -145,7 +148,7 @@ In order to do that the voltage phasors had to be multiplied by
 \label{fig:phase}
 \end{figure}
 
-
+% ------------------> explicar diferenças!!!
 
 
 % ver print screens da aula gravada que estão nas cenas teóricas 04/02/2021 10:16pm
