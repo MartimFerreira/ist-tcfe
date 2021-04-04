@@ -389,50 +389,50 @@ fclose(ngspice_4_input);
 
 negative_time_tab = fopen("octave_negative_time_tab.tex", "w");
 
-fprintf(negative_time_tab, "$I_1$ & %f \\\\ \\hline", I1);
-fprintf(negative_time_tab, "$I_2$ & %f \\\\ \\hline", I2);
-fprintf(negative_time_tab, "$I_3$ & %f \\\\ \\hline", I3);
-fprintf(negative_time_tab, "$I_4$ & %f \\\\ \\hline", I4);
-fprintf(negative_time_tab, "$I_5$ & %f \\\\ \\hline", I5);
-fprintf(negative_time_tab, "$I_6$ & %f \\\\ \\hline", I6);
-fprintf(negative_time_tab, "$I_7$ & %f \\\\ \\hline", I7);
-fprintf(negative_time_tab, "$V_0$ & %f \\\\ \\hline", V4);
-fprintf(negative_time_tab, "$V_1$ & %f \\\\ \\hline", V1);
-fprintf(negative_time_tab, "$V_2$ & %f \\\\ \\hline", V2);
-fprintf(negative_time_tab, "$V_3$ & %f \\\\ \\hline", V3);
-fprintf(negative_time_tab, "$V_5$ & %f \\\\ \\hline", V5);
-fprintf(negative_time_tab, "$V_6$ & %f \\\\ \\hline", V6);
-fprintf(negative_time_tab, "$V_7$ & %f \\\\ \\hline", V7);
-fprintf(negative_time_tab, "$V_8$ & %f \\\\ \\hline", V8);
+fprintf(negative_time_tab, "$I_{R_1}$ & %f \\\\ \\hline\n", I1);
+fprintf(negative_time_tab, "$I_{R_2}$ & %f \\\\ \\hline\n", I2);
+fprintf(negative_time_tab, "$I_{R_3}$ & %f \\\\ \\hline\n", I3);
+fprintf(negative_time_tab, "$I_{R_4}$ & %f \\\\ \\hline\n", I4);
+fprintf(negative_time_tab, "$I_{R_5}$ & %f \\\\ \\hline\n", I5);
+fprintf(negative_time_tab, "$I_{R_6}$ & %f \\\\ \\hline\n", I6);
+fprintf(negative_time_tab, "$I_{R_7}$ & %f \\\\ \\hline\n", I7);
+fprintf(negative_time_tab, "$V_0$ & %f \\\\ \\hline\n", V4);
+fprintf(negative_time_tab, "$V_1$ & %f \\\\ \\hline\n", V1);
+fprintf(negative_time_tab, "$V_2$ & %f \\\\ \\hline\n", V2);
+fprintf(negative_time_tab, "$V_3$ & %f \\\\ \\hline\n", V3);
+fprintf(negative_time_tab, "$V_5$ & %f \\\\ \\hline\n", V5);
+fprintf(negative_time_tab, "$V_6$ & %f \\\\ \\hline\n", V6);
+fprintf(negative_time_tab, "$V_7$ & %f \\\\ \\hline\n", V7);
+fprintf(negative_time_tab, "$V_8$ & %f \\\\ \\hline\n", V8);
 
 fclose(negative_time_tab);
 
 zero_time_tab = fopen("octave_zero_time_tab.tex", "w");
 
-fprintf(zero_time_tab, "$V_0$ & %f \\\\ \\hline", 0);
-fprintf(zero_time_tab, "$V_1$ & %f \\\\ \\hline", 0);
-fprintf(zero_time_tab, "$V_2$ & %f \\\\ \\hline", V20);
-fprintf(zero_time_tab, "$V_3$ & %f \\\\ \\hline", V30);
-fprintf(zero_time_tab, "$V_5$ & %f \\\\ \\hline", V50);
-fprintf(zero_time_tab, "$V_6$ & %f \\\\ \\hline", V60);
-fprintf(zero_time_tab, "$V_7$ & %f \\\\ \\hline", V70);
-fprintf(zero_time_tab, "$V_8$ & %f \\\\ \\hline", V80);
-fprintf(zero_time_tab, "$V_x$ & %f \\\\ \\hline", Vx);
-fprintf(zero_time_tab, "$I_x$ & %f \\\\ \\hline", Ix);
-fprintf(zero_time_tab, "$R_e_q$ & %f \\\\ \\hline", Req);
+fprintf(zero_time_tab, "$V_0$ & %f \\\\ \\hline\n", 0);
+fprintf(zero_time_tab, "$V_1$ & %f \\\\ \\hline\n", 0);
+fprintf(zero_time_tab, "$V_2$ & %f \\\\ \\hline\n", V20);
+fprintf(zero_time_tab, "$V_3$ & %f \\\\ \\hline\n", V30);
+fprintf(zero_time_tab, "$V_5$ & %f \\\\ \\hline\n", V50);
+fprintf(zero_time_tab, "$V_6$ & %f \\\\ \\hline\n", V60);
+fprintf(zero_time_tab, "$V_7$ & %f \\\\ \\hline\n", V70);
+fprintf(zero_time_tab, "$V_8$ & %f \\\\ \\hline\n", V80);
+fprintf(zero_time_tab, "$V_x$ & %f \\\\ \\hline\n", Vx);
+fprintf(zero_time_tab, "$I_x$ & %f \\\\ \\hline\n", Ix);
+fprintf(zero_time_tab, "$R_{eq}$ & %f \\\\ \\hline\n", Req);
 
 fclose(zero_time_tab);
 
 
 complex_tab = fopen("octave_complex_tab.tex", "w");
 
-fprintf(complex_tab, "$A_V_1$ & %f \\\\ \\hline", AV1p);
-fprintf(complex_tab, "$A_V_2$ & %f \\\\ \\hline", AV2p);
-fprintf(complex_tab, "$A_V_3$ & %f \\\\ \\hline", AV3p);
-fprintf(complex_tab, "$A_V_5$ & %f \\\\ \\hline", AV5p);
-fprintf(complex_tab, "$A_V_6$ & %f \\\\ \\hline", AV6p);
-fprintf(complex_tab, "$A_V_7$ & %f \\\\ \\hline", AV7p);
-fprintf(complex_tab, "$A_V_8$ & %f \\\\ \\hline", AV8p);
+fprintf(complex_tab, "$A_{V_1}$ & %f \\\\ \\hline\n", AV1p);
+fprintf(complex_tab, "$A_{V_2}$ & %f \\\\ \\hline\n", AV2p);
+fprintf(complex_tab, "$A_{V_3}$ & %f \\\\ \\hline\n", AV3p);
+fprintf(complex_tab, "$A_{V_5}$ & %f \\\\ \\hline\n", AV5p);
+fprintf(complex_tab, "$A_{V_6}$ & %f \\\\ \\hline\n", AV6p);
+fprintf(complex_tab, "$A_{V_7}$ & %f \\\\ \\hline\n", AV7p);
+fprintf(complex_tab, "$A_{V_8}$ & %f \\\\ \\hline\n", AV8p);
 
 fclose(complex_tab);
 
