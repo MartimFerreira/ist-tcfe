@@ -3,9 +3,7 @@
 
 \subsection{Circuit when $t<0$}
 
-Table~\ref{tab:op} shows the simulated operating point results for the circuit
-under analysis. Compared to the theoretical analysis results, one notices the
-following differences: describe and explain the differences.
+Table \ref{tab:t<0_sim} shows the results of the simulation of the circuit in study for t<0. For this time condition, $v_s = V_s$.
 
 \begin{table}[h]
   \centering
@@ -14,7 +12,7 @@ following differences: describe and explain the differences.
     {\bf Name} & {\bf Value [A or V]} \\ \hline
     \input{../sim/op_tab}
   \end{tabular}
-  \caption{Operating point. A variable preceded by @ is of type {\em current}
+  \caption{A variable preceded by @ is of type {\em current}
     and expressed in Ampere; other variables are of type {\it voltage} and expressed in
     Volt.}
   \label{tab:t<0_sim}
@@ -23,9 +21,7 @@ following differences: describe and explain the differences.
 
 \subsection{Circuit when $t=0$}
 
-Table~\ref{tab:op} shows the simulated operating point results for the circuit
-under analysis. Compared to the theoretical analysis results, one notices the
-following differences: describe and explain the differences.
+Table \ref{tab:t=0_sim} shows the results of the simulation of the circuit in study for t=0. For this simulation, the capacitor was replaced by a voltage source with voltage equal to the difference in electric potential between the terminals of the capacitor for t<0 (that is, $V_6 - V_8$, with $V_6$ and $V_8$ being taken from the previous analysis). This was done because the electric tension between terminals of a capacitor must always be continuous (since a capacitor takes time to charge and discharge), which means the tension between terminals of the capacitor in $t=0$ must be the same it was in our $t<0$ steady-state analysis (even if $V_6$ and $V_8$ had instantaneous variations). The way to ensure this continuity is by doing the aforementioned replacement.
 
 \begin{table}[h]
   \centering
@@ -34,7 +30,7 @@ following differences: describe and explain the differences.
     {\bf Name} & {\bf Value [A or V]} \\ \hline
     \input{../sim/op2_tab}
   \end{tabular}
-  \caption{Operating point. A variable preceded by @ is of type {\em current}
+  \caption{A variable preceded by @ is of type {\em current}
     and expressed in Ampere; other variables are of type {\it voltage} and expressed in
     Volt.}
   \label{tab:t=0_sim}
@@ -45,9 +41,7 @@ following differences: describe and explain the differences.
 
 \subsubsection{Natural Solution}
 
-Figure~\ref{fig:trans} shows the simulated transient analysis results for the
-circuit under analysis. Compared to the theoretical analysis results, one
-notices the following differences: describe and explain the differences.
+The following graph shows the evolution in time of the natural solution component of the voltage in node 6 according to the simulation that was run. In order to simulate the natural response of the circuit, the voltage source $v_s$ was set to $0$V, and the voltages in nodes 6 and 8 calculated for $t=0$ were used as boundary conditions.
 
 \begin{figure}[h] \centering
 \includegraphics[width=0.6\linewidth]{../sim/trans_3.pdf}
@@ -57,9 +51,7 @@ notices the following differences: describe and explain the differences.
 
 \subsubsection{Final Solution}
 
-Figure~\ref{fig:acm} shows the magnitude of the frequency response for the
-circuit under analysis. Compared to the theoretical analysis results, one
-notices the following differences: describe and explain the differences.
+The following graph shows the simulated evolution in time of the voltage in node 6 when the voltage source provides a sinusoidal input with frequency $1$kHz. The evolution in time of the voltage source stimulus can also be seen.
 
 \begin{figure}[h] \centering
 \includegraphics[width=0.6\linewidth]{../sim/trans_4.pdf}
@@ -71,9 +63,7 @@ notices the following differences: describe and explain the differences.
 
 \subsubsection{Frequency Response}
 
-Figure~\ref{fig:acp} shows the magnitude of the frequency response for the
-circuit under analysis. Compared to the theoretical analysis results, one
-notices the following differences: describe and explain the differences.
+The following graphs show the simulated evolution with frequency of the magnitude and phase of the voltage in node 6 as well as of the sinusoidal input from the voltage source for frequencies between $0.1$Hz and $1$MHz.
 
 \begin{figure}[h] \centering
 \includegraphics[width=0.6\linewidth]{../sim/mag_4.pdf}
