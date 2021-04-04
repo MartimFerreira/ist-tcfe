@@ -10,7 +10,18 @@
 % sections
 
 % state the learning objective 
-The aim of this laboratory assignment is to study the RC circuit in Figure~\ref{fig:rc}. It contains two voltage sources ($V_d$ a linear current controlled one and $V_S$, an independent one, which supplies voltage $V_S$ for $t\leq0$ and $\sin (2 \pi f t)$ for $t>0$), one current source ($I_b$ a linear voltage controlled one), resistors ($R_1$, $R_2$, $R_3$, $R_4$, $R_5$, $R_6$ and $R_7$) and a capacitor ($C$).
+The aim of this laboratory assignment is to study the RC circuit in Figure~\ref{fig:rc}. It contains two voltage sources ($V_d$ a linear current controlled one and $v_S$, an independent one), one current source ($I_b$ a linear voltage controlled one), resistors ($R_1$, $R_2$, $R_3$, $R_4$, $R_5$, $R_6$ and $R_7$) and a capacitor ($C$).
+The $V_s$ voltage supply varies over time.
+
+\[ 
+v_s (t)= \left\{
+\begin{array}{ll}
+      V_s & t \leq 0 \\
+      \sin(2 \pi f t) & t>0\\
+\end{array} 
+\right. 
+\]
+
 With regard to the identification of the nodes it was decided that the ground node would hereafter be referred to as node 0. Node 4 was also an option but because in \textit{Ngspice} 0 is the ground node, this notation was also used in the theoretical analysis for reasons of convenience and coherence.
 
 
