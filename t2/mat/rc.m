@@ -26,7 +26,7 @@ trash = fscanf(data, "\n\nUnits for the values: V, mA, kOhm, mS and uF\n\nValues
 [fR1, fR2, fR3, fR4, fR5, fR6, fR7, count, errmsg] = fscanf(data, "R1 = %f \nR2 = %f \nR3 = %f \nR4 = %f \nR5 = %f \nR6 = %f \nR7 = %f \n", "C");
 [fVs, fC, fKb, fKd, count, errmsg] = fscanf(data, "Vs = %f \nC = %f \nKb = %f \nKd = %f", "C");
 
-fclose(data)
+fclose(data);
 
 
 %%%%%%%%%%%%%%%%%%%%%%% MAIN CALCULATIONS %%%%%%%%%%%%%%%%555
@@ -71,12 +71,12 @@ Vx= V6-V8;
 
 %%%%%% t = 0
 M0 = [(1/fR1) + (1/fR2) + (1/fR3), -(1/fR2), -(1/fR3), 0, 0, 0, 0;
-      1/fR2 - fKb, 1/fR2, fKb, 0, 0, 0, 0;
-      fKb, 0, -fKb - 1/fR5, 1/fR5, 0, 0, 1;
+      -1/fR2 - fKb, 1/fR2, fKb, 0, 0, 0, 0;
+      fKb, 0, -fKb - 1/fR5, 1/fR5, 0, 0, -1;
       0, 0, 0, 0, -1/fR6 - 1/fR7, 1/fR7, 0; 
       0, 0, 1, 0, fKd/fR6, -1, 0; 
       0, 0, 0, 1, 0, -1, 0;
-      1/fR3, 0, -1/fR3 - 1/fR4 - 1/fR5, 1/fR5, 1/fR7, -1/fR7, 0;];
+      1/fR3, 0, -1/fR3 - 1/fR4 - 1/fR5, 1/fR5, 1/fR7, -1/fR7, -1;];
 
 
 
@@ -95,6 +95,20 @@ Ix  = x0(7)
 Req= Vx/Ix
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea3
+
+t_3=0:1e-6:20e-3;
+
+v6_natural = Vx * exp(-t_3/(Req*fC));
+
+v6natural_plot = figure ();
+plot (t_3*1000, v6_natural, "g");
+
+xlabel ("t[ms]");
+ylabel ("v6(t) [V]");
+print (v6natural_plot, "v6natural_plot.eps", "-depsc");
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea4
 
 Vsp= 1; 
@@ -102,14 +116,13 @@ f=1000;
 w= 2*pi*f;
 Zc = 1/(j*w*fC); 
 
-
 Mp = [ 1, 0, 0, 0, 0, 0, 0;                                                           %no1
-      -(1/fR1), (1/fR1) + (1/fR2) + (1/fR3), -(1/fR2),0,  -(1/fR3), 0, 0;             %no2
-      0, -(1/fR2) - fKb, (1/fR2), 0, fKb, 0, 0;                                       %no3
+      -(1/fR1), (1/fR1) + (1/fR2) + (1/fR3), -(1/fR2), -(1/fR3), 0, 0, 0;             %no2
+      0, -(1/fR2) - fKb, (1/fR2), fKb, 0, 0, 0;                                       %no3
       0, fKb, 0,-fKb - (1/fR5), (1/fR5)+(1/Zc), 0,-(1/Zc);                            %no6
       0, 0, 0, 0, 0, -(1/fR6) - (1/fR7), (1/fR7);                                     %no7 
       0, 0, 0, 1, 0, fKd/fR6, -1;                                                     %no8
-      0, (1/fR3), 0,-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5)-(1/Zc),(1/fR7),-(1/fR7)+(1/Zc);]; %supernode
+      0, (1/fR3), 0,-(1/fR3)-(1/fR4)-(1/fR5),(1/fR5)+(1/Zc),(1/fR7),-(1/fR7)-(1/Zc);]; %supernode
 
 
 bp = [Vsp; 0; 0; 0; 0; 0; 0];
@@ -142,7 +155,7 @@ V1s= imag(ct*V1p);
 V2s= imag(ct*V2p);
 V3s= imag(ct*V3p);
 V5s= imag(ct*V5p);
-V6s= imag(ct*V6p);
+V6s= imag(ct*V6p) + v6_natural;
 V7s= imag(ct*V7p);
 V8s= imag(ct*V8p);
 
@@ -247,7 +260,7 @@ fprintf(ngspice_1_input,"R6 0 7 %f\n", fR6);
 fprintf(ngspice_1_input,"Vi 7 im %f\n",0); 
 
 fprintf(ngspice_1_input,"R7 im 8 %f\n", fR7);
-fprintf(ngspice_1_input,"Vs 0 1 %f\n", fVs);
+fprintf(ngspice_1_input,"Vs 1 0 %f\n", fVs);
 fprintf(ngspice_1_input,"Gb 6 3 2 5 %f\n", fKb);
 fprintf(ngspice_1_input,"Hd 5 8 Vi %f\n", fKd);
 
@@ -271,7 +284,7 @@ fprintf(ngspice_2_input,"Vi 7 im %f\n", 0);
 
 fprintf(ngspice_2_input,"R7 im 8 %f\n", fR7);
 fprintf(ngspice_2_input,"Vs 1 0 %f\n", 0);
-fprintf(ngspice_2_input,"Vx 6 8 %f\n", V6-V8);
+fprintf(ngspice_2_input,"Vx 6 8 %f\n", Vx);
 fprintf(ngspice_2_input,"Gb 6 3 2 5 %f\n", fKb);
 fprintf(ngspice_2_input,"Hd 5 8 Vi %f\n", fKd);
 
@@ -296,7 +309,7 @@ fprintf(ngspice_3_input,"Vs 1 0 %f\n", 0);
 fprintf(ngspice_3_input,"C1 6 8 %f\n", fC);
 fprintf(ngspice_3_input,"Gb 6 3 2 5 %f\n", fKb);
 fprintf(ngspice_3_input,"Hd 5 8 Vi %f\n", fKd);
-fprintf(ngspice_3_input,".ic v(6) = %f v(8) = %f\n", V6, V8);
+fprintf(ngspice_3_input,".ic v(6) = %f v(8) = %f\n", V60, V80);
 
 fclose(ngspice_3_input);
 
@@ -319,7 +332,7 @@ fprintf(ngspice_4_input,"Vs 1 0 SIN(0.0 1.0 1000.0) AC 1.0 0.0\n");
 fprintf(ngspice_4_input,"C1 6 8 %f\n", fC);
 fprintf(ngspice_4_input,"Gb 6 3 2 5 %f\n", fKb);
 fprintf(ngspice_4_input,"Hd 5 8 Vi %f\n", fKd);
-fprintf(ngspice_4_input,".ic v(6) = %f v(8) = %f\n", V6, V8);
+fprintf(ngspice_4_input,".ic v(6) = %f v(8) = %f\n", V60, V80);
 
 fclose(ngspice_4_input);
 
