@@ -77,62 +77,124 @@ illustrated in Figure~\ref{fig:forced}.
 
 
 \subsection{Circuit when $t<0$} % ---> alínea 1
-For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c$, since during this time the capacitor is charging and eventually when it is fully charged the current stops. Taking this into account it was possible to determine the voltages in all of the nodes using the nodal method. The equations obtained were the following oones:
-
-
-
-
+For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c=0$, since it is considered that the capacitor had been charging for a long time and eventually reached steady-state and in that moment the current is null. Taking this into account it was possible to determine the voltages in all of the nodes using the nodal method. The equations obtained were the following ones:
 
 % * pus V_0 em vez de V_4
 % * retirei I_c das equações por ser nulo
 
 \begin{equation}
   \begin{cases}
-  V_0 = 0 & \mbox{GND node} \\
+  V_0 = 0 & \mbox{node 0}\\
   V_1-V_0 = V_S & \mbox{node 1} \\
-  \frac{V_2-V_1}{R_1}+\frac{V_2-V_5}{R_3}+\frac{V_2-V_3}{R_2} = 0 & \mbox{node 2} \\
+  \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
   (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
-  (V_5-V_2)K_b + \frac{V_6-V_5}{R_5} & \mbox{node 6} \\
-  \frac{V_4-V_7}{R_6} - \frac{V_7-V_8}{R_7} & \mbox{node 7} \\
-  (V_5-V_8) = K_d \frac{V_4-V_7}{R_6} & \mbox{node 8} \\
-  \frac{V_2-V_5}{R_3} + \frac{V_6-V_5}{R_5} + \frac{V_7-V_8}{R_7} - \frac{V_5-V_4}{R_4} & \mbox{supernode 5-8} \\ 
+  (V_2-V_5)K_b + \frac{V_6-V_5}{R_5} = 0 & \mbox{node 6} \\
+  \frac{V_0-V_7}{R_6} - \frac{V_7-V_8}{R_7} = 0 & \mbox{node 7} \\
+  (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{node 8} \\
+  \frac{V_2-V_5}{R_3} - \frac{V_5-V_0}{R_4} + \frac{V_6-V_5}{R_5} + \frac{V_7-V_8}{R_7}  = 0 & \mbox{supernode 5-8} \\ 
   \end{cases}
 \end{equation}
+% As soluções são [V0,V1,V2,V3,V4,V5,V6,V7,V8]
 
-The first two equatins were obtained by inspections, whereas the rest were through KCL.
-Solving this system of equations in \textit{Octave} the value of the voltage in each node was determined and, subsequently, the current in every branch.
+The first two equations were obtained by inspection, whereas the rest were through KCL. Note that $V_b=V_2-V_5$.
+Solving this system of equations the value of the voltage in each node was determined and, subsequently, the current in every branch.
+Note that all systems of equations were solved using \textit{Octave}.
 
-% * tabela com os resultados: potencial em todos os nós e corrente em cada ramo
+% *** tabela com os resultados: potencial em todos os nós e corrente em cada ramo
 
 
 
 
 
 \subsection{Circuit when $t=0$} % ---> alínea 2
-Making $V_S=0$ and replacing the capacitor with a voltage source $V_X=V_6-V_8$, $V_6$ and $V_8$ being, respectively, the voltage in nodes 6 and 8 obtained for $t<0$.
-Using once again the nodal analysis the value of $I_X$, the current that goes through $V_X$, was found out. Because the value of $V_X$ was already known, the equivalent resistor $R_{eq} = \frac{V_X}{I_X}$ was computed, as well as the time constant $\tau = R_{eq}C$.
-The reason for adopting this procedure was that the capacitor's terminals are connected to nodes 6 and 8 and, even the though the values of $V_6$ and $V_8$ may change when $t=0$, the electric potential difference, $V_6-V_8$, has to remain the same. There has to be continuity regarding what happens when $t<0$ and in instant $t=0$. Besides that, as learnt in the theory classes, to compute the equivalent resistor as seen by the capacitor (and later the time constant), one has to consider that all independent sources are switched off. However, the only independent source in the given circuit is $V_S$ and, for this point, it had already been assumed that $V_S=0$. The remaing sources are all dependent so the traditional analysis using the fact that the resistors were either in series or in parallel to simplify the circuit could not be applied here.
+Making $V_S=0$, 0 and 1 become the same node, the ground node, which means that $V_0=V_1=0$, and replacing the capacitor with a voltage source $V_X=V_6-V_8$, $V_6$ and $V_8$ being, respectively, the voltage in nodes 6 and 8 obtained for $t<0$.
+Using once again the nodal analysis the value of $I_X$, the current that goes through $V_X$, was found out. Because the value of $V_X$ was already known, the equivalent resistor $R_{eq} = \frac{V_X}{I_X}$ was computed, as well as the time constant $\tau = R_{eq}C$, $C$ being the capacitance.
+The reason for adopting this procedure was that the capacitor's terminals are connected to nodes 6 and 8 and, even though the values of $V_6$ and $V_8$ may change when $t=0$, the electric potential difference, $V_6-V_8$, has to remain the same. There has to be continuity regarding what happens when $t<0$ and in instant $t=0$. Besides that, as learnt in the theory classes, to compute the equivalent resistor as seen by the capacitor (and later the time constant), one has to consider that all independent sources are switched off, which is why it was assumed that $V_S=0$. The remaining sources are all dependent so the traditional analysis using the fact that the resistors were either in series or in parallel to simplify the circuit could not be applied here.
+Using once again the nodal analysis method, one reaches the following equations:
 
-% * apresentar sistema de equações
-% * tabela com os resultados
+\begin{equation}
+  \begin{cases}
+  V_0=0 & \mbox{node 0} \\
+  V_1=0 & \mbox{node 1} \\
+  \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
+  (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
+  V_6-V_8 = V_X & \mbox{node 6} \\
+  \frac{V_0-V_7}{R_6} - \frac{V_7-V_8}{R_7} = 0 & \mbox{node 7} \\
+  (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{node 8} \\
+  \frac{V_2-V_5}{R_3} + \frac{V_0-V_5}{R_4} + \frac{V_6-V_5}{R_5} + \frac{V_7-V_8}{R_7} = 0 & \mbox{supernode 5-8} \\ 
+  \end{cases}
+\end{equation}
+% As soluções são [V0,V1,V2,V3,V5,V6,V7,V8]
+
+After finding the values of the voltage in every node for instant $t=0$ one can solve equation $(V_2-V_5)K_b + \frac{V_6-V_5}{R_5} + I_X = 0$ for node 6 and, therefore, know the value of $I_X$.
+
+% *** tabela com os resultados
+
+
 
 
 \subsection{Circuit when $t>0$}
 
-% * escrever equação diferencial e dizer que solução = natural + forçada? como no t0
-
 \subsubsection{Natural solution}  % ---> alínea 3
 As learnt in lectures, the natural solution is of the form $v_{6_{n}}(t) = A e^{-\frac{t}{R_{eq}C}}$, where $A$ is an integration constant.
+Using the initial condition $v_{6_{n}}(t=0) = V_X$, which is the capacitor voltage for instant $t=0$, one can conclude that $A= V_X$. Thus $v_{6_{n}}(t) = V_X e^{-\frac{t}{R_{eq}C}}$.
 
-% * use the capacitor voltage V_X for t<0 as the initial condition
-% * plot for [0, 20] ms, idetify axes, display signals and units
+% *** show natural solution
+% *** plot v_6_n(t) for [0, 20] ms, idetify axes, display signals and units
+
+
 
 
 \subsubsection{Forced solution}  % ---> alínea 4
+To determine the forced solution, $v_{6_{f}}(t)$, in the same interval with $f=1kHz$ it was assumed that $V_S=1$, $C$ was replaced with its impedance$Z_c$ and then through the nodal analysis the phasor voltage in each node was calculated. Below is the system of equations that was used.
+
+
+\begin{equation}
+  \begin{cases}
+  Ṽ_0 = 0 & \mbox{node 0} \\
+   Ṽ_1 = Ṽ_S & \mbox{node 1} \\
+  \frac{Ṽ_2-Ṽ_1}{R_1}+\frac{Ṽ_2-Ṽ_3}{R_2}+\frac{Ṽ_2-Ṽ_5}{R_3} = 0 & \mbox{node 2} \\
+  (Ṽ_5-Ṽ_2)K_b + \frac{Ṽ_3-Ṽ_2}{R_2} = 0 & \mbox{node 3} \\
+  (-Ṽ_5+Ṽ_2)K_b + \frac{Ṽ_6-Ṽ_5}{R_5} + \frac{Ṽ_6-Ṽ_8}{Z_c} = 0 & \mbox{node 6} \\
+  \frac{Ṽ_0-Ṽ_7}{R_6} - \frac{Ṽ_7-Ṽ_8}{R_7} = 0 & \mbox{node 7} \\
+  (Ṽ_5-Ṽ_8) = K_d \frac{Ṽ_0-Ṽ_7}{R_6} & \mbox{node 8} \\
+  \frac{Ṽ_2-Ṽ_5}{R_3} + \frac{Ṽ_0-Ṽ_5}{R_4} + \frac{Ṽ_6-Ṽ_5}{R_5} + \frac{Ṽ_7-Ṽ_8}{R_7} - \frac{Ṽ_6-Ṽ_8}{Z_c} = 0 & \mbox{supernode 5-8} \\ 
+  \end{cases}
+\end{equation}
+% As soluções são [Ṽ0,Ṽ1,Ṽ2,Ṽ3,Ṽ5,Ṽ6,Ṽ7,Ṽ8]
+
+% dizer explicitamente quais são as incógnitas para cada sistema de equações?
+% explicar melhor como é que se chegou a cada equação?
+
+
+
+% *** show forced solution
+% *** tabela com a amplitude complexa nos nós
+
+
+
 
 \subsubsection{Final solution}  % ---> alínea 5
+To determine the final total solution, $v_6(t)$, one has to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and the forced solutions
+
+% * escrever equação diferencial e dizer que solução = natural + forçada? como no t0
+
+% *** plot v_s(t) and v_6(t) for [-5, 20] ms in the same figure
+
+
+
 
 \subsubsection{Frequency respnses}  % ---> alínea 6
+
+
+
+
+
+
+
+
+% ver print screens da aula gravada que estão nas cenas teóricas 04/02/2021 10:16pm
+
 
 \lipsum[1-1]
 
