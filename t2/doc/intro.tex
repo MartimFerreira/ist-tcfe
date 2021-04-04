@@ -7,7 +7,7 @@
 % circuit image
 % --- present the values that were given to us
 % --- talk about the significant digits
-% --- sections
+% sections
 
 % state the learning objective 
 The aim of this laboratory assignment is to study the RC circuit in Figure~\ref{fig:rc}. It contains two voltage sources ($V_d$ a linear current controlled one and $V_S$, an independent one, which supplies voltage $V_S$ for $t\leq0$ and $\sin (2 \pi f t)$ for $t>0$), one current source ($I_b$ a linear voltage controlled one), resistors ($R_1$, $R_2$, $R_3$, $R_4$, $R_5$, $R_6$ and $R_7$) and a capacitor ($C$).
@@ -20,14 +20,36 @@ With regard to the identification of the nodes it was decided that the ground no
 \label{fig:rc}
 \end{figure}
 
-% *** tabela com os valores gerados
 
-% falar outra vez dos algarismos significativos?
+
+
+
+The original data that was received had 11 significant digits. However, Octave, by default, works with an approximation of 5 significant digits. With this new approximation the results still present high precision and the uncertainty range is still below 1\%, so we kept it, while still using the original values in ngspice. The table \ref{tab:ap} has all the original values and the approximated values that were considered. 
+
+\begin{table}[hbt!]
+  \centering
+  \begin{tabular}{|c|c|c|}
+    \hline
+    &           \textbf{Original Values}        & \textbf{Approximated Values ---- confirmar!!!}\\ \hline
+    $R_1 (\Omega)$   &  $   1039.30068064   $     & $1039.3$\\ \hline
+    $R_2 (\Omega)$   &  $   2010.9087471    $      & $2010.9$\\ \hline
+    $R_3 (\Omega)$   &  $   3041.24242148   $    & $3041.2$\\ \hline
+    $R_4 (\Omega)$   &  $   4183.83562625   $     & $4183.8$\\ \hline
+    $R_5 (\Omega)$   &  $   3095.83437009   $     & $3095.8$\\ \hline
+    $R_6 (\Omega)$   &  $   2021.17084711   $     & $2021.2$\\ \hline
+    $R_7 (\Omega)$   &  $   1022.26630661   $     & $1022.3$\\\hline
+    $V_S (V)$   &  $   5.17979967502   $     & $5.1798$\\ \hline
+    $C (F)$   &  $    0.00000100439545365     $     & $0.0010044$\\ \hline
+    $K_b (S)$   &  $    0.00708750963899     $     & $0.0070875$\\ \hline
+    $K_d (\Omega)$   &     $8185.75062147    $     & $8185.8$\\ \hline
+  \end{tabular}
+  \caption{Significant figures considered by Octave and Ngsipe- approximation} 
+  \label{tab:ap}
+\end{table}
+
+% falar outra vez dos algarismos significativos
+%The original data that was received had 11 significant digits. However, Octave, by default, works with an approximation of 5 significant digits. With this new approximation the results still present high precision and the uncertainty range is still below 1\%, so we kept it, while still using the original values in ngspice. The table \ref{tab:ap} has all the original values and the approximated values that were considered. 
+% appprooximated values da tabela ainda têm que ser confirmados
 
 % secções
-
-In Section~\ref{sec:analysis}, a theoretical analysis of the circuit is
-presented. In Section~\ref{sec:simulation}, the circuit is analysed by
-simulation, and the results are compared to the theoretical results obtained in
-Section~\ref{sec:analysis}. The conclusions of this study are outlined in
-Section~\ref{sec:conclusion}.
+In Section~\ref{sec:analysis}, a theoretical analysis of the circuit is presented. It was important to know how the circuit behaved for different time intervals, as well as to understand how the voltages changed not only over time but also with the frequency. Here all systems of equations were solved using \textit{Octave}. In Section~\ref{sec:simulation}, the circuit is analysed using \textit{ngspice}, following a similar procedure to that of the previous section. Lastly, in Section~\ref{sec:conclusion}, the simulation and the theoretical predictions are compared and conclusions are taken.
