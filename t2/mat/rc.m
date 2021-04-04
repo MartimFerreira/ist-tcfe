@@ -44,6 +44,8 @@ fKd = fKd*1000;
 
 
 %%%%%%%%% t < 0
+
+
 M = [ 1, 0, 0, -1, 0, 0, 0, 0;
       -(1/fR1), (1/fR1) + (1/fR2) + (1/fR3), -(1/fR2),0,  -(1/fR3), 0, 0, 0;
       0, -(1/fR2) - fKb, (1/fR2), 0, fKb, 0, 0, 0;
@@ -65,8 +67,17 @@ V5 = x(5)
 V6 = x(6)
 V7 = x(7)
 V8 = x(8)
+Vx= V6-V8;
 
-Vx= V6-V8; 
+
+I1=(V1-V2)/fR1
+I2=(V2-V3)/fR2 
+I3=(V2-V5)/fR3 
+I4=(-V5)/fR4
+I5=(V5-V6)/fR5 
+I6=(-V7)/fR6
+I7=(V7-V8)/fR7 
+
 
 
 %%%%%% t = 0
@@ -159,14 +170,35 @@ V6s= imag(ct*V6p) + v6_natural;
 V7s= imag(ct*V7p);
 V8s= imag(ct*V8p);
 
+
+
+t_neg= 0:1e-6:5e-03;
+V6_vector =linspace(V6,V6,5e03+1);
+Vs_vector =linspace(fVs,fVs,5e03+1);
+
+V6_verticalx = linspace(0,0,100);
+V6_verticaly = linspace(V6,V60,100);
+Vs_verticalx = linspace(0,0,100);
+Vs_verticaly = linspace(0,fVs,100);
+
+
 vfinal_plot = figure ();
+plot((t_neg-5e-03)*1000, V6_vector, "g"); 
+hold on; 
+plot((t_neg-5e-03)*1000, Vs_vector, "b");
+hold on; 
 plot (t*1000, V6s, "g");
 hold on;
 plot (t*1000, V1s, "b");
+hold on; 
+plot(V6_verticalx,V6_verticaly, "g");
+hold on; 
+plot(Vs_verticalx,Vs_verticaly, "b");
+
 
 xlabel ("t[ms]");
 ylabel ("v6(t), vs(t) [V]");
-legenda= legend("V6(t)" , "Vs(t)"); 
+legenda= legend("V6(t)" ,"Vs(t)"); 
 print (vfinal_plot, "vfinal_plot.eps", "-depsc");
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%alinea6
@@ -338,9 +370,56 @@ fclose(ngspice_4_input);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Tables%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+negative_time_tab = fopen("octave_negative_time_tab.tex", "w");
+
+fprintf(negative_time_tab, "$I_1$ & %f \\\\ \\hline", I1);
+fprintf(negative_time_tab, "$I_2$ & %f \\\\ \\hline", I2);
+fprintf(negative_time_tab, "$I_3$ & %f \\\\ \\hline", I3);
+fprintf(negative_time_tab, "$I_4$ & %f \\\\ \\hline", I4);
+fprintf(negative_time_tab, "$I_5$ & %f \\\\ \\hline", I5);
+fprintf(negative_time_tab, "$I_6$ & %f \\\\ \\hline", I6);
+fprintf(negative_time_tab, "$I_7$ & %f \\\\ \\hline", I7);
+fprintf(negative_time_tab, "$V_0$ & %f \\\\ \\hline", V4);
+fprintf(negative_time_tab, "$V_1$ & %f \\\\ \\hline", V1);
+fprintf(negative_time_tab, "$V_2$ & %f \\\\ \\hline", V2);
+fprintf(negative_time_tab, "$V_3$ & %f \\\\ \\hline", V3);
+fprintf(negative_time_tab, "$V_5$ & %f \\\\ \\hline", V5);
+fprintf(negative_time_tab, "$V_6$ & %f \\\\ \\hline", V6);
+fprintf(negative_time_tab, "$V_7$ & %f \\\\ \\hline", V7);
+fprintf(negative_time_tab, "$V_8$ & %f \\\\ \\hline", V8);
+
+fclose(negative_time_tab);
+
+zero_time_tab = fopen("octave_zero_time_tab.tex", "w");
+
+fprintf(zero_time_tab, "$V_0$ & %f \\\\ \\hline", 0);
+fprintf(zero_time_tab, "$V_1$ & %f \\\\ \\hline", 0);
+fprintf(zero_time_tab, "$V_2$ & %f \\\\ \\hline", V20);
+fprintf(zero_time_tab, "$V_3$ & %f \\\\ \\hline", V30);
+fprintf(zero_time_tab, "$V_5$ & %f \\\\ \\hline", V50);
+fprintf(zero_time_tab, "$V_6$ & %f \\\\ \\hline", V60);
+fprintf(zero_time_tab, "$V_7$ & %f \\\\ \\hline", V70);
+fprintf(zero_time_tab, "$V_8$ & %f \\\\ \\hline", V80);
+fprintf(zero_time_tab, "$V_x$ & %f \\\\ \\hline", Vx);
+fprintf(zero_time_tab, "$I_x$ & %f \\\\ \\hline", Ix);
+fprintf(zero_time_tab, "$R_e_q$ & %f \\\\ \\hline", Req);
+
+fclose(zero_time_tab);
 
 
+complex_tab = fopen("octave_complex_tab.tex", "w");
 
- 
+fprintf(complex_tab, "$A_V_1$ & %f \\\\ \\hline", AV1p);
+fprintf(complex_tab, "$A_V_2$ & %f \\\\ \\hline", AV2p);
+fprintf(complex_tab, "$A_V_3$ & %f \\\\ \\hline", AV3p);
+fprintf(complex_tab, "$A_V_5$ & %f \\\\ \\hline", AV5p);
+fprintf(complex_tab, "$A_V_6$ & %f \\\\ \\hline", AV6p);
+fprintf(complex_tab, "$A_V_7$ & %f \\\\ \\hline", AV7p);
+fprintf(complex_tab, "$A_V_8$ & %f \\\\ \\hline", AV8p);
+
+fclose(complex_tab);
+
