@@ -5,7 +5,7 @@
 % MUITO IMPORTANTE: LER OS COMENTÁRIOS
 
 \subsection{Circuit when $t<0$} % ---> alínea 1
-For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c=0$, since it is considered that the capacitor had been charging for a long time and eventually reached steady-state and in that moment the current is null. Taking this into account it was possible to determine the voltages in all of the nodes using the nodal method. The equations obtained were the following ones:
+For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c=0$, since it is considered that the capacitor had been charging for a long time and eventually reached steady-state, making the current passing through it null. Taking this into account it is possible to determine the voltages in all of the nodes using the nodal method. The equations obtained were the following ones:
 
 % * pus V_0 em vez de V_4
 % * retirei I_c das equações por ser nulo
@@ -13,18 +13,18 @@ For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c=0$, since 
 \begin{equation}
   \begin{cases}
   V_0 = 0 & \mbox{node 0}\\
-  V_1-V_0 = V_S & \mbox{node 1} \\
+  V_1-V_0 = V_S & \mbox{source between nodes 1 and 0} \\
   \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
   (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
+  \frac{V_2-V_5}{R_3} - \frac{V_5-V_0}{R_4} + \frac{V_6-V_5}{R_5} + \frac{V_7-V_8}{R_7}  = 0 & \mbox{supernode 5-8} \\ 
   (V_2-V_5)K_b + \frac{V_6-V_5}{R_5} = 0 & \mbox{node 6} \\
   \frac{V_0-V_7}{R_6} - \frac{V_7-V_8}{R_7} = 0 & \mbox{node 7} \\
-  (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{node 8} \\
-  \frac{V_2-V_5}{R_3} - \frac{V_5-V_0}{R_4} + \frac{V_6-V_5}{R_5} + \frac{V_7-V_8}{R_7}  = 0 & \mbox{supernode 5-8} \\ 
+  (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{source between nodes 5 and 8} \\
   \end{cases}
 \end{equation}
-% As soluções são [V0,V1,V2,V3,V4,V5,V6,V7,V8]
+% As soluções são [V0,V1,V2,V3,V5,V6,V7,V8]
 
-The first two equations were obtained by inspection, whereas the rest were through KCL. Note that $V_b=V_2-V_5$.
+The first equation corresponds to imposing node 0 as the ground node, the second and last equations are the equations for the voltage sources and the rest are applications of KCL to the various nodes and to supernode 5-8. %Note that $V_b=V_2-V_5$.
 Solving this system of equations the value of the voltage in each node was determined and, subsequently, the current in every branch.
 
 % *** tabela com os resultados: potencial em todos os nós e corrente em cada ramo
@@ -43,26 +43,26 @@ Solving this system of equations the value of the voltage in each node was deter
 
 
 \subsection{Calculation of $R_{eq}$} % ---> alínea 2
-Making $V_S=0$, 0 and 1 become the same node, the ground node, which means that $V_0=V_1=0$, and replacing the capacitor with a voltage source $V_X=V_6-V_8$, $V_6$ and $V_8$ being, respectively, the voltage in nodes 6 and 8 obtained for $t<0$.
-Using once again the nodal analysis the value of $I_X$, the current that goes through $V_X$, was found out. Because the value of $V_X$ was already known, the equivalent resistor $R_{eq} = \frac{V_X}{I_X}$ was computed, as well as the time constant $\tau = R_{eq}C$, $C$ being the capacitance.
-The reason for adopting this procedure was that the capacitor's terminals are connected to nodes 6 and 8 and, even though the values of $V_6$ and $V_8$ may change when $t=0$, the electric potential difference, $V_6-V_8$, has to remain the same. There has to be continuity regarding what happens when $t<0$ and in instant $t=0$. Besides that, as learnt in the theory classes, to compute the equivalent resistor as seen by the capacitor (and later the time constant), one has to consider that all independent sources are switched off, which is why it was assumed that $V_S=0$. The remaining sources are all dependent so the traditional analysis using the fact that the resistors were either in series or in parallel to simplify the circuit could not be applied here.
+In order to compute the $R_{eq}$ as seen by terminals of the capacitor, the circuit was analyzed at $t = 0$ and it was imposed that $V_S=0$, meaning 0 and 1 become the same node, the ground node ($V_0=V_1=0$). The capacitor was also replaced with a voltage source $V_X=V_6-V_8$, with $V_6$ and $V_8$ being, respectively, the voltages in nodes 6 and 8 obtained for $t<0$.
+Using nodal analysis once again, the value of $I_X$, the current that goes through $V_X$, was found out. Because the value of $V_X$ was already known, the equivalent resistance $R_{eq} = \frac{V_X}{I_X}$ was computed, as well as the time constant $\tau = R_{eq}C$, $C$ being the capacitance.
+The reason for adopting this procedure was that the capacitor's terminals are connected to nodes 6 and 8 and, even though $V_6$ and $V_8$ may not be continuous when $t=0$, when it comes to the electric potential difference, $V_6-V_8$, there has to be continuity regarding what happens for $t<0$ and in instant $t=0$. Besides that, as learnt in the theory classes, to compute the equivalent resistor as seen by the capacitor (and later the time constant), one has to consider that all independent sources are switched off, which is why it was imposed that $V_S=0$. The remaining sources are all dependent so the traditional analysis using the fact that the resistors were either in series or in parallel to simplify the circuit could not be applied here.
 Using once again the nodal analysis method, one reaches the following equations:
 
 \begin{equation}
   \begin{cases}
   V_0=0 & \mbox{node 0} \\
-  V_1=0 & \mbox{node 1} \\
+  V_1=0 & \mbox{nodes 1 and 0 are now the same} \\
   \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
   (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
-  V_6-V_8 = V_X & \mbox{node 6} \\
-  \frac{V_0-V_7}{R_6} - \frac{V_7-V_8}{R_7} = 0 & \mbox{node 7} \\
-  (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{node 8} \\
   \frac{V_2-V_5}{R_3} + \frac{V_0-V_5}{R_4} + \frac{V_6-V_5}{R_5} + \frac{V_7-V_8}{R_7} = 0 & \mbox{supernode 5-8} \\ 
+  V_6-V_8 = V_X & \mbox{source between nodes 6 and 8} \\
+  \frac{V_0-V_7}{R_6} - \frac{V_7-V_8}{R_7} = 0 & \mbox{node 7} \\
+  (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{source between nodes 5 and 8} \\
   \end{cases}
 \end{equation}
 % As soluções são [V0,V1,V2,V3,V5,V6,V7,V8]
 
-After finding the values of the voltage in every node for instant $t=0$ one can solve equation $(V_2-V_5)K_b + \frac{V_6-V_5}{R_5} + I_X = 0$ for node 6 and, therefore, know the value of $I_X$.
+After finding the values of the voltage in every node for instant $t=0$ one can solve equation $(V_2-V_5)K_b + \frac{V_6-V_5}{R_5} + I_X = 0$ (KCL applied to node 6) for $I_x$ and, with it, calculate $R_{eq}$.
 
 % *** tabela com os resultados
 
