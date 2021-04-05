@@ -194,10 +194,10 @@ hold on;
 plot (t*1000, V6s+v6_natural, "g");
 hold on;
 plot (t*1000, V1s, "b");
-hold on; 
-plot(V6_verticalx,V6_verticaly, "g");
-hold on; 
-plot(Vs_verticalx,Vs_verticaly, "b");
+%hold on; 
+%plot(V6_verticalx,V6_verticaly, "g");
+%hold on; 
+%plot(Vs_verticalx,Vs_verticaly, "b");
 
 
 xlabel ("t[ms]");
