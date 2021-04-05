@@ -394,17 +394,17 @@ fclose(ngspice_4_input);
 
 data_tab = fopen("octave_data_tab.tex", "w");
 
-fprintf(data_tab, "$R_1$ & %f \\\\ \\hline\n", fR1);
-fprintf(data_tab, "$R_2$ & %f \\\\ \\hline\n", fR2);
-fprintf(data_tab, "$R_3$ & %f \\\\ \\hline\n", fR3);
-fprintf(data_tab, "$R_4$ & %f \\\\ \\hline\n", fR4);
-fprintf(data_tab, "$R_5$ & %f \\\\ \\hline\n", fR5);
-fprintf(data_tab, "$R_6$ & %f \\\\ \\hline\n", fR6);
-fprintf(data_tab, "$R_7$ & %f \\\\ \\hline\n", fR7);
-fprintf(data_tab, "$V_s$ & %f \\\\ \\hline\n", fVs);
-fprintf(data_tab, "$C$ &   %f \\\\ \\hline\n", fC);
-fprintf(data_tab, "$K_b$ & %f \\\\ \\hline\n", fKb);
-fprintf(data_tab, "$K_d$ & %f \\\\ \\hline\n", fKd);
+fprintf(data_tab, "$R_1\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR1);
+fprintf(data_tab, "$R_2\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR2);
+fprintf(data_tab, "$R_3\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR3);
+fprintf(data_tab, "$R_4\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR4);
+fprintf(data_tab, "$R_5\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR5);
+fprintf(data_tab, "$R_6\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR6);
+fprintf(data_tab, "$R_7\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR7);
+fprintf(data_tab, "$V_s\\;(V)$ & %.12e \\\\ \\hline\n", fVs);
+fprintf(data_tab, "$C\\;(F)$ &   %.12e \\\\ \\hline\n", fC);
+fprintf(data_tab, "$K_b\\;(S)$ & %.12e \\\\ \\hline\n", fKb);
+fprintf(data_tab, "$K_d\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fKd);
 
 fclose(data_tab);
 

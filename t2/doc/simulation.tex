@@ -3,37 +3,43 @@
 
 \subsection{Circuit when $t<0$}
 
-Table \ref{tab:t<0_sim} shows the results of the simulation of the circuit in study for t<0. For this time condition, $v_s = V_s$.
+Table \ref{tab:comparison1} shows the results of the simulation of the circuit in study for $t<0$ on the left and the theoretical values on the right. For this time condition, $v_s = V_s$.
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{|l|r|}
+  \begin{tabular}{|c|c|}
     \hline    
     {\bf Name} & {\bf Value [A or V]} \\ \hline
-    \input{../sim/op_tab}
+    \input{op_tab.tex}
   \end{tabular}
-  \caption{A variable preceded by @ is of type {\em current}
-    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
-    Volt.}
-  \label{tab:t<0_sim}
+  \begin{tabular}{|c|c|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{octave_negative_time_tab.tex}
+  \end{tabular}
+  \caption{Voltages in nodes and currents through branchces for $t<0$ as determined by the simulation (left) and our calculations (right). Values preceded by @ are currents. All currents are in Ampere and all voltages are in Volt}
+  \label{tab:comparison1}
 \end{table}
 
 
 \subsection{Circuit when $t=0$}
 
-Table \ref{tab:t=0_sim} shows the results of the simulation of the circuit in study for t=0. For this simulation, the capacitor was replaced by a voltage source with voltage equal to the difference in electric potential between the terminals of the capacitor for t<0 (that is, $V_6 - V_8$, with $V_6$ and $V_8$ being taken from the previous analysis). This was done because the electric tension between terminals of a capacitor must always be continuous (since a capacitor takes time to charge and discharge), which means the tension between terminals of the capacitor in $t=0$ must be the same it was in our $t<0$ steady-state analysis (even if $V_6$ and $V_8$ had instantaneous variations). The way to ensure this continuity is by doing the aforementioned replacement.
+Table \ref{tab:comparison2} shows the results of the simulation of the circuit in study for $t=0$ on the left and the theoretical values on the right. For this simulation, the capacitor was replaced by a voltage source with voltage equal to the difference in electric potential between the terminals of the capacitor for $t<0$ (that is, $V_6 - V_8$, with $V_6$ and $V_8$ being taken from the previous analysis). This was done because the electric tension between terminals of a capacitor must always be continuous (since a capacitor takes time to charge and discharge), which means the tension between terminals of the capacitor in $t=0$ must be the same it was in our $t<0$ steady-state analysis (even if $V_6$ and $V_8$ had instantaneous variations). The way to ensure this continuity is by doing the aforementioned replacement.
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{|l|r|}
+  \begin{tabular}{|c|c|}
     \hline    
     {\bf Name} & {\bf Value [A or V]} \\ \hline
-    \input{../sim/op2_tab}
+    \input{op2_tab.tex}
   \end{tabular}
-  \caption{A variable preceded by @ is of type {\em current}
-    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
-    Volt.}
-  \label{tab:t=0_sim}
+  \begin{tabular}{|c|c|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{octave_zero_time_tab.tex}
+  \end{tabular}
+  \caption{Voltages in nodes and currents through branchces for $t=0$ as determined by the simulation (left) and our calculations (right)}
+  \label{tab:comparison2}
 \end{table}
 
 
