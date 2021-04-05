@@ -21,6 +21,7 @@ Table \ref{tab:comparison1} shows the results of the simulation of the circuit i
   \label{tab:comparison1}
 \end{table}
 
+Comparing the obtained results from the Theoretical and Simulation Analysis we can see that the all the voltages in nodes and all the currents in branches are consistent for the two different methods. The results are being printed with 12 significant figures and the small difference that can be seen on the last digit of the values are due to approximations that are done when the programs print the results on the tables.
 
 \subsection{Circuit when $t=0$}
 
@@ -42,6 +43,8 @@ Table \ref{tab:comparison2} shows the results of the simulation of the circuit i
   \label{tab:comparison2}
 \end{table}
 
+In this case we can verify that the results obtained from both methods are one more time consistent - the difference between the voltages values in all nodes for the two methods differ in less that $10^-15$. 
+The main difference between the tables are the value of $I_x$ that is simetric. This happens because ngspice , by default, calculates the currents that flows from the positive to negative terminal of the branch and in this case we want to study the opposite direction. 
 
 \subsection{Circuit when $t>0$}
 
