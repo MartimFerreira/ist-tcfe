@@ -1,4 +1,4 @@
-octave.log: rc.m
+octave.log: rc.m ../data.txt
 	octave $< > $@
 
 clean:

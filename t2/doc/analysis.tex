@@ -83,7 +83,7 @@ After finding the values of the voltage in every node for instant $t=0$ one can 
 
 \subsubsection{Natural solution}  % ---> alínea 3
 As learnt in lectures, the natural solution is of the form $v_{6_{n}}(t) = A e^{-\frac{t}{R_{eq}C}}$, where $A$ is an integration constant.
-Since we know, from our previous calculations, the value of $v_{6}(t=0)$ we can discover $A$ by replacing the previously determined value in the expression for the total solution of $v_6(t) = v_{6_n}(t) + v_{6_f}(t)$. The process used to determine $v_{6_f}(t)$ is described in section \ref{subsubsec:theor_forced}. 
+Since we know, from our previous calculations, the value of $v_{6}(t=0)$ we can discover $A$ by replacing the previously determined value in the expression for the total solution, $v_6(t) = v_{6_n}(t) + v_{6_f}(t)$. The process used to determine $v_{6_f}(t)$ is described in section \ref{subsubsec:theor_forced}. 
 
 % *** show natural solution
 % *** plot v_6_n(t) for [0, 20] ms, idetify axes, display signals and units
@@ -98,7 +98,7 @@ Since we know, from our previous calculations, the value of $v_{6}(t=0)$ we can 
 
 \subsubsection{Forced solution}  % ---> alínea 4
 \label{subsubsec:theor_forced}
-To determine the forced solution, $v_{6_{f}}(t)$, in the same interval with $f=1kHz$ it was assumed that $V_S=1$, $C$ was replaced with its impedance $Z_c$ and then through the nodal analysis the phasor voltage in each node was calculated. Below is the system of equations that was used.
+To determine the forced solution, $v_{6_{f}}(t)$, in the same time interval, with $f=1kHz$, a phasor voltage source $\tilde{V_S}=1$ was used, $C$ was replaced with its impedance $Z_c$ and then through nodal analysis the phasor voltage in each node was calculated. Making our phasor voltage source equal $1$ when it is actually a sinusoidal function means the actual voltage in each node is the imaginary part of the respective phasor multiplied by $e^{j \omega t}$. Below is the system of equations used.
 
 
 \begin{equation}
@@ -119,16 +119,24 @@ To determine the forced solution, $v_{6_{f}}(t)$, in the same interval with $f=1
 % explicar melhor como é que se chegou a cada equação?
 
 
-
-% *** show forced solution
 % *** tabela com a amplitude complexa nos nós
 
 
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline    
+    {\bf Name} & {\bf Value} \\ \hline
+    \input{octave_complex_tab.tex}
+  \end{tabular}
+  \caption{Amplitudes of phasor voltages in nodes.}
+  \label{tab:forced_amp}
+\end{table}
 
 
 \subsubsection{Final solution}  % ---> alínea 5
-To determine the final total solution, $v_6(t)$, one had to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and the forced solutions.
-In order to do that the voltage phasors had to be multiplied by $e^{i \omega t}$. Because the stimulus in the circuit, $V_S$, had the form of a sine, the imaginary part of the result was used to determine the forced solution as a real time from the respective phasor, as intended.
+To determine the final total solution, $v_6(t)$, one had to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and forced solutions.
+As mentioned before, in order to do that, the voltage phasors had to be multiplied by $e^{j \omega t}$. Because the stimulus in the circuit, $v_S$, had the form of a sine function, the imaginary part of the result was used to determine the forced solution as a real time function, as intended.
 Then, summing both the natural and the forced solutions, the final total solution was obtained, $v_6(t) = v_{6_n} (t) + v_{6_f} (t)$.
 In the next figure, there are the plots of $v_s(t)$ and $v_6(t)$ in the interval $[-5, 20] \ ms$.
 
@@ -137,14 +145,14 @@ In the next figure, there are the plots of $v_s(t)$ and $v_6(t)$ in the interval
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.8\linewidth]{vfinal_plot.eps}
-\caption{Voltage in node 6 and stimulus Vs.}
+\caption{Voltage in node 6 and stimulus $v_s$.}
 \label{fig:final}
 \end{figure}
 
 
 
 \subsubsection{Frequency response}  % ---> alínea 6
-In the previous point $f=1kHz$. However, now the objective is to understand what happens to the phasors for other frequencies. To do that the procedure used for the last point was used for 35 different values of frequency and then the plots of the variation in both magnitude and phase were made for $v_s(f)$, $v_6(f)$ and $v_c(f) = v_6(f)-v_8(f)$, with the frequency ranging between $0.1 \ Hz$ and $1 \ MHz$, using a logarithmic scale.
+In the previous analysis, the frequency of the indenpendent voltage source was fixed, $f=1kHz$. In order to understand what happens to the phasors as the imposed frequency changes, the procedure used for the last section was repeated for a vector of frequencies and then the plots of the variation in both magnitude and phase were made for $v_s(f)$, $v_6(f)$ and $v_c(f) = v_6(f)-v_8(f)$, with the frequency ranging between $0.1 \ Hz$ and $1 \ MHz$, using a logarithmic scale.
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.8\linewidth]{vmag_plot.eps}
