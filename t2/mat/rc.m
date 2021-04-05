@@ -270,27 +270,31 @@ V8f_phase =angle(V8f);
 Vcf_phase =angle(V6f - V8f);
 
 vphase_plot = figure ();
-semilogx (freq, V6f_phase*(180/pi), "g");
+semilogx (freq, V6f_phase*(180/pi), "r");
 hold on;
 semilogx (freq, V1f_phase*(180/pi), "b");
 hold on;
-semilogx (freq, Vcf_phase*(180/pi), "r");
+semilogx (freq, Vcf_phase*(180/pi), "g");
+hold on; 
+semilogx (freq, V8f_phase*(180/pi), "m");
 
 xlabel ("f[Hz]");
-ylabel ("v6, vs, vc [Degree]");
-legenda= legend("phase of V6" , "phase of Vs", "phase of Vc" ); 
+ylabel ("v6, vs, vc ,v8 [Degree]");
+legenda= legend("phase of V6" , "phase of Vs", "phase of Vc" ,"phase of V8"); 
 print (vphase_plot, "vphase_plot.eps", "-depsc");
 
 vmag_plot = figure ();
-semilogx (freq, mag2db(V6f_mag), "g");
+semilogx (freq, mag2db(V6f_mag), "r");
 hold on;
 semilogx (freq, mag2db(V1f_mag), "b");
 hold on;
-semilogx (freq, mag2db(Vcf_mag), "r");
+semilogx (freq, mag2db(Vcf_mag), "g");
+hold on;
+semilogx (freq, mag2db(V8f_mag), "m");
 
 xlabel ("f[Hz]");
-ylabel ("v6, vs, vc [dB]");
-legenda= legend("magnitude of V6" , "magnitude of Vs", "magnitude of Vc" ); 
+ylabel ("v6, vs, vc ,v8 [dB]");
+legenda= legend("magnitude of V6" , "magnitude of Vs", "magnitude of Vc", "magnitude of V8" ); 
 print (vmag_plot, "vmag_plot.eps", "-depsc");
 
 
