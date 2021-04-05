@@ -43,8 +43,10 @@ Solving this system of equations the value of the voltage in each node was deter
 
 
 \subsection{Calculation of $R_{eq}$} % ---> alínea 2
-In order to compute the $R_{eq}$ as seen by terminals of the capacitor, the circuit was analyzed at $t = 0$ and it was imposed that $V_S=0$, meaning 0 and 1 become the same node, the ground node ($V_0=V_1=0$). The capacitor was also replaced with a voltage source $V_X=V_6-V_8$, with $V_6$ and $V_8$ being, respectively, the voltages in nodes 6 and 8 obtained for $t<0$.
-Using nodal analysis once again, the value of $I_X$, the current that goes through $V_X$, was found out. Because the value of $V_X$ was already known, the equivalent resistance $R_{eq} = \frac{V_X}{I_X}$ was computed, as well as the time constant $\tau = R_{eq}C$, $C$ being the capacitance.
+In order to compute the $R_{eq}$ as seen by terminals of the capacitor, the circuit was analyzed at $t = 0$ and it was imposed that $V_S=0$, meaning 0 and 1 become the same node, the ground node ($V_0=V_1=0$). The capacitor was also replaced with a voltage source $V_x=V_6-V_8$, with $V_6$ and $V_8$ being, respectively, the voltages in nodes 6 and 8 obtained for $t<0$.
+\par
+Using nodal analysis once again, the value of $I_x$, the current that goes through $V_x$, was found out. Because the value of $V_X$ was already known, the equivalent resistance $R_{eq} = \frac{V_x}{I_x}$ was computed, as well as the time constant $\tau = R_{eq}C$, $C$ being the capacitance.
+\par
 The reason for adopting this procedure was that the capacitor's terminals are connected to nodes 6 and 8 and, even though $V_6$ and $V_8$ may not be continuous when $t=0$, when it comes to the electric potential difference, $V_6-V_8$, there has to be continuity regarding what happens for $t<0$ and in instant $t=0$. Besides that, as learnt in the theory classes, to compute the equivalent resistor as seen by the capacitor (and later the time constant), one has to consider that all independent sources are switched off, which is why it was imposed that $V_S=0$. The remaining sources are all dependent so the traditional analysis using the fact that the resistors were either in series or in parallel to simplify the circuit could not be applied here.
 Using once again the nodal analysis method, one reaches the following equations:
 
@@ -62,7 +64,7 @@ Using once again the nodal analysis method, one reaches the following equations:
 \end{equation}
 % As soluções são [V0,V1,V2,V3,V5,V6,V7,V8]
 
-After finding the values of the voltage in every node for instant $t=0$ one can solve equation $(V_2-V_5)K_b + \frac{V_6-V_5}{R_5} + I_X = 0$ (KCL applied to node 6) for $I_x$ and, with it, calculate $R_{eq}$.
+After finding the values of the voltage in every node for instant $t=0$ one can solve equation $(V_2-V_5)K_b + \frac{V_6-V_5}{R_5} + I_x = 0$ (KCL applied to node 6) for $I_x$ and, with it, calculate $R_{eq}$.
 
 % *** tabela com os resultados
 
@@ -98,7 +100,7 @@ Since we know, from our previous calculations, the value of $v_{6}(t=0)$ we can 
 
 \subsubsection{Forced solution}  % ---> alínea 4
 \label{subsubsec:theor_forced}
-To determine the forced solution, $v_{6_{f}}(t)$, in the same time interval, with $f=1kHz$, a phasor voltage source $\tilde{V_S}=1$ was used, $C$ was replaced with its impedance $Z_c$ and then through nodal analysis the phasor voltage in each node was calculated. Making our phasor voltage source equal $1$ when it is actually a sinusoidal function means the actual voltage in each node is the imaginary part of the respective phasor multiplied by $e^{j \omega t}$. Below is the system of equations used.
+To determine the forced solution, $v_{6_{f}}(t)$, in the same time interval, with $f=1kHz$, a phasor voltage source $\tilde{V_S}=1$ was used, $C$ was replaced with its impedance $Z_c$ and then through nodal analysis the phasor voltage in each node was calculated. Making our phasor voltage source equal to $1$ when it is actually a sinusoidal function means the actual voltage in each node is the imaginary part of the respective phasor multiplied by $e^{j \omega t}$. Below is the system of equations used.
 
 
 \begin{equation}
