@@ -86,8 +86,8 @@ After finding the values of the voltage in every node for instant $t=0$ one can 
 \subsection{Circuit when $t>0$}
 
 \subsubsection{Natural solution}  % ---> alínea 3
-As learnt in lectures, the natural solution is of the form $v_{6_{n}}(t) = A e^{-\frac{t}{R_{eq}C}}$, where $A$ is an integration constant.
-Since we know, from our previous calculations, the value of $v_{6}(t=0)$ we can discover $A$ by replacing the previously determined value in the expression for the total solution, $v_6(t) = v_{6_n}(t) + v_{6_f}(t)$. The process used to determine $v_{6_f}(t)$ is described in section \ref{subsubsec:theor_forced}. 
+As learnt in lectures, the natural solution is of the form $V_{6_{n}}(t) = A e^{-\frac{t}{R_{eq}C}}$, where $A$ is an integration constant.
+Since we know, from our previous calculations, the value of $V_{6}(t=0)$ we can discover $A$ by replacing the previously determined value in the expression for the total solution, $V_6(t) = V_{6_n}(t) + V_{6_f}(t)$. The process used to determine $V_{6_f}(t)$ is described in section \ref{subsubsec:theor_forced}. 
 
 % *** show natural solution
 % *** plot v_6_n(t) for [0, 20] ms, idetify axes, display signals and units
@@ -104,7 +104,7 @@ The plot shows the expected behaviour of a negative exponential function.
 
 \subsubsection{Forced solution}  % ---> alínea 4
 \label{subsubsec:theor_forced}
-To determine the forced solution, $v_{6_{f}}(t)$, in the same time interval, with $f=1kHz$, a phasor voltage source $\tilde{V_S}=1$ was used, $C$ was replaced with its impedance $Z_c$ and then through nodal analysis the phasor voltage in each node was calculated. Making our phasor voltage source equal to $1$ when it is actually a sinusoidal function means the actual voltage in each node is the imaginary part of the respective phasor multiplied by $e^{j \omega t}$. Below is the system of equations used.
+To determine the forced solution, $V_{6_{f}}(t)$, in the same time interval, with $f=1kHz$, a phasor voltage source $\tilde{V_S}=1$ was used, $C$ was replaced with its impedance $Z_c$ and then through nodal analysis the phasor voltage in each node was calculated. Making our phasor voltage source equal to $1$ when it is actually a sinusoidal function means the actual voltage in each node is the imaginary part of the respective phasor multiplied by $e^{j \omega t}$. Below is the system of equations used.
 
 
 \begin{equation}
@@ -141,12 +141,12 @@ To determine the forced solution, $v_{6_{f}}(t)$, in the same time interval, wit
 
 
 \subsubsection{Final solution}  % ---> alínea 5
-To determine the final total solution, $v_6(t)$, one had to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and forced solutions.
+To determine the final total solution, $V_6(t)$, one had to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and forced solutions.
 \par
 As mentioned before, in order to do that, the voltage phasors had to be multiplied by $e^{j \omega t}$. Because the stimulus in the circuit, $v_s$, had the form of a sine function, the imaginary part of the result was used to determine the forced solution as a real time function, as intended.
-Then, summing both the natural and the forced solutions, the final total solution was obtained, $v_6(t) = v_{6_n} (t) + v_{6_f} (t)$.
+Then, summing both the natural and the forced solutions, the final total solution was obtained, $V_6(t) = V_{6_n} (t) + V_{6_f} (t)$.
 \par
-In the next figure, there are the plots of $v_s(t)$ and $v_6(t)$ in the interval $[-5, 20] \ ms$.
+In the next figure, there are the plots of $v_s(t)$ and $V_6(t)$ in the interval $[-5, 20] \ ms$.
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.8\linewidth]{vfinal_plot.eps}
@@ -157,24 +157,24 @@ In the next figure, there are the plots of $v_s(t)$ and $v_6(t)$ in the interval
 \subsubsection{Frequency response}  % ---> alínea 6
 \label{sec:frequency}
 
-In the previous analysis, the frequency of the independent voltage source was fixed, $f=1kHz$. In order to understand what happens to the phasors as the imposed frequency changes, the procedure used for the last section was repeated for a vector of frequencies and then the plots of the variation in both magnitude and phase were made for $\tilde{v}_s(f)$, $\tilde{v}_6(f)$ and $\tilde{v}_c(f) = \tilde{v}_6(f)-\tilde{v}_8(f)$, with the frequency ranging between $0.1 \ Hz$ and $1 \ MHz$, using a logarithmic scale.
+In the previous analysis, the frequency of the independent voltage source was fixed, $f=1kHz$. In order to understand what happens to the phasors as the imposed frequency changes, the procedure used for the last section was repeated for a vector of frequencies and then the plots of the variation in both magnitude and phase were made for $\tilde{V}_s(f)$, $\tilde{V}_6(f)$ and $\tilde{V}_c(f) = \tilde{V}_6(f)-\tilde{V}_8(f)$, with the frequency ranging between $0.1 \ Hz$ and $1 \ MHz$, using a logarithmic scale.
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.8\linewidth]{vmag_plot.eps}
-\caption{Variation in magnitude of $\tilde{v}_s$, $\tilde{v}_6$ and $\tilde{v}_c$ with frequency.}
+\caption{Variation in magnitude of $\tilde{V}_s$, $\tilde{V}_6$ and $\tilde{V}_c$ with frequency.}
 \label{fig:magnitude}
 \end{figure}
 
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.8\linewidth]{vphase_plot.eps}
-\caption{Variation in phase of $\tilde{v}_s$, $\tilde{v}_6$ and $\tilde{v}_c$ with frequency.}
+\caption{Variation in phase of $\tilde{V}_s$, $\tilde{V}_6$ and $\tilde{V}_c$ with frequency.}
 \label{fig:phase}
 \end{figure}
 
-In both plots one can see that the magnitude and the phase of $\tilde{v}_s$ are constant. From the expression of $\tilde{v}_s(t)$ for $t>0$, it has magnitude $1$ and phase $0$, which explains why these variables do not vary with the frequency.
+In both plots one can see that the magnitude and the phase of $\tilde{V}_s$ are constant. From the expression of $\tilde{V}_s(t)$ for $t>0$, it has magnitude $1$ and phase $0$, which explains why these variables do not vary with the frequency.
 \par
-In the plot of the magnitude of $\tilde{V}_6$ and $\tilde{V}_c$ both start to decrease at a certain frequency. $\tilde{V}_6$ and $\tilde{V}_c$ then stabilize, with the later one approximating zero.
+In the plot of the magnitude of $\tilde{V}_6$ and $\tilde{V}_c$ both start to decrease at a certain frequency. $\tilde{V}_6$ and $\tilde{V}_c$ then stabilize, with the latter one approximating zero (one should note that the scale is in dB).
 \par
 As for the plot of their phase, from a particular value of frequency, they both begin to decline and then eventually also start to stabilize, with $\tilde{V}_6$ seeming to tend towards $-180\degree$ while $\tilde{V}_c$ goes to $-90\degree$.
 
