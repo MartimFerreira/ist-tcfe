@@ -13,7 +13,7 @@ For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c=0$, since 
 \begin{equation}
   \begin{cases}
   V_0 = 0 & \mbox{node 0}\\
-  V_1-V_0 = V_S & \mbox{source between nodes 1 and 0} \\
+  V_1-V_0 = V_s & \mbox{source between nodes 1 and 0} \\
   \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
   (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
   \frac{V_2-V_5}{R_3} - \frac{V_5-V_0}{R_4} + \frac{V_6-V_5}{R_5} + \frac{V_7-V_8}{R_7}  = 0 & \mbox{supernode 5-8} \\ 
@@ -59,7 +59,7 @@ Using once again the nodal analysis method, one reaches the following equations:
   \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
   (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
   \frac{V_2-V_5}{R_3} + \frac{V_0-V_5}{R_4} + \frac{V_7-V_8}{R_7} + (V_5-V_2)K_b = 0 & \mbox{supernode 5-6-8} \\ 
-  V_6-V_8 = V_X & \mbox{source between nodes 6 and 8} \\
+  V_6-V_8 = V_x & \mbox{source between nodes 6 and 8} \\
   \frac{V_0-V_7}{R_6} - \frac{V_7-V_8}{R_7} = 0 & \mbox{node 7} \\
   (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{source between nodes 5 and 8} \\
   \end{cases}
@@ -143,7 +143,7 @@ To determine the forced solution, $v_{6_{f}}(t)$, in the same time interval, wit
 \subsubsection{Final solution}  % ---> alínea 5
 To determine the final total solution, $v_6(t)$, one had to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and forced solutions.
 \par
-As mentioned before, in order to do that, the voltage phasors had to be multiplied by $e^{j \omega t}$. Because the stimulus in the circuit, $v_S$, had the form of a sine function, the imaginary part of the result was used to determine the forced solution as a real time function, as intended.
+As mentioned before, in order to do that, the voltage phasors had to be multiplied by $e^{j \omega t}$. Because the stimulus in the circuit, $v_s$, had the form of a sine function, the imaginary part of the result was used to determine the forced solution as a real time function, as intended.
 Then, summing both the natural and the forced solutions, the final total solution was obtained, $v_6(t) = v_{6_n} (t) + v_{6_f} (t)$.
 \par
 In the next figure, there are the plots of $v_s(t)$ and $v_6(t)$ in the interval $[-5, 20] \ ms$.
@@ -174,7 +174,7 @@ In the previous analysis, the frequency of the independent voltage source was fi
 
 In both plots one can see that the magnitude and the phase of $\tilde{v}_s$ are constant. From the expression of $\tilde{v}_s(t)$ for $t>0$, it has magnitude $1$ and phase $0$, which explains why these variables do not vary with the frequency.
 \par
-In the plot of the magnitude of $\tilde{V}_6$ and $\tilde{V}_c$ both start to decrease at a certain frequency. While $\tilde{V}_6$ then stabilizes, $\tilde{V}_c$ continues to decrease, approximating zero.
+In the plot of the magnitude of $\tilde{V}_6$ and $\tilde{V}_c$ both start to decrease at a certain frequency. $\tilde{V}_6$ and $\tilde{V}_c$ then stabilize, with the later one approximating zero.
 \par
 As for the plot of their phase, from a particular value of frequency, they both begin to decline and then eventually also start to stabilize, with $\tilde{V}_6$ seeming to tend towards $-180\degree$ while $\tilde{V}_c$ goes to $-90\degree$.
 
