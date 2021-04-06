@@ -21,10 +21,10 @@ Table \ref{tab:comparison1} shows the results of the simulation of the circuit i
   \label{tab:comparison1}
 \end{table}
 
-Comparing the obtained results from the Theoretical and Simulation Analysis we can see that the all the voltages in nodes and all the currents in branches are consistent for the two different methods. The results are being printed with 12 significant figures and the small difference that can be seen on the last digit of the values are due to approximations that are done when the programs print the results on the tables.
+Comparing the obtained results from the Theoretical and Simulation Analysis we can see that all the voltages in nodes and all currents in branches are consistent for the two different methods with the exception of the currents through voltage sources, which ngspice always considers to be going from the voltage source's positive terminal towards its negative terminal, when it actually goes in the other way. The results are being printed with 12 significant figures and the small difference that can be seen on the last digit of the values are due to approximations that are done when the programs print the results on the tables.
 
 
-We ran both analysis to different phython generated values and concluded that bigger divergences between both methods can be observed but even in that case we still obtain the same results from both methods with an uncertainty range below 1\%. 
+We ran both analysis with different python generated values and concluded that bigger divergences between both methods can be observed but even in that case we still obtain the same results from both methods with an uncertainty range below 1\%. 
 
 \subsection{Circuit when $t=0$}
 
@@ -45,12 +45,12 @@ This was done because the electric tension between terminals of a capacitor must
     {\bf Name} & {\bf Value [A or V]} \\ \hline
     \input{octave_zero_time_tab.tex}
   \end{tabular}
-  \caption{Voltages in nodes and currents through branchces for $t=0$ as determined by the simulation (left) and our calculations (right)}
+  \caption{Voltages in nodes and currents through branches for $t=0$ as determined by the simulation (left) and our calculations (right)}
   \label{tab:comparison2}
 \end{table}
 
-In this case we can verify that the results obtained from both methods are once again consistent - the difference between the voltages values in all nodes for the two methods differ in less that $10^{-15}$. 
-The main difference between the tables is that the value of $I_x$  is symmetric. This happens because ngspice, by default, calculates the currents that flow from the positive to negative terminal of the branch and in this case we wanted to study the opposite direction. 
+In this case we can verify that the results obtained from both methods are once again consistent - the difference between the voltage values in all nodes for the two methods differ by less that $10^{-15}$. 
+The main difference between the tables is that the value of $I_x$  is symmetric, a phenomena that was already explained previously ($I_x$ is a current going through a voltage source).
 
 
 
@@ -92,3 +92,6 @@ The following graphs show the simulated evolution with frequency of the magnitud
 \caption{Phase of frequency response in node 6 and stimulus}
 \label{fig:phase_sim}
 \end{figure}
+
+
+These graphs are just like the ones previously seen in the theoretical analysis (Section~\ref{sec:frequency}) so please refer to that section for a description and explanation of this behaviour.
