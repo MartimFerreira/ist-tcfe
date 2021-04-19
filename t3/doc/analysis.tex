@@ -1,0 +1,205 @@
+\section{Theoretical Analysis}
+\label{sec:analysis}
+
+
+% MUITO IMPORTANTE: LER OS COMENTÁRIOS
+
+\subsection{Circuit when $t<0$} % ---> alínea 1
+For $t<0$, $v_S(t) = V_S$, according to the given equations, and $I_c=0$, since it is considered that the capacitor had been charging for a long time and eventually reached steady-state, making the current passing through it null. Taking this into account it is possible to determine the voltages in all of the nodes using the nodal method. The equations obtained were the following ones:
+
+% * pus V_0 em vez de V_4
+% * retirei I_c das equações por ser nulo
+
+\begin{equation}
+  \begin{cases}
+  V_0 = 0 & \mbox{node 0}\\
+  V_1-V_0 = V_s & \mbox{source between nodes 1 and 0} \\
+  \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
+  (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
+  \frac{V_2-V_5}{R_3} - \frac{V_5-V_0}{R_4} + \frac{V_6-V_5}{R_5} + \frac{V_7-V_8}{R_7}  = 0 & \mbox{supernode 5-8} \\ 
+  (V_2-V_5)K_b + \frac{V_6-V_5}{R_5} = 0 & \mbox{node 6} \\
+  \frac{V_0-V_7}{R_6} - \frac{V_7-V_8}{R_7} = 0 & \mbox{node 7} \\
+  (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{source between nodes 5 and 8} \\
+  \end{cases}
+\end{equation}
+% As soluções são [V0,V1,V2,V3,V5,V6,V7,V8]
+
+The first equation corresponds to imposing node 0 as the ground node, the second and last equations are the equations for the voltage sources and the rest are applications of KCL to the various nodes and to supernode 5-8. %Note that $V_b=V_2-V_5$.
+Solving this system of equations the value of the voltage in each node was determined and, subsequently, the current in every branch.
+
+% *** tabela com os resultados: potencial em todos os nós e corrente em cada ramo
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{octave_negative_time_tab.tex}
+  \end{tabular}
+  \caption{Voltages in nodes and currents through branches for $t<0$.}
+  \label{tab:t<0}
+\end{table}
+
+
+
+\subsection{Calculation of $R_{eq}$} % ---> alínea 2
+In order to compute the $R_{eq}$ as seen by the terminals of the capacitor, the circuit was analyzed at $t = 0$ and it was imposed that $V_S=0$, meaning 0 and 1 become the same node, the ground node ($V_0=V_1=0$). The capacitor was also replaced with a voltage source $V_x=V_6-V_8$, with $V_6$ and $V_8$ being, respectively, the voltages in nodes 6 and 8 obtained for $t<0$.
+\par
+Using nodal analysis once again, the value of $I_x$, the current that goes through $V_x$, was found out. Because the value of $V_x$ was already known, the equivalent resistance $R_{eq} = \frac{V_x}{I_x}$ was computed, as well as the time constant $\tau = R_{eq}C$, $C$ being the capacitance.
+\par
+The reason for adopting this procedure was that the capacitor's terminals are connected to nodes 6 and 8 and, even though $V_6$ and $V_8$ may not be continuous when $t=0$, when it comes to the electric potential difference, $V_6-V_8$, there has to be continuity regarding what happens for $t<0$ and in instant $t=0$. Besides that, as learnt in the theory classes, to compute the equivalent resistor as seen by the capacitor (and later the time constant), one has to consider that all independent sources are switched off, which is why it was imposed that $V_S=0$.
+
+The remaining sources are all dependent so the traditional analysis using the fact that the resistors were either in series or in parallel to simplify the circuit could not be applied here.
+Using once again the nodal analysis method, one reaches the following equations:
+
+\begin{equation}
+  \begin{cases}
+  V_0=0 & \mbox{node 0} \\
+  V_1=0 & \mbox{nodes 1 and 0 are now the same} \\
+  \frac{V_2-V_1}{R_1}+\frac{V_2-V_3}{R_2}+\frac{V_2-V_5}{R_3} = 0 & \mbox{node 2} \\
+  (V_5-V_2)K_b + \frac{V_3-V_2}{R_2} = 0 & \mbox{node 3} \\
+  \frac{V_2-V_5}{R_3} + \frac{V_0-V_5}{R_4} + \frac{V_7-V_8}{R_7} + (V_5-V_2)K_b = 0 & \mbox{supernode 5-6-8} \\ 
+  V_6-V_8 = V_x & \mbox{source between nodes 6 and 8} \\
+  \frac{V_0-V_7}{R_6} - \frac{V_7-V_8}{R_7} = 0 & \mbox{node 7} \\
+  (V_5-V_8) = K_d \frac{V_0-V_7}{R_6} & \mbox{source between nodes 5 and 8} \\
+  \end{cases}
+\end{equation}
+% As soluções são [V0,V1,V2,V3,V5,V6,V7,V8]
+
+After finding the values of the voltage in every node for instant $t=0$ one can solve equation $(V_2-V_5)K_b + \frac{V_6-V_5}{R_5} + I_x = 0$ (KCL applied to node 6) for $I_x$ and, with it, calculate $R_{eq}$.
+
+% *** tabela com os resultados
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline    
+    {\bf Name} & {\bf Value [A, V or $\Omega$]} \\ \hline
+    \input{octave_zero_time_tab.tex}
+  \end{tabular}
+  \caption{Values determined as part of the $R_{eq}$ calculation procedure.}
+  \label{tab:t=0}
+\end{table}
+
+
+
+\subsection{Circuit when $t>0$}
+
+\subsubsection{Natural solution}  % ---> alínea 3
+As learnt in lectures, the natural solution is of the form $V_{6_{n}}(t) = A e^{-\frac{t}{R_{eq}C}}$, where $A$ is an integration constant.
+Since we know, from our previous calculations, the value of $V_{6}(t=0)$ we can discover $A$ by replacing the previously determined value in the expression for the total solution, $V_6(t) = V_{6_n}(t) + V_{6_f}(t)$. The process used to determine $V_{6_f}(t)$ is described in section \ref{subsubsec:theor_forced}. 
+
+% *** show natural solution
+% *** plot v_6_n(t) for [0, 20] ms, idetify axes, display signals and units
+
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.8\linewidth]{v6natural_plot.eps}
+\caption{Natural response voltage in node 6.}
+\label{fig:natural}
+\end{figure}
+
+The plot shows the expected behaviour of a negative exponential function.
+
+
+\subsubsection{Forced solution}  % ---> alínea 4
+\label{subsubsec:theor_forced}
+To determine the forced solution, $V_{6_{f}}(t)$, in the same time interval, with $f=1kHz$, a phasor voltage source $\tilde{V_S}=1$ was used, $C$ was replaced with its impedance $Z_c$ and then through nodal analysis the phasor voltage in each node was calculated. Making our phasor voltage source equal to $1$ when it is actually a sinusoidal function means the actual voltage in each node is the imaginary part of the respective phasor multiplied by $e^{j \omega t}$. Below is the system of equations used.
+
+
+\begin{equation}
+  \begin{cases}
+  \tilde{V}_0 = 0 & \mbox{node 0} \\
+   \tilde{V}_1 = \tilde{V}_S & \mbox{node 1} \\
+  \frac{\tilde{V}_2-\tilde{V}_1}{R_1}+\frac{\tilde{V}_2-\tilde{V}_3}{R_2}+\frac{\tilde{V}_2-\tilde{V}_5}{R_3} = 0 & \mbox{node 2} \\
+  (\tilde{V}_5-\tilde{V}_2)K_b + \frac{\tilde{V}_3-\tilde{V}_2}{R_2} = 0 & \mbox{node 3} \\
+  (-\tilde{V}_5+\tilde{V}_2)K_b + \frac{\tilde{V}_6-\tilde{V}_5}{R_5} + \frac{\tilde{V}_6-\tilde{V}_8}{Z_c} = 0 & \mbox{node 6} \\
+  \frac{\tilde{V}_0-\tilde{V}_7}{R_6} - \frac{\tilde{V}_7-\tilde{V}_8}{R_7} = 0 & \mbox{node 7} \\
+  (\tilde{V}_5-\tilde{V}_8) = K_d \frac{\tilde{V}_0-\tilde{V}_7}{R_6} & \mbox{node 8} \\
+  \frac{\tilde{V}_2-\tilde{V}_5}{R_3} + \frac{\tilde{V}_0-\tilde{V}_5}{R_4} + \frac{\tilde{V}_6-\tilde{V}_5}{R_5} + \frac{\tilde{V}_7-\tilde{V}_8}{R_7} + \frac{\tilde{V}_6-\tilde{V}_8}{Z_c} = 0 & \mbox{supernode 5-8} \\ 
+  \end{cases}
+\end{equation}
+% As soluções são [\tilde{V}0,\tilde{V}1,\tilde{V}2,\tilde{V}3,\tilde{V}5,\tilde{V}6,\tilde{V}7,\tilde{V}8]
+
+% dizer explicitamente quais são as incógnitas para cada sistema de equações?
+% explicar melhor como é que se chegou a cada equação?
+
+
+% *** tabela com a amplitude complexa nos nós
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline    
+    {\bf Name} & {\bf Value} \\ \hline
+    \input{octave_complex_tab.tex}
+  \end{tabular}
+  \caption{Amplitudes of phasor voltages in nodes.}
+  \label{tab:forced_amp}
+\end{table}
+
+
+\subsubsection{Final solution}  % ---> alínea 5
+To determine the final total solution, $V_6(t)$, one had to convert the phasors to real time functions, for $f=1kHz$, and superimpose the natural and forced solutions.
+\par
+As mentioned before, in order to do that, the voltage phasors had to be multiplied by $e^{j \omega t}$. Because the stimulus in the circuit, $v_s$, had the form of a sine function, the imaginary part of the result was used to determine the forced solution as a real time function, as intended.
+Then, summing both the natural and the forced solutions, the final total solution was obtained, $V_6(t) = V_{6_n} (t) + V_{6_f} (t)$.
+\par
+In the next figure, there are the plots of $v_s(t)$ and $V_6(t)$ in the interval $[-5, 20] \ ms$.
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.8\linewidth]{vfinal_plot.eps}
+\caption{Voltage in node 6 and stimulus $v_s$.}
+\label{fig:final}
+\end{figure}
+
+\subsubsection{Frequency response}  % ---> alínea 6
+\label{sec:frequency}
+
+In the previous analysis, the frequency of the independent voltage source was fixed, $f=1kHz$. In order to understand what happens to the phasors as the imposed frequency changes, the procedure used for the last section was repeated for a vector of frequencies and then the plots of the variation in both magnitude and phase were made for $\tilde{V}_s(f)$, $\tilde{V}_6(f)$ and $\tilde{V}_c(f) = \tilde{V}_6(f)-\tilde{V}_8(f)$, with the frequency ranging between $0.1 \ Hz$ and $1 \ MHz$, using a logarithmic scale.
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.8\linewidth]{vmag_plot.eps}
+\caption{Variation in magnitude of $\tilde{V}_s$, $\tilde{V}_6$ and $\tilde{V}_c$ with frequency.}
+\label{fig:magnitude}
+\end{figure}
+
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.8\linewidth]{vphase_plot.eps}
+\caption{Variation in phase of $\tilde{V}_s$, $\tilde{V}_6$ and $\tilde{V}_c$ with frequency.}
+\label{fig:phase}
+\end{figure}
+
+In both plots one can see that the magnitude and the phase of $\tilde{V}_s$ are constant. From the expression of $\tilde{V}_s(t)$ for $t>0$, it has magnitude $1$ and phase $0$, which explains why these variables do not vary with the frequency.
+\par
+In the plot of the magnitude of $\tilde{V}_6$ and $\tilde{V}_c$ both start to decrease at a certain frequency. $\tilde{V}_6$ and $\tilde{V}_c$ then stabilize, with the latter one approximating zero (one should note that the scale is in dB).
+\par
+As for the plot of their phase, from a particular value of frequency, they both begin to decline and then eventually also start to stabilize, with $\tilde{V}_6$ seeming to tend towards $-180\degree$ while $\tilde{V}_c$ goes to $-90\degree$.
+
+The behaviour of $\tilde{V}_c$ is what one would expect would happen to the voltage between a capacitor's terminals in an RC circuit: the magnitude decreases and tends to 0 as the frequency increases while the phase tends, with an arctangent-like curve, towards being $90\degree$ away from the stimulus phase.
+
+Meanwhile, it would make sense that $\tilde{V}_6$ would tend towards whatever magnitude and phase $\tilde{V}_8$ has (so as to make the magnitude of $\tilde{V}_c$ tend to $0$). As a matter of fact, we know $\tilde{V}_8$ does not vary with frequency because the following system can be written and solved:
+
+
+\begin{equation}
+  \begin{cases}
+  \tilde{V}_0 = 0 & \mbox{node 0} \\
+   \tilde{V}_1 = \tilde{V}_S & \mbox{node 1} \\
+  \frac{\tilde{V}_2-\tilde{V}_1}{R_1}+\frac{\tilde{V}_2-\tilde{V}_3}{R_2}+\frac{\tilde{V}_2-\tilde{V}_5}{R_3} = 0 & \mbox{node 2} \\
+  (\tilde{V}_5-\tilde{V}_2)K_b + \frac{\tilde{V}_3-\tilde{V}_2}{R_2} = 0 & \mbox{node 3} \\
+  \frac{\tilde{V}_0-\tilde{V}_7}{R_6} - \frac{\tilde{V}_7-\tilde{V}_8}{R_7} = 0 & \mbox{node 7} \\
+  (\tilde{V}_5-\tilde{V}_8) = K_d \frac{\tilde{V}_0-\tilde{V}_7}{R_6} & \mbox{node 8} \\
+  \frac{\tilde{V}_2-\tilde{V}_5}{R_3} + \frac{\tilde{V}_0-\tilde{V}_5}{R_4} + (\tilde{V}_5-\tilde{V}_2)K_b + \frac{\tilde{V}_7-\tilde{V}_8}{R_7}  = 0 & \mbox{supernode 5-6-8} \\ 
+  \end{cases}
+\end{equation}
+
+This system of equations is independent of the input frequency and determines all nodal potential phasors with the exception of $\tilde{V}_6$, which means $\tilde{V}_8$ is independent of frequency. Hence why the behaviour of $\tilde{V}_6$ is so similar to that of $\tilde{V}_c$: because $\tilde{V}_6$ is just $\tilde{V}_c$ summed with a constant $\tilde{V}_8$, making its magnitude and phase tend towards that of $\tilde{V}_8$.
+% referir valores em concreto
+% explain why!!!
+
+
+% ver print screens da aula gravada que estão nas cenas teóricas 04/02/2021 10:16pm
+
+

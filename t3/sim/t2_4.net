@@ -1,0 +1,52 @@
+*
+* NGSPICE simulation script
+* BJT amp with feedback
+*
+
+* forces current values to be saved
+.options savecurrents
+
+.include ngspice_4_input.txt
+
+
+.control
+
+set numdgt = 12
+
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
+
+echo "********************************************"
+echo  "Transient analysis"
+echo "********************************************"
+tran 1e-6 20e-3
+
+hardcopy trans_4.ps v(6) v(1)
+echo trans_4_FIG
+
+
+
+echo "********************************************"
+echo  "Frequency analysis"
+echo "********************************************"
+
+ac dec 10 0.1 1MEG
+
+hardcopy mag_4.ps db(v(6)) db(v(1))
+echo mag_4_FIG
+
+hardcopy phase_4.ps vp(6)*180/pi vp(1)*180/pi
+echo phase_4_FIG
+
+quit
+.endc
+
+.end
