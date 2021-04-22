@@ -25,6 +25,8 @@ n = 230./12.; %number of turns in transformer
 fL1 = 1; %inductance (left side of the transformer)
 fL2 = fL1*n*n;
 
+MagVs = 1; %magnitude of voltage imposed by voltage source
+
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -61,9 +63,6 @@ fprintf(ngspice_input,"K L1 L2 1 Default\n");
 
 %%% voltage source
 fprintf(ngspice_1_input,"Vs begin1 begin2 230 AC %.12f SIN(0.0 1.0 50.0) %.12f\n", MagVs, fVs);
-
-SIN(0.0 1.0 1000.0)
-
 
 
 
