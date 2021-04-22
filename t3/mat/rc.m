@@ -12,6 +12,44 @@ format long
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%% VARIABLES THAT MAY BE CHANGED %%%%%%%%%%%%%%%%
+
+fRdet = 1; %resistor in envelope detector
+fRreg = 1; % resistor in voltage regulator
+
+fC = 1U; % capacitor in envelope detector
+
+n = 230./12.; %number of turns in transformer
+
+%%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+ngspice_1_input = fopen("../sim/ngspice_input.txt", "w");
+
+%%%  resistors
+fprintf(ngspice_input,"Rdet mid1 0 %.12f\n", fRdet);
+fprintf(ngspice_input,"Rreg mid1 out1 %.12f\n", fRreg);
+
+%%% capacitor
+fprintf(ngspice_input,"C mid1 0 %.12f\n", fC);
+
+%%% diodes
+fprintf(ngspice_input,"Dfw1 in1 fwout1 Default\n");
+fprintf(ngspice_input,"Dfw2 in2 fwout1 Default\n");
+fprintf(ngspice_input,"Dfw3 0 in2 Default\n");
+fprintf(ngspice_input,"Dfw4 0 in1 Default\n");
+fprintf(ngspice_input,"Ddet fwout1 mid1 Default\n");
+fprintf(ngspice_input,"Dreg1 out1 dd12 Default\n");
+fprintf(ngspice_input,"Dreg2 dd12 dd23 Default\n");
+fprintf(ngspice_input,"Dreg3 dd23 0 Default\n");
+
+%%% transformer
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ngspice_1_input = fopen("../sim/ngspice_1_input.txt", "w");
