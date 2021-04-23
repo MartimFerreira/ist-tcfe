@@ -19,7 +19,7 @@ fVs = 230; % independent voltage source
 fRdet = 1; %resistor in envelope detector
 fRreg = 1; % resistor in voltage regulator
 
-fC = 1U; % capacitor in envelope detector
+fC = 1; % U capacitor in envelope detector
 
 n = 230./12.; %number of turns in transformer
 fL1 = 1; %inductance (left side of the transformer)
@@ -30,7 +30,7 @@ MagVs = 1; %magnitude of voltage imposed by voltage source
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-ngspice_1_input = fopen("../sim/ngspice_input.txt", "w");
+ngspice_input = fopen("../sim/ngspice_input.txt", "w");
 
 %%%  resistors
 fprintf(ngspice_input,"Rdet mid1 0 %.12f\n", fRdet);
@@ -62,7 +62,7 @@ fprintf(ngspice_input,"K L1 L2 1 Default\n");
 
 
 %%% voltage source
-fprintf(ngspice_1_input,"Vs begin1 begin2 230 AC %.12f SIN(0.0 1.0 50.0) %.12f\n", MagVs, fVs);
+fprintf(ngspice_input,"Vs begin1 begin2 230 AC %.12f SIN(0.0 1.0 50.0) %.12f\n", MagVs, fVs);
 
 
 
