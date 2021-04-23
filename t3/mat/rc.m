@@ -62,7 +62,7 @@ fprintf(ngspice_input,"K L1 L2 1 \n");
 
 
 %%% voltage source
-fprintf(ngspice_input,"Vs begin1 begin2 230 AC %.12f SIN(0.0 1.0 50.0) %.12f\n", MagVs, fVs);
+fprintf(ngspice_input,"Vs begin1 begin2 %.12f AC %.12f SIN(0.0 1.0 50.0)\n", fVs, MagVs);
 
 
 
