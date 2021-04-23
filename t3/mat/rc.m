@@ -16,6 +16,14 @@ C = 1U; % capacitor in envelope detector
 
 n = 230./12.; %number of turns in transformer
 
+fVs = 230; % independent voltage source
+
+n = 230./12.; %number of turns in transformer
+fL1 = 1; %inductance (left side of the transformer)
+fL2 = fL1*n*n;
+
+MagVs = 1; %magnitude of voltage imposed by voltage source
+
 
 %%%%%%%%%%%%%%%%%%%%%%% MAIN CALCULATIONS %%%%%%%%%%%%%%%%
 
@@ -24,10 +32,6 @@ n = 230./12.; %number of turns in transformer
 R = 5
 
 v1(t) = 230 + sin(100*pi*t);
-
-
-%%%% Transformer %%%%
-
 
 v2(t) = 1/n * v1;
 
@@ -51,6 +55,7 @@ v_fwout2 = 0;
 
 %i_d4(t) + i_d3(t) = i_out(t);
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -69,62 +74,25 @@ fprintf(ngspice_input,"Dfw2 in2 fwout1 Default\n");
 fprintf(ngspice_input,"Dfw3 0 in2 Default\n");
 fprintf(ngspice_input,"Dfw4 0 in1 Default\n");
 fprintf(ngspice_input,"Ddet fwout1 mid1 Default\n");
-fprintf(ngspice_input,"Dreg1 out1 dd12 Default\n");
-fprintf(ngspice_input,"Dreg2 dd12 dd23 Default\n");
-fprintf(ngspice_input,"Dreg3 dd23 0 Default\n");
+fprintf(ngspice_input,"Dreg1 out1 d1d2 Default\n");
+fprintf(ngspice_input,"Dreg2 d1d2 d2d3 Default\n");
+fprintf(ngspice_input,"Dreg3 d2d3 0 Default\n");
 
 %%% transformer
+% www.seas.upenn.edu/~jan/spice/spice.transformer.html
+% sourceforge.net/p/ngspice/discussion/133842/thread/87641fa4/
+% forum.kicad.info/t/how-to-edit-transformer/19871/5
+% www.analog.com/en/technical-articles/ltspice-basic-steps-for-simulating-transformers.html#
+% ngspice.sourceforge.net/docs/ngspice-html-manual/manual.xhtml#subsec_Inductors
+fprintf(ngspice_input,"L1 begin1 begin2 %.12f\n", fL1);
+fprintf(ngspice_input,"L2 in1 in2 %.12f\n", fL2);
+fprintf(ngspice_input,"K L1 L2 1 Default\n");
+% if 1 doesn't work maybe try 0.99999
 
 
+%%% voltage source
+fprintf(ngspice_1_input,"Vs begin1 begin2 %.12f AC %.12f SIN(0.0 1.0 50.0)\n", fVs, MagVs);
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-ngspice_1_input = fopen("../sim/ngspice_1_input.txt", "w");
-
-fprintf(ngspice_1_input,"R1 1 2 %.12f\n", fR1);
-fprintf(ngspice_1_input,"R2 2 3 %.12f\n", fR2);
-fprintf(ngspice_1_input,"R3 2 5 %.12f\n", fR3);
-fprintf(ngspice_1_input,"R4 0 5 %.12f\n", fR4);
-fprintf(ngspice_1_input,"R5 5 6 %.12f\n", fR5);
-fprintf(ngspice_1_input,"R6 0 7 %.12f\n", fR6);
-
-%Fonte de tensão imaginária
-fprintf(ngspice_1_input,"Vi 7 im %.12f\n",0); 
-
-fprintf(ngspice_1_input,"R7 im 8 %.12f\n", fR7);
-fprintf(ngspice_1_input,"C1 6 8 %.12f\n", fC);
-fprintf(ngspice_1_input,"Vs 1 0 %.12f\n", fVs);
-fprintf(ngspice_1_input,"Gb 6 3 2 5 %.12f\n", fKb);
-fprintf(ngspice_1_input,"Hd 5 8 Vi %.12f\n", fKd);
-
-fclose(ngspice_1_input);
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-ngspice_2_input = fopen("../sim/ngspice_2_input.txt", "w");
-
-fprintf(ngspice_2_input,"R1 1 2 %.12f\n", fR1);
-fprintf(ngspice_2_input,"R2 2 3 %.12f\n", fR2);
-fprintf(ngspice_2_input,"R3 2 5 %.12f\n", fR3);
-fprintf(ngspice_2_input,"R4 0 5 %.12f\n", fR4);
-fprintf(ngspice_2_input,"R5 5 6 %.12f\n", fR5);
-fprintf(ngspice_2_input,"R6 0 7 %.12f\n", fR6);
-
-%Fonte de tensão imaginária
-fprintf(ngspice_2_input,"Vi 7 im %.12f\n", 0); 
-
-fprintf(ngspice_2_input,"R7 im 8 %.12f\n", fR7);
-fprintf(ngspice_2_input,"Vs 1 0 %.12f\n", 0);
-fprintf(ngspice_2_input,"Vx 6 8 %.12f\n", Vx);
-fprintf(ngspice_2_input,"Gb 6 3 2 5 %.12f\n", fKb);
-fprintf(ngspice_2_input,"Hd 5 8 Vi %.12f\n", fKd);
-
-fclose(ngspice_2_input);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%% TABLES %%%%%%%%%%%%%%%%%%%%%%
