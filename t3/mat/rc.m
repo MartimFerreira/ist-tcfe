@@ -19,7 +19,7 @@ fVs = 230; % independent voltage source
 fRdet = 1; %resistor in envelope detector
 fRreg = 1; % resistor in voltage regulator
 
-fC = 1; % U capacitor in envelope detector
+fC = 1*(10^(-6)); % U capacitor in envelope detector
 
 n = 230./12.; %number of turns in transformer
 fL1 = 1; %inductance (left side of the transformer)
@@ -53,11 +53,11 @@ fprintf(ngspice_input,"Dreg3 d2d3 0 Default\n");
 % www.seas.upenn.edu/~jan/spice/spice.transformer.html
 % sourceforge.net/p/ngspice/discussion/133842/thread/87641fa4/
 % forum.kicad.info/t/how-to-edit-transformer/19871/5
-% www.analog.com/en/technical-articles/ltspice-basic-steps-for-simulating-transformers.html#
+% www.analog.com/en/technical-articles/ltspice-basic-stepssimulating-transformers.html#
 % ngspice.sourceforge.net/docs/ngspice-html-manual/manual.xhtml#subsec_Inductors
 fprintf(ngspice_input,"L1 begin1 begin2 %.12f\n", fL1);
 fprintf(ngspice_input,"L2 in1 in2 %.12f\n", fL2);
-fprintf(ngspice_input,"K L1 L2 1 Default\n");
+fprintf(ngspice_input,"K L1 L2 1 \n");
 % if 1 doesnt work maybe try 0.99999
 
 

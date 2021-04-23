@@ -1,12 +1,15 @@
-*
+Circuito regulador
 * NGSPICE simulation script
 * BJT amp with feedback
 *
 
 * forces current values to be saved
+
 .options savecurrents
 
 .include ngspice_input.txt
+
+.model Default D
 
 .op
 
@@ -42,7 +45,6 @@ echo trans_sim4_FIG
 
 hardcopy trans_sim5.ps v(out1)-v(0)-12
 echo trans_sim5_FIG
-
 
 .endc
 
