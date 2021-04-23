@@ -7,19 +7,49 @@ pkg load control
 
 format long
 
+%%%%%%%%%%%%%%%%%%%%%%% VARIABLES THAT MAY BE CHANGED %%%%%%%%%%%%%%%%
+
+Rdet = 1; %resistor in envelope detector
+Rreg = 1; % resistor in voltage regulator
+
+C = 1U; % capacitor in envelope detector
+
+n = 230./12.; %number of turns in transformer
+
 
 %%%%%%%%%%%%%%%%%%%%%%% MAIN CALCULATIONS %%%%%%%%%%%%%%%%
 
+%TODO:
+%NOTA: DÍODOS TRATADOS COMO RESISTÊNCIAS POR AGORA
+R = 5
+
+v1(t) = 230 + sin(100*pi*t);
 
 
-%%%%%%%%%%%%%%%%%%%%%%% VARIABLES THAT MAY BE CHANGED %%%%%%%%%%%%%%%%
+%%%% Transformer %%%%
 
-fRdet = 1; %resistor in envelope detector
-fRreg = 1; % resistor in voltage regulator
 
-fC = 1U; % capacitor in envelope detector
+v2(t) = 1/n * v1;
 
-n = 230./12.; %number of turns in transformer
+
+v_fwout2 = 0;
+
+
+%v_in1(t) - v_in2(t) = v2(t);
+%i_d1(t) = R(v_in1 - v_fwout1);
+%i_d2(t) = R(v_in2 - v_fwout1);
+%i_d3(t) = R(v_fwout2 - v_in2);
+%i_d4(t) = R(v_fwout2 - v_in1);
+
+%i_d3 + i_d1 = i_d2 + i_d4;
+
+%i_det(t) = R(v_fwout1 - v_mid1);
+
+%i_d1(t) + i_d2(t) = i_det(t);
+
+%i_d1(t) = v_mid1/Rdet + C*d(v_mid1)/dt + i_out;
+
+%i_d4(t) + i_d3(t) = i_out(t);
 
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -27,11 +57,11 @@ n = 230./12.; %number of turns in transformer
 ngspice_1_input = fopen("../sim/ngspice_input.txt", "w");
 
 %%%  resistors
-fprintf(ngspice_input,"Rdet mid1 0 %.12f\n", fRdet);
-fprintf(ngspice_input,"Rreg mid1 out1 %.12f\n", fRreg);
+fprintf(ngspice_input,"Rdet mid1 0 %.12f\n", Rdet);
+fprintf(ngspice_input,"Rreg mid1 out1 %.12f\n", Rreg);
 
 %%% capacitor
-fprintf(ngspice_input,"C mid1 0 %.12f\n", fC);
+fprintf(ngspice_input,"C mid1 0 %.12f\n", C);
 
 %%% diodes
 fprintf(ngspice_input,"Dfw1 in1 fwout1 Default\n");
