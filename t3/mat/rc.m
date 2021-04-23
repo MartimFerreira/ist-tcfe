@@ -5,6 +5,8 @@ pkg load control
 
 %%EXAMPLE SYMBOLIC COMPUTATIONS
 
+pkg load symbolic
+
 format long
 
 %%%%%%%%%%%%%%%%%%%%%%% VARIABLES THAT MAY BE CHANGED %%%%%%%%%%%%%%%%
@@ -12,31 +14,30 @@ format long
 Rdet = 1; %resistor in envelope detector
 Rreg = 1; % resistor in voltage regulator
 
-C = 1U; % capacitor in envelope detector
+C = 1*10^(-6); % capacitor in envelope detector
 
 n = 230./12.; %number of turns in transformer
 
 fVs = 230; % independent voltage source
 
-n = 230./12.; %number of turns in transformer
 fL1 = 1; %inductance (left side of the transformer)
 fL2 = fL1*n*n;
 
 MagVs = 1; %magnitude of voltage imposed by voltage source
 
+t=0:1e-5:2e-1;
+
+v_on = 1;
+R_on = 1;
 
 %%%%%%%%%%%%%%%%%%%%%%% MAIN CALCULATIONS %%%%%%%%%%%%%%%%
 
-%TODO:
-%NOTA: DÍODOS TRATADOS COMO RESISTÊNCIAS POR AGORA
-R = 5
+%v1 = 230 + sin(100*pi*t);
 
-v1(t) = 230 + sin(100*pi*t);
-
-v2(t) = 1/n * v1;
+%v2 = 1/n * v1;
 
 
-v_fwout2 = 0;
+%v_fwout2 = 0;
 
 
 %v_in1(t) - v_in2(t) = v2(t);
@@ -56,10 +57,26 @@ v_fwout2 = 0;
 %i_d4(t) + i_d3(t) = i_out(t);
 
 
+
+%v_e1 = v_fwout1 - i_fwout1 * R_on;
+%v_e2 = v_e1 - v_on;
+
+  
+syms v1;
+syms n;
+syms v2;
+
+syms v_in1 v_in2 v_fwout1 v_fwout2 i_fwout1 i_fwout2 i_2 sv_on sr_on c1 c2 c3 c4 c5 c6;
+
+[c1 c2 c3 c4 c5] = solve( (v_in1 - v_fwout1 - sv_on)/sr_on == i_2, (v_in1 - v_fwout1 - sv_on)/sr_on + (v_in2 - v_fwout1 - sv_on)/sr_on == i_fwout1, (-v_in2 - sv_on)/sr_on == i_2 + (v_in2 - v_fwout1 - sv_on)/sr_on, (-v_in2 - sv_on)/sr_on + i_fwout1  == 0, v_in1 - v_in2 == v2, v_in1, v_in2, v_fwout1, i_fwout1, i_2 )
+
+
+
+  
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-ngspice_1_input = fopen("../sim/ngspice_input.txt", "w");
+ngspice_input = fopen("../sim/ngspice_input.txt", "w");
 
 %%%  resistors
 fprintf(ngspice_input,"Rdet mid1 0 %.12f\n", Rdet);
@@ -84,50 +101,17 @@ fprintf(ngspice_input,"Dreg3 d2d3 0 Default\n");
 % forum.kicad.info/t/how-to-edit-transformer/19871/5
 % www.analog.com/en/technical-articles/ltspice-basic-steps-for-simulating-transformers.html#
 % ngspice.sourceforge.net/docs/ngspice-html-manual/manual.xhtml#subsec_Inductors
+
 fprintf(ngspice_input,"L1 begin1 begin2 %.12f\n", fL1);
 fprintf(ngspice_input,"L2 in1 in2 %.12f\n", fL2);
 fprintf(ngspice_input,"K L1 L2 1 Default\n");
-% if 1 doesn't work maybe try 0.99999
+
+% se 1 doesnt work maybe try 0.99999
 
 
 %%% voltage source
-fprintf(ngspice_1_input,"Vs begin1 begin2 %.12f AC %.12f SIN(0.0 1.0 50.0)\n", fVs, MagVs);
+fprintf(ngspice_input,"Vs begin1 begin2 %.12f AC %.12f SIN(0.0 1.0 50.0)\n", fVs, MagVs);
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%% TABLES %%%%%%%%%%%%%%%%%%%%%%
-
-
-data_tab = fopen("octave_data_tab.tex", "w");
-
-fprintf(data_tab, "$R_1\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR1);
-fprintf(data_tab, "$R_2\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR2);
-fprintf(data_tab, "$R_3\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR3);
-fprintf(data_tab, "$R_4\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR4);
-fprintf(data_tab, "$R_5\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR5);
-fprintf(data_tab, "$R_6\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR6);
-fprintf(data_tab, "$R_7\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR7);
-fprintf(data_tab, "$V_s\\;(V)$ & %.12e \\\\ \\hline\n", fVs);
-fprintf(data_tab, "$C\\;(F)$ &   %.12e \\\\ \\hline\n", fC);
-fprintf(data_tab, "$K_b\\;(S)$ & %.12e \\\\ \\hline\n", fKb);
-fprintf(data_tab, "$K_d\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fKd);
-
-fclose(data_tab);
-
-
-zero_time_tab = fopen("octave_zero_time_tab.tex", "w");
-
-fprintf(zero_time_tab, "$V_1$ & %.12e \\\\ \\hline\n", 0);
-fprintf(zero_time_tab, "$V_2$ & %.12e \\\\ \\hline\n", V20);
-fprintf(zero_time_tab, "$V_3$ & %.12e \\\\ \\hline\n", V30);
-fprintf(zero_time_tab, "$V_5$ & %.12e \\\\ \\hline\n", V50);
-fprintf(zero_time_tab, "$V_6$ & %.12e \\\\ \\hline\n", V60);
-fprintf(zero_time_tab, "$V_7$ & %.12e \\\\ \\hline\n", V70);
-fprintf(zero_time_tab, "$V_8$ & %.12e \\\\ \\hline\n", V80);
-fprintf(zero_time_tab, "$V_x$ & %.12e \\\\ \\hline\n", Vx);
-fprintf(zero_time_tab, "$I_x$ & %.12e\\\\ \\hline\n", Ix);
-fprintf(zero_time_tab, "$R_{eq}$ & %.12e \\\\ \\hline\n", Req);
-
-fclose(zero_time_tab);
 
 
