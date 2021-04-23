@@ -30,10 +30,18 @@ set color6=rgb:4/0/0
 echo "********************************************"
 echo  "Transient analysis"
 echo "********************************************"
-tran 1e-2 2e-1
+tran 1e-4 2e-1
 
-hardcopy trans_3.ps v(6)
-echo trans_3_FIG
+let average  = mean(v(out1)-v(0))
+
+.measure tran ymax MAX v(out1)-v(0)
+.measure tran ymin MIN v(out1)-v(0)
+
+hardcopy trans_sim4.ps (v(mid1)-v(0)) (v(out1)-v(0))
+echo trans_sim4_FIG
+
+hardcopy trans_sim5.ps v(out1)-v(0)-12
+echo trans_sim5_FIG
 
 
 .endc
