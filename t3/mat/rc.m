@@ -11,19 +11,17 @@ format long
 
 %%%%%%%%%%%%%%%%%%%%%%% VARIABLES THAT MAY BE CHANGED %%%%%%%%%%%%%%%%
 
-Rdet = 1; %resistor in envelope detector
-Rreg = 1; % resistor in voltage regulator
+Rdet = 1000; %resistor in envelope detector
+Rreg = 10; % resistor in voltage regulator
 
-C = 1*10^(-6); % capacitor in envelope detector
+C = 5*10^(-4); % capacitor in envelope detector
 
-n = 230./12.; %number of turns in transformer
+n = 230./14.5; %number of turns in transformer
 
-fVs = 230; % independent voltage source
+fVs = 230.; % independent voltage source
 
 fL1 = 1; %inductance (left side of the transformer)
 fL2 = fL1*n*n;
-
-MagVs = 1; %magnitude of voltage imposed by voltage source
 
 t=0:1e-5:2e-1;
 
@@ -63,7 +61,7 @@ R_on = 1;
 
   
 syms v1;
-syms n;
+syms sn;
 syms v2;
 
 syms v_in1 v_in2 v_fwout1 v_fwout2 i_fwout1 i_fwout2 i_2 sv_on sr_on c1 c2 c3 c4 c5 c6;
@@ -91,9 +89,79 @@ fprintf(ngspice_input,"Dfw2 in2 fwout1 Default\n");
 fprintf(ngspice_input,"Dfw3 0 in2 Default\n");
 fprintf(ngspice_input,"Dfw4 0 in1 Default\n");
 fprintf(ngspice_input,"Ddet fwout1 mid1 Default\n");
-fprintf(ngspice_input,"Dreg1 out1 d1d2 Default\n");
-fprintf(ngspice_input,"Dreg2 d1d2 d2d3 Default\n");
-fprintf(ngspice_input,"Dreg3 d2d3 0 Default\n");
+
+fprintf(ngspice_input,"Dreg01 out1 d01 Default\n");
+fprintf(ngspice_input,"Dreg02 d01 d02 Default\n");
+fprintf(ngspice_input,"Dreg03 d02 d03 Default\n");
+fprintf(ngspice_input,"Dreg04 d03 d04 Default\n");
+fprintf(ngspice_input,"Dreg05 d04 d05 Default\n");
+fprintf(ngspice_input,"Dreg06 d05 d06 Default\n");
+fprintf(ngspice_input,"Dreg07 d06 d07 Default\n");
+fprintf(ngspice_input,"Dreg08 d07 d08 Default\n");
+fprintf(ngspice_input,"Dreg09 d08 d09 Default\n");
+fprintf(ngspice_input,"Dreg010 d09 d010 Default\n");
+fprintf(ngspice_input,"Dreg011 d010 d011 Default\n");
+fprintf(ngspice_input,"Dreg012 d011 d012 Default\n");
+fprintf(ngspice_input,"Dreg013 d012 d013 Default\n");
+fprintf(ngspice_input,"Dreg014 d013 d014 Default\n");
+fprintf(ngspice_input,"Dreg015 d014 d015 Default\n");
+fprintf(ngspice_input,"Dreg016 d015 d016 Default\n");
+fprintf(ngspice_input,"Dreg017 d016 d017 Default\n");
+fprintf(ngspice_input,"Dreg018 d017 0 Default\n");
+fprintf(ngspice_input,"Dreg11 out1 d11 Default\n");
+fprintf(ngspice_input,"Dreg12 d11 d12 Default\n");
+fprintf(ngspice_input,"Dreg13 d12 d13 Default\n");
+fprintf(ngspice_input,"Dreg14 d13 d14 Default\n");
+fprintf(ngspice_input,"Dreg15 d14 d15 Default\n");
+fprintf(ngspice_input,"Dreg16 d15 d16 Default\n");
+fprintf(ngspice_input,"Dreg17 d16 d17 Default\n");
+fprintf(ngspice_input,"Dreg18 d17 d18 Default\n");
+fprintf(ngspice_input,"Dreg19 d18 d19 Default\n");
+fprintf(ngspice_input,"Dreg110 d19 d110 Default\n");
+fprintf(ngspice_input,"Dreg111 d110 d111 Default\n");
+fprintf(ngspice_input,"Dreg112 d111 d112 Default\n");
+fprintf(ngspice_input,"Dreg113 d112 d113 Default\n");
+fprintf(ngspice_input,"Dreg114 d113 d114 Default\n");
+fprintf(ngspice_input,"Dreg115 d114 d115 Default\n");
+fprintf(ngspice_input,"Dreg116 d115 d116 Default\n");
+fprintf(ngspice_input,"Dreg117 d116 d117 Default\n");
+fprintf(ngspice_input,"Dreg118 d117 0 Default\n");
+fprintf(ngspice_input,"Dreg21 out1 d21 Default\n");
+fprintf(ngspice_input,"Dreg22 d21 d22 Default\n");
+fprintf(ngspice_input,"Dreg23 d22 d23 Default\n");
+fprintf(ngspice_input,"Dreg24 d23 d24 Default\n");
+fprintf(ngspice_input,"Dreg25 d24 d25 Default\n");
+fprintf(ngspice_input,"Dreg26 d25 d26 Default\n");
+fprintf(ngspice_input,"Dreg27 d26 d27 Default\n");
+fprintf(ngspice_input,"Dreg28 d27 d28 Default\n");
+fprintf(ngspice_input,"Dreg29 d28 d29 Default\n");
+fprintf(ngspice_input,"Dreg210 d29 d210 Default\n");
+fprintf(ngspice_input,"Dreg211 d210 d211 Default\n");
+fprintf(ngspice_input,"Dreg212 d211 d212 Default\n");
+fprintf(ngspice_input,"Dreg213 d212 d213 Default\n");
+fprintf(ngspice_input,"Dreg214 d213 d214 Default\n");
+fprintf(ngspice_input,"Dreg215 d214 d215 Default\n");
+fprintf(ngspice_input,"Dreg216 d215 d216 Default\n");
+fprintf(ngspice_input,"Dreg217 d216 d217 Default\n");
+fprintf(ngspice_input,"Dreg218 d217 0 Default\n");
+fprintf(ngspice_input,"Dreg31 out1 d31 Default\n");
+fprintf(ngspice_input,"Dreg32 d31 d32 Default\n");
+fprintf(ngspice_input,"Dreg33 d32 d33 Default\n");
+fprintf(ngspice_input,"Dreg34 d33 d34 Default\n");
+fprintf(ngspice_input,"Dreg35 d34 d35 Default\n");
+fprintf(ngspice_input,"Dreg36 d35 d36 Default\n");
+fprintf(ngspice_input,"Dreg37 d36 d37 Default\n");
+fprintf(ngspice_input,"Dreg38 d37 d38 Default\n");
+fprintf(ngspice_input,"Dreg39 d38 d39 Default\n");
+fprintf(ngspice_input,"Dreg310 d39 d310 Default\n");
+fprintf(ngspice_input,"Dreg311 d310 d311 Default\n");
+fprintf(ngspice_input,"Dreg312 d311 d312 Default\n");
+fprintf(ngspice_input,"Dreg313 d312 d313 Default\n");
+fprintf(ngspice_input,"Dreg314 d313 d314 Default\n");
+fprintf(ngspice_input,"Dreg315 d314 d315 Default\n");
+fprintf(ngspice_input,"Dreg316 d315 d316 Default\n");
+fprintf(ngspice_input,"Dreg317 d316 d317 Default\n");
+fprintf(ngspice_input,"Dreg318 d317 0 Default\n");
 
 %%% transformer
 % www.seas.upenn.edu/~jan/spice/spice.transformer.html
@@ -102,16 +170,16 @@ fprintf(ngspice_input,"Dreg3 d2d3 0 Default\n");
 % www.analog.com/en/technical-articles/ltspice-basic-stepssimulating-transformers.html#
 % ngspice.sourceforge.net/docs/ngspice-html-manual/manual.xhtml#subsec_Inductors
 
-fprintf(ngspice_input,"L1 begin1 begin2 %.12f\n", fL1);
-fprintf(ngspice_input,"L2 in1 in2 %.12f\n", fL2);
-fprintf(ngspice_input,"K L1 L2 1 \n");
-% if 1 doesnt work maybe try 0.99999
+fprintf(ngspice_input,"E1 in1 im begin1 0 %.12f\n", 1./n);
+fprintf(ngspice_input,"Vim in2 im 0\n");
+fprintf(ngspice_input,"F1 im1 0 Vim %.12f\n", 1./n);
+fprintf(ngspice_input,"R2 begin1 im1 1\n"); 
 
 
 %%% voltage source
-fprintf(ngspice_input,"Vs begin1 begin2 %.12f AC %.12f SIN(0.0 1.0 50.0)\n", fVs, MagVs);
+fprintf(ngspice_input,"Vs begin1 0 SIN(0.000000000000 %.12f 50.0)\n", fVs);
 
-
+fclose(ngspice_input);
 
 %%%%%%%%%%%%%%%%%%%%%%%% TABLES %%%%%%%%%%%%%%%%%%%%%%
 

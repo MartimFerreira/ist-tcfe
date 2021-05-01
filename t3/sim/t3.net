@@ -35,15 +35,14 @@ echo  "Transient analysis"
 echo "********************************************"
 tran 1e-4 2e-1
 
-let average  = mean(v(out1)-v(0))
+meas tran ymax MAX v(out1)
+meas tran ymin MIN v(out1)
+meas tran mean AVG v(out1)
 
-.measure tran ymax MAX v(out1)-v(0)
-.measure tran ymin MIN v(out1)-v(0)
-
-hardcopy trans_sim4.ps (v(mid1)-v(0)) (v(out1)-v(0))
+hardcopy trans_sim4.ps v(mid1) v(out1)
 echo trans_sim4_FIG
 
-hardcopy trans_sim5.ps v(out1)-v(0)-12
+hardcopy trans_sim5.ps v(out1)-12
 echo trans_sim5_FIG
 
 .endc
