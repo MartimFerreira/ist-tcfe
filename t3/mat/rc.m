@@ -177,7 +177,7 @@ fprintf(ngspice_input,"R2 begin1 im1 1\n");
 
 
 %%% voltage source
-fprintf(ngspice_input,"Vs begin1 0 SIN(0.000000000000 %.12f 50.0)\n", fVs);
+fprintf(ngspice_input,"Vs begin1 0 SIN(0.000000000000 %.12f 50.0 0.0 0.0 -90)\n", fVs);
 
 fclose(ngspice_input);
 
