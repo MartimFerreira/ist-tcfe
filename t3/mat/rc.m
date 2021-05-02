@@ -76,18 +76,21 @@ w = 100*pi;
 %%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
 
   %Ideal Transformer
-  v1 = 230 + sin(w*t);
+  v1(t) = 230 + sin(w*t);
 
-v2 = 1/n * v1;
+v2(t) = 1/n * v1;
 
-%Full wave bridge rectifier
 
-v_fwout1 = abs(v2) - 2*v_on; 
-v_fwout2 = 0;
+%----FULL WAVE BRIDGE RECTIFIER-----
 
-%Envelope Detector
+v_fwout1(t) = abs(v2(t)) - 2*v_on; 
+v_fwout2(t) = 0;
+
+
+%-----ENVELOPE DETECTOR-----
 
 toff=(1/w)* atan(1/(w*Rdet*C))
+
 
 %Newton Method to find ton
 
@@ -96,31 +99,32 @@ function Newtons_method()
 dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
     eps = 1e-6;
     x0 = 1/50;
-    [solution,no_iterations] = Newton(f, dfdx, x0, eps);
+    [solution, no_iterations] = Newton(f, dfdx, x0, eps);
     if no_iterations > 0   % Solution found
-        printf('Number of function calls: %d\n', 1 + 2*no_iterations)
-        printf('A solution is: %f\n', solution)
+        printf("Number of function calls: %d\n", 1 + 2*no_iterations)
+        printf("A solution is: %f\n", solution)
     else
-        printf('Abort execution.\n')
+        printf("Abort execution.\n")
     end
 end
+
 
 function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
     x = x0;
     f_value = f(x);
     iteration_counter = 0;
-    printf('\n')
-    printf('iteration counter= %d     x=%f     f(x)=%f \n', iteration_counter, x, f_value)
+    disp(" ")
+    disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
     while abs(f_value) > eps && iteration_counter < 100
         try
             x = x - (f_value)/dfdx(x);
         catch
-            printf('Error! - derivative zero for x = \n', x)
+            printf("Error! - derivative zero for x = \n", x)
             exit(1)
         end
         f_value = f(x);
         iteration_counter = iteration_counter + 1;
-        printf('iteration counter= %d     x=%f     f(x)=%f \n', iteration_counter, x, f_value)
+        disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
     end
     % Here, either a solution is found, or too many iterations
     if abs(f_value) > eps
@@ -129,6 +133,25 @@ function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
     solution = x
     no_iterations = iteration_counter;
 end
+
+%ton = solution
+
+
+% lecture 14
+% at t=0 the diode is on ------> v(fwout1)-von = v(mid1) ---- incluir Von?
+% at t=tOFF the diode goes off  ------> v(mid1)-v(fwout2) = v(mid1) = Acos(w*toff)*exp((-t+toff)/(Rdet*C)) ---- saber A
+% at t=tON the diode goes on again ------> v(fwout1) = v(mid1) ---- incluir Von?
+
+T = 2*pi/w;
+% When the diode is ON, v_fwout1(t)-von = v_mid1(t)
+
+
+
+
+
+%-----VOLTAGE REGULATOR-----
+
+
 
   
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
