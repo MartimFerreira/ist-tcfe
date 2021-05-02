@@ -109,6 +109,8 @@ function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
     x = x0;
     f_value = f(x);
     iteration_counter = 0;
+    printf('\n')
+    printf('iteration counter= %d     x=%f     f(x)=%f \n', iteration_counter, x, f_value)
     while abs(f_value) > eps && iteration_counter < 100
         try
             x = x - (f_value)/dfdx(x);
@@ -118,6 +120,7 @@ function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
         end
         f_value = f(x);
         iteration_counter = iteration_counter + 1;
+        printf('iteration counter= %d     x=%f     f(x)=%f \n', iteration_counter, x, f_value)
     end
     % Here, either a solution is found, or too many iterations
     if abs(f_value) > eps
