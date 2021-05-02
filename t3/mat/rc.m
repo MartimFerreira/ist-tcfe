@@ -25,8 +25,12 @@ fL2 = fL1*n*n;
 
 t=0:1e-5:2e-1;
 
-v_on = 1;
-R_on = 1;
+v_on = 11.97740/18
+
+%f= 50 Hz , w = 2*pi*f
+w = 100*pi;
+
+%R_on = 1;
 
 %%%%%%%%%%%%%%%%%%%%%%% MAIN CALCULATIONS %%%%%%%%%%%%%%%%
 
@@ -60,15 +64,68 @@ R_on = 1;
 %v_e2 = v_e1 - v_on;
 
   
-syms v1;
-syms sn;
-syms v2;
+%syms v1;
+%syms sn;
+%syms v2;
 
-syms v_in1 v_in2 v_fwout1 v_fwout2 i_fwout1 i_fwout2 i_2 sv_on sr_on c1 c2 c3 c4 c5 c6;
+%syms v_in1 v_in2 v_fwout1 v_fwout2 i_fwout1 i_fwout2 i_2 sv_on sr_on c1 c2 c3 c4 c5 c6;
 
-[c1 c2 c3 c4 c5] = solve( (v_in1 - v_fwout1 - sv_on)/sr_on == i_2, (v_in1 - v_fwout1 - sv_on)/sr_on + (v_in2 - v_fwout1 - sv_on)/sr_on == i_fwout1, (-v_in2 - sv_on)/sr_on == i_2 + (v_in2 - v_fwout1 - sv_on)/sr_on, (-v_in2 - sv_on)/sr_on + i_fwout1  == 0, v_in1 - v_in2 == v2, v_in1, v_in2, v_fwout1, i_fwout1, i_2 )
+%[c1 c2 c3 c4 c5] = solve( (v_in1 - v_fwout1 - sv_on)/sr_on == i_2, (v_in1 - v_fwout1 - sv_on)/sr_on + (v_in2 - v_fwout1 - sv_on)/sr_on == i_fwout1, (-v_in2 - sv_on)/sr_on == i_2 + (v_in2 - v_fwout1 - sv_on)/sr_on, (-v_in2 - sv_on)/sr_on + i_fwout1  == 0, v_in1 - v_in2 == v2, v_in1, v_in2, v_fwout1, i_fwout1, i_2 )
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
+
+  %Ideal Transformer
+  v1 = 230 + sin(w*t);
+
+v2 = 1/n * v1;
+
+%Full wave bridge rectifier
+
+v_fwout1 = abs(v2) - 2*v_on; 
+v_fwout2 = 0;
+
+%Envelope Detector
+
+toff=(1/w)* atan(1/(w*Rdet*C))
+
+%Newton Method to find ton
+
+function Newtons_method()
+  f = @(x) cos(w*toff)*exp((-x-toff)/(Rdet*C))-cos(x);
+dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
+    eps = 1e-6;
+    x0 = 1/50;
+    [solution,no_iterations] = Newton(f, dfdx, x0, eps);
+    if no_iterations > 0   % Solution found
+        printf('Number of function calls: %d\n', 1 + 2*no_iterations)
+        printf('A solution is: %f\n', solution)
+    else
+        printf('Abort execution.\n')
+    end
+end
+
+function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
+    x = x0;
+    f_value = f(x);
+    iteration_counter = 0;
+    while abs(f_value) > eps && iteration_counter < 100
+        try
+            x = x - (f_value)/dfdx(x);
+        catch
+            printf('Error! - derivative zero for x = \n', x)
+            exit(1)
+        end
+        f_value = f(x);
+        iteration_counter = iteration_counter + 1;
+    end
+    % Here, either a solution is found, or too many iterations
+    if abs(f_value) > eps
+        iteration_counter = -1;
+    end
+    solution = x
+    no_iterations = iteration_counter;
+end
 
   
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
