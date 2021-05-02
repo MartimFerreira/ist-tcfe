@@ -76,15 +76,15 @@ w = 100*pi;
 %%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
 
   %Ideal Transformer
-  v1(t) = 230 + sin(w*t);
+  v1 = 230 + sin(w*t);
 
-v2(t) = 1/n * v1;
+v2 = 1/n * v1;
 
 
 %----FULL WAVE BRIDGE RECTIFIER-----
 
-v_fwout1(t) = abs(v2(t)) - 2*v_on; 
-v_fwout2(t) = 0;
+v_fwout1 = abs(v2) - 2*v_on; 
+v_fwout2 = 0;
 
 
 %-----ENVELOPE DETECTOR-----
@@ -94,19 +94,6 @@ toff=(1/w)* atan(1/(w*Rdet*C))
 
 %Newton Method to find ton
 
-function Newtons_method()
-  f = @(x) cos(w*toff)*exp((-x-toff)/(Rdet*C))-cos(x);
-dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
-    eps = 1e-6;
-    x0 = 1/50;
-    [solution, no_iterations] = Newton(f, dfdx, x0, eps);
-    if no_iterations > 0   % Solution found
-        printf("Number of function calls: %d\n", 1 + 2*no_iterations)
-        printf("A solution is: %f\n", solution)
-    else
-        printf("Abort execution.\n")
-    end
-end
 
 
 function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
@@ -134,7 +121,21 @@ function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
     no_iterations = iteration_counter;
 end
 
-%ton = solution
+function Newtons_method()
+  f = @(x) cos(w*toff)*exp((-x-toff)/(Rdet*C))-cos(x);
+dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
+    eps = 1e-6;
+    x0 = 1./100.;
+    vec = Newton(f, dfdx, x0, eps);
+    if no_iterations > 0   % Solution found
+        printf("Number of function calls: %d\n", 1 + 2*no_iterations)
+        printf("A solution is: %f\n", solution)
+    else
+        printf("Abort execution.\n")
+    end
+end
+
+ton = vec(1)
 
 
 % lecture 14
