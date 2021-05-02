@@ -76,7 +76,7 @@ w = 100*pi;
 %%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
 
   %Ideal Transformer
-  v1 = 230 + sin(w*t);
+  v1 = 230 + cos(w*t);
 
 v2 = 1/n * v1;
 
@@ -144,10 +144,42 @@ ton = vec(1)
 % at t=tON the diode goes on again ------> v(fwout1) = v(mid1) ---- incluir Von?
 
 T = 2*pi/w;
-% When the diode is ON, v_fwout1(t)-von = v_mid1(t)
+% When the diode is ON, v_fwout1(t)-von = v_mid1(t) --- % t in interval [ON, OFF]
+% When the diode is OFF, v(mid1) = Acos(w*toff)*exp((-t+toff)/(Rdet*C)) --- % t in interval [OFF, ON]
 
 
+% know which one comes first ton or toff
 
+% ton value (example)
+ton = toff + 0.8*T;
+% declaration of vector with respective size
+
+i = 0;
+if i <= 20001 % size of vector t
+	% the diode is OFF in the beginning
+	if (ton < toff)
+		if (t(i) < ton)
+		v_mid(i) = v_fwout1(i) - v_on
+		elseif (t(i) >= ton && t(i) < toff)
+		v_mid(i) = -Rdet*C*sin(w*t(i))*cos(w*t(i))/abs(cos(w*t(i)))- v_on
+		endif
+		ton = ton + T/2; % after half a period there is a new ton
+		toff = toff + T/2; % after half a period there is a new toff
+	% the diode is ON in the beginning
+	elseif (ton > toff)
+		if (t(i) < toff)
+		v_mid(i) = v_fwout1(i) - v_on
+		elseif (t(i) >= toff && t(i) < toff)
+		v_mid(i) = -Rdet*C*sin(w*t(i))*cos(w*t(i))/abs(cos(w*t(i)))- v_on
+		endif
+		ton = ton + T/2; % after half a period there is a new ton
+		toff = toff + T/2; % after half a period there is a new toff
+	else
+	print("Error in calculations!\n")
+	
+	endif
+i = i+1;
+endif
 
 
 %-----VOLTAGE REGULATOR-----
