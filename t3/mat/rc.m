@@ -141,15 +141,10 @@ end
 % lecture 14
 
 T = 2*pi/w
-% When the diode is OFF, v_o = -R*i_c --- % t in interval [OFF, ON]
 
-
-% know which one comes first ton or toff
 
 % ton value (example)
 ton = toff + 0.8*T
-% declaration of vector with respective size
-% ton and toff must be different
 
 % lecture 14
 % When the diode is ON, v_o = v_s --- % t in interval [ON, OFF]
@@ -160,29 +155,95 @@ ton = toff + 0.8*T
 % https://www.yanivplan.com/files/tutorial2vectors.pdf
 % https://stackoverflow.com/questions/38174739/octave-replace-elements-in-a-vector-under-certain-circumstances
 
+ton_i = ton; % initial ton
+toff_i = toff; % initial toff
+
 v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of vector t)
-for idx = 1:length(v_mid1);
-     %the diode is OFF in the beginning
-	if (ton < toff)
-		if (t(idx) < ton) % diode OFF
+
+if (ton_i < toff_i) %the diode is OFF in the beginning
+	for idx = 1:length(v_mid1);
+		if (t(idx) <= ton_i || (t(idx) >= toff && t(idx) < ton)) % diode OFF
 		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
 		else % diode ON
 		v_mid1(idx) = v_fwout1(idx) - v_on;
 		end
-		%ton = ton + T/2; % after half a period there is a new ton
-		%toff = toff + T/2; % after half a period there is a new toff
-	 %the diode is ON in the beginning
-	else % when testing I realised this was the part of the loop it used
-		if (t(idx) < toff) % diode ON
+		if(t(idx) == ton) ton = ton + T/2;
+		end
+		if(t(idx) == toff) toff = toff + T/2;
+		end
+	end
+end
+
+if (ton_i > toff_i) %the diode is ON in the beginning
+	for idx = 1:length(v_mid1);
+		if (t(idx) <= toff_i || (t(idx) >= ton && t(idx) < toff)) % diode ON
 		v_mid1(idx) = v_fwout1(idx) - v_on;
 		else % diode OFF
 		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
 		end
-		%ton = ton + T/2; % after half a period there is a new ton
-		%toff = toff + T/2; % after half a period there is a new toff
+		if(t(idx) == ton) ton = ton + T/2;
+		end
+		if(t(idx) == toff) toff = toff + T/2;
+		end
 	end
-    
 end
+
+
+%for idx = 1:length(v_mid1);
+%	if (ton_i < toff_i)
+%		if (t(idx) < ton) % diode OFF
+%		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+%		else % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		end
+%		%ton = ton + T/2; % after half a period there is a new ton
+%		%toff = toff + T/2; % after half a period there is a new toff
+%	 %the diode is ON in the beginning
+%	else % when testing I realised this was the part of the loop it used
+%		if (t(idx) < toff) % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		else % diode OFF
+%		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+%		end
+%		%ton = ton + T/2; % after half a period there is a new ton
+%		%toff = toff + T/2; % after half a period there is a new toff
+%	end
+%	%if (t(idx)==toff) 
+%	%ton = ton + T/2; % after half a period there is a new ton
+%	%end
+%	%if (t(idx)==ton)
+%	%toff = toff + T/2; % after half a period there is a new toff
+%	%end
+%end
+
+%v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of vector t)
+%for idx = 1:length(v_mid1);
+%     %the diode is OFF in the beginning
+%	if (ton < toff)
+%		if (t(idx) < ton) % diode OFF
+%		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+%		else % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		end
+%		%ton = ton + T/2; % after half a period there is a new ton
+%		%toff = toff + T/2; % after half a period there is a new toff
+%	 %the diode is ON in the beginning
+%	else % when testing I realised this was the part of the loop it used
+%		if (t(idx) < toff) % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		else % diode OFF
+%		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+%		end
+%		%ton = ton + T/2; % after half a period there is a new ton
+%		%toff = toff + T/2; % after half a period there is a new toff
+%	end
+%	%if (t(idx)==toff) 
+%	%ton = ton + T/2; % after half a period there is a new ton
+%	%end
+%	%if (t(idx)==ton)
+%	%toff = toff + T/2; % after half a period there is a new toff
+%	%end
+%end
 
 %print vector t --- working
 %g=sprintf('%f ', t);
