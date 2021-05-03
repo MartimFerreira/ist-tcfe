@@ -76,7 +76,7 @@ w = 100*pi;
 %%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
 
   %Ideal Transformer
-  v1 = 230 + sin(w*t);
+  v1 = 230 * cos(w*t);
 
 v2 = 1/n * v1;
 
@@ -89,55 +89,68 @@ v_fwout2 = 0;
 
 %-----ENVELOPE DETECTOR-----
 
-toff=(1/w)* atan(1/(w*Rdet*C))
 
 
-%Newton Method to find ton
+%toff=(1/w)* atan(1/(w*Rdet*C))
 
 
+  A= 230/n;
 
-function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
+syms ws real
+syms Rdets real
+syms Cs real
+syms vons real
+syms toffs real
+syms As real
+syms x real
+syms y real
+
+  f_toff = As*Cs*ws*sin(ws*toffs)*abs(cos(ws*toffs))/cos(ws*toffs) - As*abs(cos(ws*toffs))/Rdets +(2*vons)/Rdets
+
+% Substitute in values that are known
+  newf = subs(f_toff, [ws,Rdets, Cs, vons,As], [w, Rdet, C, v_on, A]);
+
+% Solve the resulting symbolic expression for toffs
+[result] = solve(newf == 0, toffs)
+
+
+% And if you need a numeric (rather than symbolic) result
+  toff_1= double(result(1))
+  toff_2= double(result(2))
+
+  toff=toff_2
+
+
+f_ton = @(x) abs(cos(w*toff))*exp((-x+toff)/(Rdet*C))-abs(cos(w*x));
+dfdx = @(x) (-abs(cos(w*toff))*(1/(Rdet*C)))*exp((-x+toff)/(Rdet*C))+ w*sin(x*w)*(cos(w*x)/abs(cos(w*x)));
+    eps = 1e-6;
+    x0 = toff + 1/10;
+
+
     x = x0;
-    f_value = f(x);
+    f_value = f_ton(x);
     iteration_counter = 0;
-    disp(" ")
-    disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
-    while abs(f_value) > eps && iteration_counter < 100
+
+    
+    while abs(f_value) > eps && iteration_counter < 100000000
         try
             x = x - (f_value)/dfdx(x);
         catch
             printf("Error! - derivative zero for x = \n", x)
             exit(1)
         end
-        f_value = f(x);
+        f_value = f_ton(x);
         iteration_counter = iteration_counter + 1;
-        disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
+        
     end
     % Here, either a solution is found, or too many iterations
     if abs(f_value) > eps
         iteration_counter = -1;
     end
-    solution = x
+    ton = x
     no_iterations = iteration_counter;
-end
 
-function Newtons_method()
-  f = @(x) cos(w*toff)*exp((-x-toff)/(Rdet*C))-cos(x);
-dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
-    eps = 1e-6;
-    x0 = 1./100.;
-    vec = Newton(f, dfdx, x0, eps);
-    if no_iterations > 0   % Solution found
-        printf("Number of function calls: %d\n", 1 + 2*no_iterations)
-        printf("A solution is: %f\n", solution)
-    else
-        printf("Abort execution.\n")
-    end
-end
-
-ton = vec(1)
-
-
+	  
 % lecture 14
 % at t=0 the diode is on ------> v(fwout1)-von = v(mid1) ---- incluir Von?
 % at t=tOFF the diode goes off  ------> v(mid1)-v(fwout2) = v(mid1) = Acos(w*toff)*exp((-t+toff)/(Rdet*C)) ---- saber A
@@ -302,3 +315,84 @@ fclose(ngspice_input);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ %function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
+ %   x = x0;
+ %   f_value = f(x);
+ %   iteration_counter = 0;
+ %   disp(" ")
+ %   disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
+ %   while abs(f_value) > eps && iteration_counter < 100
+ %       try
+ %           x = x - (f_value)/dfdx(x);
+ %       catch
+ %           printf("Error! - derivative zero for x = \n", x)
+ %           exit(1)
+ %       end
+ %       f_value = f(x);
+ %       iteration_counter = iteration_counter + 1;
+ %       disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
+ %   end
+ %   % Here, either a solution is found, or too many iterations
+ %   if abs(f_value) > eps
+ %       iteration_counter = -1;
+ %   end
+ %   solution = x
+ %   no_iterations = iteration_counter;
+%end
+
+%function Newtons_method()
+%  f = @(x) cos(w*toff)*exp((-x-toff)/(Rdet*C))-cos(x);
+%dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
+%    eps = 1e-6;
+%    x0 = 1./100.;
+%    vec = Newton(f, dfdx, x0, eps);
+%    if no_iterations > 0   % Solution found
+%        printf("Number of function calls: %d\n", 1 + 2*no_iterations)
+%        printf("A solution is: %f\n", solution)
+%    else
+%        printf("Abort execution.\n")
+%    end
+% end
+
+
+
+%ton = vec(1)
