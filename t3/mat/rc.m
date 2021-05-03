@@ -76,7 +76,9 @@ w = 100*pi;
 %%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
 
   %Ideal Transformer
+
   v1 = 230 * cos(w*t);
+
 
 v2 = 1/n * v1;
 
@@ -150,17 +152,74 @@ dfdx = @(x) (-abs(cos(w*toff))*(1/(Rdet*C)))*exp((-x+toff)/(Rdet*C))+ w*sin(x*w)
     ton = x
     no_iterations = iteration_counter;
 
-	  
 % lecture 14
-% at t=0 the diode is on ------> v(fwout1)-von = v(mid1) ---- incluir Von?
-% at t=tOFF the diode goes off  ------> v(mid1)-v(fwout2) = v(mid1) = Acos(w*toff)*exp((-t+toff)/(Rdet*C)) ---- saber A
-% at t=tON the diode goes on again ------> v(fwout1) = v(mid1) ---- incluir Von?
 
-T = 2*pi/w;
-% When the diode is ON, v_fwout1(t)-von = v_mid1(t)
+T = 2*pi/w
+% When the diode is OFF, v_o = -R*i_c --- % t in interval [OFF, ON]
 
 
+% know which one comes first ton or toff
 
+% ton value (example)
+ton = toff + 0.8*T
+% declaration of vector with respective size
+% ton and toff must be different
+
+% lecture 14
+% When the diode is ON, v_o = v_s --- % t in interval [ON, OFF]
+% When the diode is OFF, v_o = -R*i_c --- % t in interval [OFF, ON]
+
+
+% links that may be helpful
+% https://www.yanivplan.com/files/tutorial2vectors.pdf
+% https://stackoverflow.com/questions/38174739/octave-replace-elements-in-a-vector-under-certain-circumstances
+
+v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of vector t)
+for idx = 1:length(v_mid1);
+     %the diode is OFF in the beginning
+	if (ton < toff)
+		if (t(idx) < ton) % diode OFF
+		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+		else % diode ON
+		v_mid1(idx) = v_fwout1(idx) - v_on;
+		end
+		%ton = ton + T/2; % after half a period there is a new ton
+		%toff = toff + T/2; % after half a period there is a new toff
+	 %the diode is ON in the beginning
+	else % when testing I realised this was the part of the loop it used
+		if (t(idx) < toff) % diode ON
+		v_mid1(idx) = v_fwout1(idx) - v_on;
+		else % diode OFF
+		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+		end
+		%ton = ton + T/2; % after half a period there is a new ton
+		%toff = toff + T/2; % after half a period there is a new toff
+	end
+    
+end
+
+%print vector t --- working
+%g=sprintf('%f ', t);
+%fprintf('Answer: %s\n', g)
+
+%print vector v_fwout1 --- working
+%g=sprintf('%f ', v_fwout1);
+%fprintf('Answer: %s\n', g)
+
+%print vector v_mid1
+g=sprintf('%f ', v_mid1);
+fprintf('Answer: %s\n', g)
+
+
+v_mid1_plot = figure ();
+plot (t, v_mid1, "g");
+
+xlabel ("t [s]");
+ylabel ("v_{mid1}(t) [V]");
+print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
+
+%plot(t, v_mid1);
+%hold on;
 
 
 %-----VOLTAGE REGULATOR-----
