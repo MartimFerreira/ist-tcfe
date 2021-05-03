@@ -164,22 +164,22 @@ v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of 
 for idx = 1:length(v_mid1);
      %the diode is OFF in the beginning
 	if (ton < toff)
-		if (t(idx) < ton)
-		v_mid1(idx, 1) = v_fwout1(idx) - v_on;
-		else
-		v_mid1(idx,1) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
-		end
-		ton = ton + T/2; % after half a period there is a new ton
-		toff = toff + T/2; % after half a period there is a new toff
-	 %the diode is ON in the beginning
-	else
-		if (t(idx) < toff)
+		if (t(idx) < ton) % diode OFF
+		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+		else % diode ON
 		v_mid1(idx) = v_fwout1(idx) - v_on;
-		else
+		end
+		%ton = ton + T/2; % after half a period there is a new ton
+		%toff = toff + T/2; % after half a period there is a new toff
+	 %the diode is ON in the beginning
+	else % when testing I realised this was the part of the loop it used
+		if (t(idx) < toff) % diode ON
+		v_mid1(idx) = v_fwout1(idx) - v_on;
+		else % diode OFF
 		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
 		end
-		ton = ton + T/2; % after half a period there is a new ton
-		toff = toff + T/2; % after half a period there is a new toff
+		%ton = ton + T/2; % after half a period there is a new ton
+		%toff = toff + T/2; % after half a period there is a new toff
 	end
     
 end
@@ -195,6 +195,18 @@ end
 %print vector v_mid1
 g=sprintf('%f ', v_mid1);
 fprintf('Answer: %s\n', g)
+
+
+v_mid1_plot = figure ();
+plot (t, v_mid1, "g");
+
+xlabel ("t [s]");
+ylabel ("v_{mid1}(t) [V]");
+print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
+
+%plot(t, v_mid1);
+%hold on;
+
 
 %-----VOLTAGE REGULATOR-----
 
