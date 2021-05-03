@@ -135,52 +135,66 @@ dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
     end
 end
 
-ton = vec(1)
+%ton = vec(1)
 
 
 % lecture 14
-% at t=0 the diode is on ------> v(fwout1)-von = v(mid1) ---- incluir Von?
-% at t=tOFF the diode goes off  ------> v(mid1)-v(fwout2) = v(mid1) = Acos(w*toff)*exp((-t+toff)/(Rdet*C)) ---- saber A
-% at t=tON the diode goes on again ------> v(fwout1) = v(mid1) ---- incluir Von?
 
-T = 2*pi/w;
-% When the diode is ON, v_fwout1(t)-von = v_mid1(t) --- % t in interval [ON, OFF]
-% When the diode is OFF, v(mid1) = Acos(w*toff)*exp((-t+toff)/(Rdet*C)) --- % t in interval [OFF, ON]
+T = 2*pi/w
+% When the diode is OFF, v_o = -R*i_c --- % t in interval [OFF, ON]
 
 
 % know which one comes first ton or toff
 
 % ton value (example)
-ton = toff + 0.8*T;
+ton = toff + 0.8*T
 % declaration of vector with respective size
+% ton and toff must be different
 
-i = 0;
-if i <= 20001 % size of vector t
-	% the diode is OFF in the beginning
+% lecture 14
+% When the diode is ON, v_o = v_s --- % t in interval [ON, OFF]
+% When the diode is OFF, v_o = -R*i_c --- % t in interval [OFF, ON]
+
+
+% links that may be helpful
+% https://www.yanivplan.com/files/tutorial2vectors.pdf
+% https://stackoverflow.com/questions/38174739/octave-replace-elements-in-a-vector-under-certain-circumstances
+
+v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of vector t)
+for idx = 1:length(v_mid1);
+     %the diode is OFF in the beginning
 	if (ton < toff)
-		if (t(i) < ton)
-		v_mid(i) = v_fwout1(i) - v_on
-		elseif (t(i) >= ton && t(i) < toff)
-		v_mid(i) = -Rdet*C*sin(w*t(i))*cos(w*t(i))/abs(cos(w*t(i)))- v_on
-		endif
+		if (t(idx) < ton)
+		v_mid1(idx, 1) = v_fwout1(idx) - v_on;
+		else
+		v_mid1(idx,1) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+		end
 		ton = ton + T/2; % after half a period there is a new ton
 		toff = toff + T/2; % after half a period there is a new toff
-	% the diode is ON in the beginning
-	elseif (ton > toff)
-		if (t(i) < toff)
-		v_mid(i) = v_fwout1(i) - v_on
-		elseif (t(i) >= toff && t(i) < toff)
-		v_mid(i) = -Rdet*C*sin(w*t(i))*cos(w*t(i))/abs(cos(w*t(i)))- v_on
-		endif
-		ton = ton + T/2; % after half a period there is a new ton
-		toff = toff + T/2; % after half a period there is a new toff
+	 %the diode is ON in the beginning
 	else
-	print("Error in calculations!\n")
-	
-	endif
-i = i+1;
-endif
+		if (t(idx) < toff)
+		v_mid1(idx) = v_fwout1(idx) - v_on;
+		else
+		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+		end
+		ton = ton + T/2; % after half a period there is a new ton
+		toff = toff + T/2; % after half a period there is a new toff
+	end
+    
+end
 
+%print vector t --- working
+%g=sprintf('%f ', t);
+%fprintf('Answer: %s\n', g)
+
+%print vector v_fwout1 --- working
+%g=sprintf('%f ', v_fwout1);
+%fprintf('Answer: %s\n', g)
+
+%print vector v_mid1
+g=sprintf('%f ', v_mid1);
+fprintf('Answer: %s\n', g)
 
 %-----VOLTAGE REGULATOR-----
 
