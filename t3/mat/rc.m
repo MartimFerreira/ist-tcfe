@@ -93,21 +93,25 @@ v_fwout2 = 0;
 
 
 
-%toff=(1/w)* atan(1/(w*Rdet*C))
+%toff calculation
 
-
-  A= 230/n;
+  A= 230/n
 
 syms ws real
 syms Rdets real
 syms Cs real
 syms vons real
 syms toffs real
+syms toffs2 real 
 syms As real
 syms x real
 syms y real
+syms tons real
+
 
   f_toff = As*Cs*ws*sin(ws*toffs)*abs(cos(ws*toffs))/cos(ws*toffs) - As*abs(cos(ws*toffs))/Rdets +(2*vons)/Rdets
+
+  f_ton = As*abs(cos(ws*toffs2))*exp((-tons+toffs2)/(Rdets*Cs))- As*abs(cos(ws*tons));
 
 % Substitute in values that are known
   newf = subs(f_toff, [ws,Rdets, Cs, vons,As], [w, Rdet, C, v_on, A]);
@@ -122,43 +126,38 @@ syms y real
 
   toff=toff_2
 
-
-f_ton = @(x) abs(cos(w*toff))*exp((-x+toff)/(Rdet*C))-abs(cos(w*x));
-dfdx = @(x) (-abs(cos(w*toff))*(1/(Rdet*C)))*exp((-x+toff)/(Rdet*C))+ w*sin(x*w)*(cos(w*x)/abs(cos(w*x)));
-    eps = 1e-6;
-    x0 = toff + 1/10;
+newf_ton = subs(f_ton, [ws,Rdets, Cs, toffs2,As], [w, Rdet, C, toff, A]);
 
 
-    x = x0;
-    f_value = f_ton(x);
-    iteration_counter = 0;
+  %Newton
 
-    
-    while abs(f_value) > eps && iteration_counter < 100000000
-        try
-            x = x - (f_value)/dfdx(x);
-        catch
-            printf("Error! - derivative zero for x = \n", x)
-            exit(1)
-        end
-        f_value = f_ton(x);
-        iteration_counter = iteration_counter + 1;
-        
-    end
-    % Here, either a solution is found, or too many iterations
-    if abs(f_value) > eps
-        iteration_counter = -1;
-    end
-    ton = x
-    no_iterations = iteration_counter;
+maxNumIter = 60000;
+itCounter = 0;
+tol=1e-5;
+x0= 0.013; 
+syms fp;   % derivative
+fp = diff(newf_ton);
 
-% lecture 14
+xcur = x0;
+while ( (abs(subs(newf_ton,xcur))>tol)  &  (itCounter < maxNumIter) ) 
+        xcur = double(xcur - subs(newf_ton,xcur)/subs(fp,xcur));
+        itCounter = itCounter+1;
+end
 
-T = 2*pi/w
+if( abs(subs(newf_ton,xcur))>tol )
+  disp("not found")
+end
+
+ton=xcur
+
+
+
+
+    T = 2*pi/w;
 
 
 % ton value (example)
-ton = toff + 0.8*T
+%ton = toff + 0.8*T
 
 % lecture 14
 % When the diode is ON, v_o = v_s --- % t in interval [ON, OFF]
@@ -454,13 +453,47 @@ fclose(ngspice_input);
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Tentativas de newton que nao quis apagar%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
 
 
 
+ %newton 1;
 
+%f_ton = @(x) abs(cos(w*toff))*exp((-x+toff)/(Rdet*C))-abs(cos(w*x));
+%dfdx = @(x) (-abs(cos(w*toff))*(1/(Rdet*C)))*exp((-x+toff)/(Rdet*C))+ w*sin(x*w)*(cos(w*x)/abs(cos(w*x)));
+%    eps = 1e-6;
+%    x0 = toff + 1/10;
+
+
+%    x = x0;
+%    f_value = f_ton(x);
+%    iteration_counter = 0;
+
+    
+%    while abs(f_value) > eps && iteration_counter < 100000000
+%        try
+%            x = x - (f_value)/dfdx(x);
+%        catch
+%            printf("Error! - derivative zero for x = \n", x)
+%            exit(1)
+%        end
+%        f_value = f_ton(x);
+%        iteration_counter = iteration_counter + 1;
+%        
+%   end
+%    % Here, either a solution is found, or too many iterations
+%    if abs(f_value) > eps
+%        iteration_counter = -1;
+%    end
+%    ton = x
+%    no_iterations = iteration_counter;
 
 
 
