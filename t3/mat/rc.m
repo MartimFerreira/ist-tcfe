@@ -121,10 +121,10 @@ syms tons real
 
 
 % And if you need a numeric (rather than symbolic) result
-  toff_1= double(result(1))
-  toff_2= double(result(2))
+  toff_1= double(result(1));
+toff_2= double(result(2));
 
-  toff=toff_2
+toff=toff_2;
 
 newf_ton = subs(f_ton, [ws,Rdets, Cs, toffs2,As], [w, Rdet, C, toff, A]);
 
