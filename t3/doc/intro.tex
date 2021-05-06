@@ -10,16 +10,21 @@
 % sections
 
 % state the learning objective 
-The aim of this laboratory assignment is to build an AC/Dc converter circuit whose input is AC voltage with frequency $50 \ Hz$ and DC component $230 \ V$ and whose output is DC voltage $12 \ V$.
+The aim of this laboratory assignment is to build an AC/DC converter circuit whose input is AC voltage with frequency $50 \ Hz$ and DC component $230 \ V$ and whose output is DC voltage $12 \ V$.
 
 
 % corrigir, porque provavelmente há coisas que não estão certas, por causa das alterações que fizemos depois de falar com o stor na última aula de laboratório (especialmente na parte da esquerda, antes do transformador)
 % modelos usados para os díodos
 % tentativa erro
-The circuit is composed up of several parts. In the first one there is a voltage source $V_S$, then there is a transformer with 1 loop on the left and $n$ loops on the right, followed by a full-wave bridge rectifier, composed of 4 diodes ($Dfw1$, $Dfw2$, $Dfw3$ and $Dfw4$). The model chosen for the diodes was the ideal one plus a voltage source $V_{on}$. In \textit{ngspice} it was mandatory to used the default model. The two other parts were based on the examples explained in the theoretical lectures. The envelope detector had a rectifier with a diode $Ddet$ and a resistor $Rdet$ plus a capacitor $C$ in parallel with the resistor. Finally there is the voltage regulator with a resistor $Rreg$ and a limiter made up of 4 series in parallel, each with 18 diodes in total. The diodes were in parallel to reduce the total resistance in this part of the circuit.
+The circuit is composed up of several parts. In the first one there is a voltage source $V_S$, then there is a transformer with 1 loop on the left and $n$ loops on the right, followed by a full-wave bridge rectifier, composed of 4 diodes ($Dfw1$, $Dfw2$, $Dfw3$ and $Dfw4$). The model chosen for the diodes was the ideal one plus a voltage source $V_{on}$. In \textit{ngspice} it was mandatory to used the default model.
+
+The two other parts were based on the examples explained in the theoretical lectures. The envelope detector had a rectifier with a diode $Ddet$ and a resistor $Rdet$ plus a capacitor $C$ in parallel with the resistor. Finally, there is the voltage regulator with a resistor $Rreg$ and a limiter made  of 4 series in parallel, each with 18 diodes (so there are 72 diodes in total). The diodes in parallel help reduce the total resistance in this part of the circuit.
 
 % componentes - done
 % falta falar dos nós, maybe?
 % esquema do circuito
 
-Some of the main objectives were to used the lowest possible number of components (namely, resistors, capacitors and diodes) and also obtain an average output voltage of $12 \ V$ with a very small ripple.
+The main objectives were to used the lowest possible number of components (namely, resistors, capacitors and diodes) and also obtain an average output voltage of $12 \ V$ with a very small ripple.
+
+
+In Section~\ref{sec:analysis}, there is the theoretical analysis of the circuit (all the necessary calculations were made with \textit{Octave}). In Section~\ref{sec:simulation}, the circuit is simulated with \textit{ngspice}. The theoretical and simulation results are then compared. Lastly,  Section~\ref{sec:conclusion} is the conclusion of the report. 
