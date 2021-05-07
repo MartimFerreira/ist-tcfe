@@ -35,7 +35,8 @@ N_diodes_parallel = 4;
 %%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
 
 %Ideal Transformer
-v1 = 230 + cos(w*t);
+
+v1 = 230 * cos(w*t);
 
 v2 = 1/n * v1;
 
@@ -48,81 +49,203 @@ v_fwout2 = 0;
 
 %-----ENVELOPE DETECTOR-----
 
-toff=(1/w)* atan(1/(w*Rdet*C))
 
 
-%Newton Method to find ton
+%toff calculation
 
-function Newtons_method()
-  f = @(x) cos(w*toff)*exp((-x-toff)/(Rdet*C))-cos(x);
-dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
-    eps = 1e-6;
-    x0 = 1/50;
-    [solution, no_iterations] = Newton(f, dfdx, x0, eps);
-    if no_iterations > 0   % Solution found
-        printf("Number of function calls: %d\n", 1 + 2*no_iterations)
-        printf("A solution is: %f\n", solution)
-    else
-        printf("Abort execution.\n")
-    end
+  A= 230/n
+
+syms ws real
+syms Rdets real
+syms Cs real
+syms vons real
+syms toffs real
+syms toffs2 real 
+syms As real
+syms x real
+syms y real
+syms tons real
+
+
+  f_toff = As*Cs*ws*sin(ws*toffs)*abs(cos(ws*toffs))/cos(ws*toffs) - As*abs(cos(ws*toffs))/Rdets +(2*vons)/Rdets
+
+  f_ton = As*abs(cos(ws*toffs2))*exp((-tons+toffs2)/(Rdets*Cs))- As*abs(cos(ws*tons));
+
+% Substitute in values that are known
+  newf = subs(f_toff, [ws,Rdets, Cs, vons,As], [w, Rdet, C, v_on, A]);
+
+% Solve the resulting symbolic expression for toffs
+[result] = solve(newf == 0, toffs)
+
+
+% And if you need a numeric (rather than symbolic) result
+  toff_1= double(result(1));
+toff_2= double(result(2));
+
+toff=toff_2;
+
+newf_ton = subs(f_ton, [ws,Rdets, Cs, toffs2,As], [w, Rdet, C, toff, A]);
+
+
+  %Newton
+
+maxNumIter = 60000;
+itCounter = 0;
+tol=1e-5;
+x0= 0.013; 
+syms fp;   % derivative
+fp = diff(newf_ton);
+
+xcur = x0;
+while ( (abs(subs(newf_ton,xcur))>tol)  &  (itCounter < maxNumIter) ) 
+        xcur = double(xcur - subs(newf_ton,xcur)/subs(fp,xcur));
+        itCounter = itCounter+1;
 end
 
-
-function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
-    x = x0;
-    f_value = f(x);
-    iteration_counter = 0;
-    disp(" ")
-    disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
-    while abs(f_value) > eps && iteration_counter < 100
-        try
-            x = x - (f_value)/dfdx(x);
-        catch
-            printf("Error! - derivative zero for x = \n", x)
-            exit(1)
-        end
-        f_value = f(x);
-        iteration_counter = iteration_counter + 1;
-        disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
-    end
-    % Here, either a solution is found, or too many iterations
-    if abs(f_value) > eps
-        iteration_counter = -1;
-    end
-    solution = x
-    no_iterations = iteration_counter;
+if( abs(subs(newf_ton,xcur))>tol )
+  disp("not found")
 end
 
-%ton = solution
+ton=xcur
+
+
+T = 2*pi/w;
+
+
+v_mid_DC = mean (v_mid);
+v_mid_AC = v_mid-v_mid_DC;
 
 
 % lecture 14
-% at t=0 the diode is on ------> v(fwout1)-von = v(mid1) ---- incluir Von?
-% at t=tOFF the diode goes off  ------> v(mid1)-v(fwout2) = v(mid1) = Acos(w*toff)*exp((-t+toff)/(Rdet*C)) ---- saber A
-% at t=tON the diode goes on again ------> v(fwout1) = v(mid1) ---- incluir Von?
-
-T = 2*pi/w;
-% When the diode is ON, v_fwout1(t)-von = v_mid1(t);
+% When the diode is ON, v_o = v_s --- % t in interval [ON, OFF]
+% When the diode is OFF, v_o = -R*i_c --- % t in interval [OFF, ON]
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%5%%% Voltage Regulator %%%%%%%%%%%%%%%%%%%%%%%%%%55
+% links that may be helpful
+% https://www.yanivplan.com/files/tutorial2vectors.pdf
+% https://stackoverflow.com/questions/38174739/octave-replace-elements-in-a-vector-under-certain-circumstances
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FILLER
-v_mid=11.5:1e-5:12.5;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FILLER
+ton_i = ton; % initial ton
+toff_i = toff; % initial toff
 
-v_mid_DC = mean (v_mid);
-  v_mid_AC = v_mid-v_mid_DC;
+v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of vector t)
 
-  v_out_DC = N_diodes_series * v_on;
+if (ton_i < toff_i) %the diode is OFF in the beginning
+	for idx = 1:length(v_mid1);
+		if (t(idx) <= ton_i || (t(idx) >= toff && t(idx) < ton)) % diode OFF
+		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+		else % diode ON
+		v_mid1(idx) = v_fwout1(idx) - v_on;
+		end
+		if(t(idx) == ton) ton = ton + T/2;
+		end
+		if(t(idx) == toff) toff = toff + T/2;
+		end
+	end
+end
+
+if (ton_i > toff_i) %the diode is ON in the beginning
+	for idx = 1:length(v_mid1);
+		if (t(idx) <= toff_i || (t(idx) >= ton && t(idx) < toff)) % diode ON
+		v_mid1(idx) = v_fwout1(idx) - v_on;
+		else % diode OFF
+		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+		end
+		if(t(idx) == ton) ton = ton + T/2;
+		end
+		if(t(idx) == toff) toff = toff + T/2;
+		end
+	end
+end
+
+
+%for idx = 1:length(v_mid1);
+%	if (ton_i < toff_i)
+%		if (t(idx) < ton) % diode OFF
+%		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+%		else % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		end
+%		%ton = ton + T/2; % after half a period there is a new ton
+%		%toff = toff + T/2; % after half a period there is a new toff
+%	 %the diode is ON in the beginning
+%	else % when testing I realised this was the part of the loop it used
+%		if (t(idx) < toff) % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		else % diode OFF
+%		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+%		end
+%		%ton = ton + T/2; % after half a period there is a new ton
+%		%toff = toff + T/2; % after half a period there is a new toff
+%	end
+%	%if (t(idx)==toff) 
+%	%ton = ton + T/2; % after half a period there is a new ton
+%	%end
+%	%if (t(idx)==ton)
+%	%toff = toff + T/2; % after half a period there is a new toff
+%	%end
+%end
+
+%v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of vector t)
+%for idx = 1:length(v_mid1);
+%     %the diode is OFF in the beginning
+%	if (ton < toff)
+%		if (t(idx) < ton) % diode OFF
+%		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+%		else % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		end
+%		%ton = ton + T/2; % after half a period there is a new ton
+%		%toff = toff + T/2; % after half a period there is a new toff
+%	 %the diode is ON in the beginning
+%	else % when testing I realised this was the part of the loop it used
+%		if (t(idx) < toff) % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		else % diode OFF
+%		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+%		end
+%		%ton = ton + T/2; % after half a period there is a new ton
+%		%toff = toff + T/2; % after half a period there is a new toff
+%	end
+%	%if (t(idx)==toff) 
+%	%ton = ton + T/2; % after half a period there is a new ton
+%	%end
+%	%if (t(idx)==ton)
+%	%toff = toff + T/2; % after half a period there is a new toff
+%	%end
+%end
+
+%print vector t --- working
+%g=sprintf('%f ', t);
+%fprintf('Answer: %s\n', g)
+
+%print vector v_fwout1 --- working
+%g=sprintf('%f ', v_fwout1);
+%fprintf('Answer: %s\n', g)
+
+%print vector v_mid1
+g=sprintf('%f ', v_mid1);
+fprintf('Answer: %s\n', g)
+
+
+v_mid1_plot = figure ();
+plot (t, v_mid1, "g");
+
+xlabel ("t [s]");
+ylabel ("v_{mid1}(t) [V]");
+print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
+
+%plot(t, v_mid1);
+%hold on;
+
+
+
+
+v_out_DC = N_diodes_series * v_on;
 
 diode_total_res = N_diodes_series/N_diodes_parallel * r_d
   
 v_out_AC = v_mid_AC * diode_total_res/(diode_total_res + Rreg);
-
-
-
-
 
   
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,3 +390,118 @@ fclose(ngspice_input);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Tentativas de newton que nao quis apagar%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+ %newton 1;
+
+%f_ton = @(x) abs(cos(w*toff))*exp((-x+toff)/(Rdet*C))-abs(cos(w*x));
+%dfdx = @(x) (-abs(cos(w*toff))*(1/(Rdet*C)))*exp((-x+toff)/(Rdet*C))+ w*sin(x*w)*(cos(w*x)/abs(cos(w*x)));
+%    eps = 1e-6;
+%    x0 = toff + 1/10;
+
+
+%    x = x0;
+%    f_value = f_ton(x);
+%    iteration_counter = 0;
+
+    
+%    while abs(f_value) > eps && iteration_counter < 100000000
+%        try
+%            x = x - (f_value)/dfdx(x);
+%        catch
+%            printf("Error! - derivative zero for x = \n", x)
+%            exit(1)
+%        end
+%        f_value = f_ton(x);
+%        iteration_counter = iteration_counter + 1;
+%        
+%   end
+%    % Here, either a solution is found, or too many iterations
+%    if abs(f_value) > eps
+%        iteration_counter = -1;
+%    end
+%    ton = x
+%    no_iterations = iteration_counter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+ %function [solution, no_iterations] = Newton(f, dfdx, x0, eps)
+ %   x = x0;
+ %   f_value = f(x);
+ %   iteration_counter = 0;
+ %   disp(" ")
+ %   disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
+ %   while abs(f_value) > eps && iteration_counter < 100
+ %       try
+ %           x = x - (f_value)/dfdx(x);
+ %       catch
+ %           printf("Error! - derivative zero for x = \n", x)
+ %           exit(1)
+ %       end
+ %       f_value = f(x);
+ %       iteration_counter = iteration_counter + 1;
+ %       disp("iteration counter= %d     x=%f     f(x)=%f", iteration_counter, x, f_value)
+ %   end
+ %   % Here, either a solution is found, or too many iterations
+ %   if abs(f_value) > eps
+ %       iteration_counter = -1;
+ %   end
+ %   solution = x
+ %   no_iterations = iteration_counter;
+%end
+
+%function Newtons_method()
+%  f = @(x) cos(w*toff)*exp((-x-toff)/(Rdet*C))-cos(x);
+%dfdx = @(x) -(cos(w*toff)/(Rdet*C))*exp((-x-toff)/(Rdet*C))+ sin(x);
+%    eps = 1e-6;
+%    x0 = 1./100.;
+%    vec = Newton(f, dfdx, x0, eps);
+%    if no_iterations > 0   % Solution found
+%        printf("Number of function calls: %d\n", 1 + 2*no_iterations)
+%        printf("A solution is: %f\n", solution)
+%    else
+%        printf("Abort execution.\n")
+%    end
+% end
+
+
+
+%ton = vec(1)
