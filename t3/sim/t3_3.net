@@ -6,7 +6,11 @@
 * forces current values to be saved
 .options savecurrents
 
-.include ngspice_3_input.txt
+Vs begin1 0 SIN(0.000000000000 230.000000000000 50.0 0.0 0.0 -90)
+R2 begin1 im1 1
+Dfw1 im1 0 Default
+
+.model Default D
 
 .op
 
@@ -30,10 +34,9 @@ set color6=rgb:4/0/0
 echo "********************************************"
 echo  "Transient analysis"
 echo "********************************************"
-tran 1e-5 20e-3
+ac 1e-5 20e-3
 
-hardcopy trans_3.ps v(6)
-echo trans_3_FIG
+meas ac r_d AVG v(im1)/@Dfw1[i]
 
 
 .endc

@@ -5,8 +5,6 @@ pkg load control
 
 %%EXAMPLE SYMBOLIC COMPUTATIONS
 
-pkg load symbolic
-
 format long
 
 %%%%%%%%%%%%%%%%%%%%%%% VARIABLES THAT MAY BE CHANGED %%%%%%%%%%%%%%%%
@@ -20,71 +18,32 @@ n = 230./14.5; %number of turns in transformer
 
 fVs = 230.; % independent voltage source
 
-fL1 = 1; %inductance (left side of the transformer)
-fL2 = fL1*n*n;
-
 t=0:1e-5:2e-1;
 
-v_on = 11.97740/18
+v_on = 11.97740/18;
+
+r_d = (12.11202-11.83641)/(0.007951937-0.004399195) *4/18;
 
 %f= 50 Hz , w = 2*pi*f
 w = 100*pi;
 
 %R_on = 1;
 
-%%%%%%%%%%%%%%%%%%%%%%% MAIN CALCULATIONS %%%%%%%%%%%%%%%%
-
-%v1 = 230 + sin(100*pi*t);
-
-%v2 = 1/n * v1;
-
-
-%v_fwout2 = 0;
-
-
-%v_in1(t) - v_in2(t) = v2(t);
-%i_d1(t) = R(v_in1 - v_fwout1);
-%i_d2(t) = R(v_in2 - v_fwout1);
-%i_d3(t) = R(v_fwout2 - v_in2);
-%i_d4(t) = R(v_fwout2 - v_in1);
-
-%i_d3 + i_d1 = i_d2 + i_d4;
-
-%i_det(t) = R(v_fwout1 - v_mid1);
-
-%i_d1(t) + i_d2(t) = i_det(t);
-
-%i_d1(t) = v_mid1/Rdet + C*d(v_mid1)/dt + i_out;
-
-%i_d4(t) + i_d3(t) = i_out(t);
-
-
-
-%v_e1 = v_fwout1 - i_fwout1 * R_on;
-%v_e2 = v_e1 - v_on;
-
-  
-%syms v1;
-%syms sn;
-%syms v2;
-
-%syms v_in1 v_in2 v_fwout1 v_fwout2 i_fwout1 i_fwout2 i_2 sv_on sr_on c1 c2 c3 c4 c5 c6;
-
-%[c1 c2 c3 c4 c5] = solve( (v_in1 - v_fwout1 - sv_on)/sr_on == i_2, (v_in1 - v_fwout1 - sv_on)/sr_on + (v_in2 - v_fwout1 - sv_on)/sr_on == i_fwout1, (-v_in2 - sv_on)/sr_on == i_2 + (v_in2 - v_fwout1 - sv_on)/sr_on, (-v_in2 - sv_on)/sr_on + i_fwout1  == 0, v_in1 - v_in2 == v2, v_in1, v_in2, v_fwout1, i_fwout1, i_2 )
-
+N_diodes_series = 18;
+N_diodes_parallel = 4;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
 
-  %Ideal Transformer
-  v1(t) = 230 + sin(w*t);
+%Ideal Transformer
+v1 = 230 + cos(w*t);
 
-v2(t) = 1/n * v1;
+v2 = 1/n * v1;
 
 
 %----FULL WAVE BRIDGE RECTIFIER-----
 
-v_fwout1(t) = abs(v2(t)) - 2*v_on; 
-v_fwout2(t) = 0;
+v_fwout1 = abs(v2) - 2*v_on; 
+v_fwout2 = 0;
 
 
 %-----ENVELOPE DETECTOR-----
@@ -143,13 +102,25 @@ end
 % at t=tON the diode goes on again ------> v(fwout1) = v(mid1) ---- incluir Von?
 
 T = 2*pi/w;
-% When the diode is ON, v_fwout1(t)-von = v_mid1(t)
+% When the diode is ON, v_fwout1(t)-von = v_mid1(t);
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%5%%% Voltage Regulator %%%%%%%%%%%%%%%%%%%%%%%%%%55
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FILLER
+v_mid=11.5:1e-5:12.5;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FILLER
+
+v_mid_DC = mean (v_mid);
+  v_mid_AC = v_mid-v_mid_DC;
+
+  v_out_DC = N_diodes_series * v_on;
+
+diode_total_res = N_diodes_series/N_diodes_parallel * r_d
+  
+v_out_AC = v_mid_AC * diode_total_res/(diode_total_res + Rreg);
 
 
-
-%-----VOLTAGE REGULATOR-----
 
 
 
@@ -246,12 +217,7 @@ fprintf(ngspice_input,"Dreg316 d315 d316 Default\n");
 fprintf(ngspice_input,"Dreg317 d316 d317 Default\n");
 fprintf(ngspice_input,"Dreg318 d317 0 Default\n");
 
-%%% transformer
-% www.seas.upenn.edu/~jan/spice/spice.transformer.html
-% sourceforge.net/p/ngspice/discussion/133842/thread/87641fa4/
-% forum.kicad.info/t/how-to-edit-transformer/19871/5
-% www.analog.com/en/technical-articles/ltspice-basic-stepssimulating-transformers.html#
-% ngspice.sourceforge.net/docs/ngspice-html-manual/manual.xhtml#subsec_Inductors
+
 
 fprintf(ngspice_input,"E1 in1 im begin1 0 %.12f\n", 1./n);
 fprintf(ngspice_input,"Vim in2 im 0\n");
