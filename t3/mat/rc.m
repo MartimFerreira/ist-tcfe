@@ -3,6 +3,8 @@ clear all
 
 pkg load control
 
+pkg load symbolic
+
 %%EXAMPLE SYMBOLIC COMPUTATIONS
 
 format long
@@ -49,11 +51,9 @@ v_fwout2 = 0;
 
 %-----ENVELOPE DETECTOR-----
 
-
-
 %toff calculation
 
-  A= 230/n
+A= 230/n;
 
 syms ws real
 syms Rdets real
@@ -67,7 +67,7 @@ syms y real
 syms tons real
 
 
-  f_toff = As*Cs*ws*sin(ws*toffs)*abs(cos(ws*toffs))/cos(ws*toffs) - As*abs(cos(ws*toffs))/Rdets +(2*vons)/Rdets
+  f_toff = As*Cs*ws*sin(ws*toffs)*abs(cos(ws*toffs))/cos(ws*toffs) - As*abs(cos(ws*toffs))/Rdets +(2*vons)/Rdets;
 
   f_ton = As*abs(cos(ws*toffs2))*exp((-tons+toffs2)/(Rdets*Cs))- As*abs(cos(ws*tons));
 
@@ -75,7 +75,7 @@ syms tons real
   newf = subs(f_toff, [ws,Rdets, Cs, vons,As], [w, Rdet, C, v_on, A]);
 
 % Solve the resulting symbolic expression for toffs
-[result] = solve(newf == 0, toffs)
+[result] = solve(newf == 0, toffs);
 
 
 % And if you need a numeric (rather than symbolic) result
@@ -92,7 +92,7 @@ newf_ton = subs(f_ton, [ws,Rdets, Cs, toffs2,As], [w, Rdet, C, toff, A]);
 maxNumIter = 60000;
 itCounter = 0;
 tol=1e-5;
-x0= 0.013; 
+x0= 9.228000e-03; 
 syms fp;   % derivative
 fp = diff(newf_ton);
 
@@ -106,14 +106,10 @@ if( abs(subs(newf_ton,xcur))>tol )
   disp("not found")
 end
 
-ton=xcur
+    ton=xcur;
 
 
 T = 2*pi/w;
-
-
-v_mid_DC = mean (v_mid);
-v_mid_AC = v_mid-v_mid_DC;
 
 
 % lecture 14
@@ -125,40 +121,53 @@ v_mid_AC = v_mid-v_mid_DC;
 % https://www.yanivplan.com/files/tutorial2vectors.pdf
 % https://stackoverflow.com/questions/38174739/octave-replace-elements-in-a-vector-under-certain-circumstances
 
-ton_i = ton; % initial ton
-toff_i = toff; % initial toff
+%ton_i = ton - T; % initial ton
+%toff_i = toff; % initial toff
+
+ton=ton-T;
+
+disp("toff = ")
+  disp(toff)
+  disp("ton = ")
+  disp(ton+T)
+disp("T/2 = ")
+disp(T/2)
+disp("fwout1 max = ")
+disp(max(v_fwout1))
 
 v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of vector t)
 
-if (ton_i < toff_i) %the diode is OFF in the beginning
-	for idx = 1:length(v_mid1);
-		if (t(idx) <= ton_i || (t(idx) >= toff && t(idx) < ton)) % diode OFF
-		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
-		else % diode ON
-		v_mid1(idx) = v_fwout1(idx) - v_on;
-		end
-		if(t(idx) == ton) ton = ton + T/2;
-		end
-		if(t(idx) == toff) toff = toff + T/2;
-		end
-	end
-end
+%if (ton_i < toff_i) %the diode is OFF in the beginning
+%	for idx = 1:length(v_mid1);
+ %               if(t(idx) > ton) toff = toff + T;
+%		end
+%		if(t(idx) > toff) ton = ton + T;
+%		end
+%		if (t(idx) >= toff && t(idx) < ton) % diode OFF
+%		v_mid1(idx) = A*cos(w*toff_i)*e^(-(t(idx)-toff_i)/(Rdet*C));
+%		else % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		end
+%		
+%	end
+%end
 
-if (ton_i > toff_i) %the diode is ON in the beginning
+%if (ton_i > toff_i) %the diode is ON in the beginning
 	for idx = 1:length(v_mid1);
-		if (t(idx) <= toff_i || (t(idx) >= ton && t(idx) < toff)) % diode ON
+                if((t(idx) > ton) && (toff<ton)) toff = toff + T/2;
+		end
+		if((t(idx) > toff) && (ton<toff)) ton = ton + T/2;
+		end
+		if (t(idx) >= ton) % diode ON
 		v_mid1(idx) = v_fwout1(idx) - v_on;
 		else % diode OFF
-		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+			 v_mid1(idx) = (abs(A*cos(w*toff))-3*v_on)*e^(-(t(idx)-toff)/(Rdet*C));
 		end
-		if(t(idx) == ton) ton = ton + T/2;
-		end
-		if(t(idx) == toff) toff = toff + T/2;
-		end
+		
 	end
-end
+%end
 
-
+%t(idx) <= toff_i || 
 %for idx = 1:length(v_mid1);
 %	if (ton_i < toff_i)
 %		if (t(idx) < ton) % diode OFF
@@ -224,9 +233,15 @@ end
 %fprintf('Answer: %s\n', g)
 
 %print vector v_mid1
-g=sprintf('%f ', v_mid1);
-fprintf('Answer: %s\n', g)
+%g=sprintf("%f ", v_mid1);
+%fprintf("Answer: %s\n", g)
 
+v_fwout1_plot = figure ();
+plot (t, v_fwout1, "g");
+
+xlabel ("t [s]");
+ylabel ("v_{fwout1}(t) [V]");
+print (v_fwout1_plot, "v_fwout1_plot.eps", "-depsc");
 
 v_mid1_plot = figure ();
 plot (t, v_mid1, "g");
@@ -239,7 +254,8 @@ print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
 %hold on;
 
 
-
+v_mid_DC = mean (v_mid1);
+v_mid_AC = v_mid1-v_mid_DC;
 
 v_out_DC = N_diodes_series * v_on;
 
@@ -247,6 +263,13 @@ diode_total_res = N_diodes_series/N_diodes_parallel * r_d
   
 v_out_AC = v_mid_AC * diode_total_res/(diode_total_res + Rreg);
 
+
+v_out_plot = figure ();
+plot (t, v_out_DC+v_out_AC, "g");
+
+xlabel ("t [s]");
+ylabel ("v_{out}(t) [V]");
+print (v_out_plot, "v_out_plot.eps", "-depsc");
   
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
