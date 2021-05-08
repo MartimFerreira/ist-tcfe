@@ -37,7 +37,11 @@ In the graph below are the plots of the output voltages for the Envelope Detecto
 \label{fig:phase_sim}
 \end{figure}
 
-One can see that both voltages evolve sinusoidally over time. They have the same frequency and are in phase, as expected and they are centered more or less around $12 \ V$ with $v(mid1)$ being centered a little above $v(out1)$, though not as close to the $12 \ V$. It also has a slightly larger amplitude than $v(out1)$, which comes to show that the voltage regulator corrrectly served its purpose.
+
+One can see that both voltages evolve sinusoidally over time, though this is more notorious for $v(mid1)$, since it has a larger amplitude. They have the same frequency and are in phase, as expected.
+
+From $v(mid1)$ to $v(out1)$ there is a clear reduction of the signal's amplitude ($v(out1)$ has such a small amplitude that it appears to be constant over time) as well as the value around which it oscillates ($v(out1)$ is centered around the $12 \ V$ we aimed at), which is a consequence of the voltage regulator's function.
+The fact that $v(mid1)$ is so much above $v(out1)$ has to do with the fact that the resistor between both has a high value to reduce the ripple value.
 
 
 
