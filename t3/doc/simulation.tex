@@ -15,6 +15,7 @@ which has a deviation of the ideal $12 V$ of %-------------------deviation in pe
 
 
 
+
 \subsection{Output voltage ripple}
 Using Ngspice's $MIN$ and $MAX$ functions, the output voltage ripple was obtained. It had a value of %----------------------insert value----------------
 which is approximately zero, as wanted.
@@ -26,9 +27,16 @@ which is approximately zero, as wanted.
 
 
 \subsection{Output voltages for the Envelope Detector and the Voltage Regulator circuits}
-In the graphs below are the plots of the output voltages for the Envelope Detector and the Voltage Regulator circuits as a function of time.
+In the graph below are the plots of the output voltages for the Envelope Detector and the Voltage Regulator circuits as a function of time.
 %comment something about that
 %include figure
+
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.6\linewidth]{../sim/trans_regulator.pdf}
+\caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
+\label{fig:phase_sim}
+\end{figure}
 
 
 \subsection{Output AC component and DC deviation}
@@ -37,7 +45,14 @@ Finally, there is the plot of $v_o -12$, where $v_o$ is the circuit's output vol
 %include figure
 
 
+\begin{figure}[H] \centering
+\includegraphics[width=0.6\linewidth]{../sim/trans_centered_output.pdf}
+\caption{Difference (im mV) between the Output Voltage and the desired 12V}
+\label{fig:phase_sim}
+\end{figure}
+
+
 \subsection{Merit figure calculation}
-Given all the above-mentioned points, it is now possible to calculated the merit figure.
+Given all the above-mentioned points, it is now possible to calculate the merit figure.
 %develop further
 

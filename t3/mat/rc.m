@@ -3,82 +3,42 @@ clear all
 
 pkg load control
 
-%%EXAMPLE SYMBOLIC COMPUTATIONS
-
 pkg load symbolic
+
+%%EXAMPLE SYMBOLIC COMPUTATIONS
 
 format long
 
 %%%%%%%%%%%%%%%%%%%%%%% VARIABLES THAT MAY BE CHANGED %%%%%%%%%%%%%%%%
 
-Rdet = 1000; %resistor in envelope detector
-Rreg = 10; % resistor in voltage regulator
+Rdet = 10000; %resistor in envelope detector
+Rreg = 5000; % resistor in voltage regulator
 
-C = 5*10^(-4); % capacitor in envelope detector
+C = 5*10^(-5); % capacitor in envelope detector
 
-n = 230./14.5; %number of turns in transformer
+n = 230./46.37; %number of turns in transformer
 
 fVs = 230.; % independent voltage source
 
-fL1 = 1; %inductance (left side of the transformer)
-fL2 = fL1*n*n;
-
 t=0:1e-5:2e-1;
 
-v_on = 11.97740/18
+v_on = 12.00007/18
+
+r_d = (12.01317-11.98591)/(0.006430684-0.006064976) *4/18
 
 %f= 50 Hz , w = 2*pi*f
 w = 100*pi;
 
 %R_on = 1;
 
-%%%%%%%%%%%%%%%%%%%%%%% MAIN CALCULATIONS %%%%%%%%%%%%%%%%
-
-%v1 = 230 + sin(100*pi*t);
-
-%v2 = 1/n * v1;
-
-
-%v_fwout2 = 0;
-
-
-%v_in1(t) - v_in2(t) = v2(t);
-%i_d1(t) = R(v_in1 - v_fwout1);
-%i_d2(t) = R(v_in2 - v_fwout1);
-%i_d3(t) = R(v_fwout2 - v_in2);
-%i_d4(t) = R(v_fwout2 - v_in1);
-
-%i_d3 + i_d1 = i_d2 + i_d4;
-
-%i_det(t) = R(v_fwout1 - v_mid1);
-
-%i_d1(t) + i_d2(t) = i_det(t);
-
-%i_d1(t) = v_mid1/Rdet + C*d(v_mid1)/dt + i_out;
-
-%i_d4(t) + i_d3(t) = i_out(t);
-
-
-
-%v_e1 = v_fwout1 - i_fwout1 * R_on;
-%v_e2 = v_e1 - v_on;
-
-  
-%syms v1;
-%syms sn;
-%syms v2;
-
-%syms v_in1 v_in2 v_fwout1 v_fwout2 i_fwout1 i_fwout2 i_2 sv_on sr_on c1 c2 c3 c4 c5 c6;
-
-%[c1 c2 c3 c4 c5] = solve( (v_in1 - v_fwout1 - sv_on)/sr_on == i_2, (v_in1 - v_fwout1 - sv_on)/sr_on + (v_in2 - v_fwout1 - sv_on)/sr_on == i_fwout1, (-v_in2 - sv_on)/sr_on == i_2 + (v_in2 - v_fwout1 - sv_on)/sr_on, (-v_in2 - sv_on)/sr_on + i_fwout1  == 0, v_in1 - v_in2 == v2, v_in1, v_in2, v_fwout1, i_fwout1, i_2 )
-
+N_diodes_series = 18;
+N_diodes_parallel = 4;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%----Theoretical Analysis ---%%%%%%%%%%%%%%%%%%%%%%%
 
-  %Ideal Transformer
+%Ideal Transformer
 
-  v1 = 230 * cos(w*t);
-
+v1 = 230 * cos(w*t);
 
 v2 = 1/n * v1;
 
@@ -91,11 +51,9 @@ v_fwout2 = 0;
 
 %-----ENVELOPE DETECTOR-----
 
-
-
 %toff calculation
 
-  A= 230/n
+A= 230/n;
 
 syms ws real
 syms Rdets real
@@ -109,7 +67,7 @@ syms y real
 syms tons real
 
 
-  f_toff = As*Cs*ws*sin(ws*toffs)*abs(cos(ws*toffs))/cos(ws*toffs) - As*abs(cos(ws*toffs))/Rdets +(2*vons)/Rdets
+  f_toff = As*Cs*ws*sin(ws*toffs)*abs(cos(ws*toffs))/cos(ws*toffs) - As*abs(cos(ws*toffs))/Rdets +(2*vons)/Rdets;
 
   f_ton = As*abs(cos(ws*toffs2))*exp((-tons+toffs2)/(Rdets*Cs))- As*abs(cos(ws*tons));
 
@@ -117,7 +75,7 @@ syms tons real
   newf = subs(f_toff, [ws,Rdets, Cs, vons,As], [w, Rdet, C, v_on, A]);
 
 % Solve the resulting symbolic expression for toffs
-[result] = solve(newf == 0, toffs)
+[result] = solve(newf == 0, toffs);
 
 
 % And if you need a numeric (rather than symbolic) result
@@ -134,7 +92,7 @@ newf_ton = subs(f_ton, [ws,Rdets, Cs, toffs2,As], [w, Rdet, C, toff, A]);
 maxNumIter = 60000;
 itCounter = 0;
 tol=1e-5;
-x0= 0.013; 
+x0= 9.228000e-03; 
 syms fp;   % derivative
 fp = diff(newf_ton);
 
@@ -148,16 +106,11 @@ if( abs(subs(newf_ton,xcur))>tol )
   disp("not found")
 end
 
-ton=xcur
+    ton=xcur;
 
 
+T = 2*pi/w;
 
-
-    T = 2*pi/w;
-
-
-% ton value (example)
-%ton = toff + 0.8*T
 
 % lecture 14
 % When the diode is ON, v_o = v_s --- % t in interval [ON, OFF]
@@ -168,40 +121,53 @@ ton=xcur
 % https://www.yanivplan.com/files/tutorial2vectors.pdf
 % https://stackoverflow.com/questions/38174739/octave-replace-elements-in-a-vector-under-certain-circumstances
 
-ton_i = ton; % initial ton
-toff_i = toff; % initial toff
+%ton_i = ton - T; % initial ton
+%toff_i = toff; % initial toff
+
+ton=ton-T;
+
+disp("toff = ")
+  disp(toff)
+  disp("ton = ")
+  disp(ton+T)
+disp("T/2 = ")
+disp(T/2)
+disp("fwout1 max = ")
+disp(max(v_fwout1))
 
 v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of vector t)
 
-if (ton_i < toff_i) %the diode is OFF in the beginning
-	for idx = 1:length(v_mid1);
-		if (t(idx) <= ton_i || (t(idx) >= toff && t(idx) < ton)) % diode OFF
-		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
-		else % diode ON
-		v_mid1(idx) = v_fwout1(idx) - v_on;
-		end
-		if(t(idx) == ton) ton = ton + T/2;
-		end
-		if(t(idx) == toff) toff = toff + T/2;
-		end
-	end
-end
+%if (ton_i < toff_i) %the diode is OFF in the beginning
+%	for idx = 1:length(v_mid1);
+ %               if(t(idx) > ton) toff = toff + T;
+%		end
+%		if(t(idx) > toff) ton = ton + T;
+%		end
+%		if (t(idx) >= toff && t(idx) < ton) % diode OFF
+%		v_mid1(idx) = A*cos(w*toff_i)*e^(-(t(idx)-toff_i)/(Rdet*C));
+%		else % diode ON
+%		v_mid1(idx) = v_fwout1(idx) - v_on;
+%		end
+%		
+%	end
+%end
 
-if (ton_i > toff_i) %the diode is ON in the beginning
+%if (ton_i > toff_i) %the diode is ON in the beginning
 	for idx = 1:length(v_mid1);
-		if (t(idx) <= toff_i || (t(idx) >= ton && t(idx) < toff)) % diode ON
+                if((t(idx) > ton) && (toff<ton)) toff = toff + T/2;
+		end
+		if((t(idx) > toff) && (ton<toff)) ton = ton + T/2;
+		end
+		if (t(idx) >= ton) % diode ON
 		v_mid1(idx) = v_fwout1(idx) - v_on;
 		else % diode OFF
-		v_mid1(idx) = -Rdet*C*sin(w*t(idx))*cos(w*t(idx))/abs(cos(w*t(idx)))- v_on;
+			 v_mid1(idx) = (abs(A*cos(w*toff))-3*v_on)*e^(-(t(idx)-toff)/(Rdet*C));
 		end
-		if(t(idx) == ton) ton = ton + T/2;
-		end
-		if(t(idx) == toff) toff = toff + T/2;
-		end
+		
 	end
-end
+%end
 
-
+%t(idx) <= toff_i || 
 %for idx = 1:length(v_mid1);
 %	if (ton_i < toff_i)
 %		if (t(idx) < ton) % diode OFF
@@ -267,25 +233,69 @@ end
 %fprintf('Answer: %s\n', g)
 
 %print vector v_mid1
-g=sprintf('%f ', v_mid1);
-fprintf('Answer: %s\n', g)
+%g=sprintf("%f ", v_mid1);
+%fprintf("Answer: %s\n", g)
 
 
-v_mid1_plot = figure ();
-plot (t, v_mid1, "g");
+%%%%%%%%%%%% Voltage Regulator %%%%%%%%%%%%%%%%%%%%%
+
+v_mid_DC = mean (v_mid1);
+v_mid_AC = v_mid1-v_mid_DC;
+
+v_out_DC = N_diodes_series * v_on;
+
+diode_total_res = N_diodes_series/N_diodes_parallel * r_d;
+  
+v_out_AC = v_mid_AC * diode_total_res/(diode_total_res + Rreg);
+
+
+DC_deviation = v_out_DC - 12
+  voltage_ripple = max(v_out_AC) - min(v_out_AC)
+  cost = 77*0.1 + (Rdet+Rreg)/1000 + C*10^6
+  theoretical_merit = 1/(cost * (voltage_ripple + DC_deviation + 10^(-6)))
+
+  ngspice_ripple = 12.01317 - 11.98591
+  ngspice_deviation = 12.00007 - 12
+  merit = 1/(cost * (ngspice_ripple + ngspice_deviation + 10^(-6)))
+
+
+%%%%%%%%%%%%%%%% Graph %%%%%%%%%%%%%%%
+
+%v_fwout1_plot = figure ();
+%plot (t, v_fwout1, "g");
+
+%xlabel ("t [s]");
+%ylabel ("v_{fwout1}(t) [V]");
+%print (v_fwout1_plot, "v_fwout1_plot.eps", "-depsc");
+
+%v_mid1_plot = figure ();
+%plot (t, v_mid1, "g");
+
+%xlabel ("t [s]");
+%ylabel ("v_{mid1}(t) [V]");
+%print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
+
+
+v_out_plot = figure ();
+
+plot (t, v_out_DC+v_out_AC, "b");
+hold on;
+plot (t, v_mid1, "r");
 
 xlabel ("t [s]");
-ylabel ("v_{mid1}(t) [V]");
-print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
-
-%plot(t, v_mid1);
-%hold on;
+ylabel ("v_{OUT}, v_{MID1} [V]");
+legenda= legend("v_{OUT}" , "v_{MID1}");
+print (v_out_plot, "v_out_plot.eps", "-depsc");
 
 
-%-----VOLTAGE REGULATOR-----
+v_centered_output_plot = figure ();
 
+plot (t, v_out_AC*1000, "r");
 
-
+xlabel ("t [s]");
+ylabel ("v_{out} [mV]");
+legenda= legend("v_{out}");
+print (v_centered_output_plot, "v_centered_output_plot.eps", "-depsc");
   
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -379,12 +389,7 @@ fprintf(ngspice_input,"Dreg316 d315 d316 Default\n");
 fprintf(ngspice_input,"Dreg317 d316 d317 Default\n");
 fprintf(ngspice_input,"Dreg318 d317 0 Default\n");
 
-%%% transformer
-% www.seas.upenn.edu/~jan/spice/spice.transformer.html
-% sourceforge.net/p/ngspice/discussion/133842/thread/87641fa4/
-% forum.kicad.info/t/how-to-edit-transformer/19871/5
-% www.analog.com/en/technical-articles/ltspice-basic-stepssimulating-transformers.html#
-% ngspice.sourceforge.net/docs/ngspice-html-manual/manual.xhtml#subsec_Inductors
+
 
 fprintf(ngspice_input,"E1 in1 im begin1 0 %.12f\n", 1./n);
 fprintf(ngspice_input,"Vim in2 im 0\n");
