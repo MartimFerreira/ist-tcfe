@@ -11,20 +11,20 @@ format long
 
 %%%%%%%%%%%%%%%%%%%%%%% VARIABLES THAT MAY BE CHANGED %%%%%%%%%%%%%%%%
 
-Rdet = 1000; %resistor in envelope detector
-Rreg = 10; % resistor in voltage regulator
+Rdet = 10000; %resistor in envelope detector
+Rreg = 5000; % resistor in voltage regulator
 
-C = 5*10^(-4); % capacitor in envelope detector
+C = 5*10^(-5); % capacitor in envelope detector
 
-n = 230./14.5; %number of turns in transformer
+n = 230./46.37; %number of turns in transformer
 
 fVs = 230.; % independent voltage source
 
 t=0:1e-5:2e-1;
 
-v_on = 11.97740/18;
+v_on = 12.00007/18
 
-r_d = (12.11202-11.83641)/(0.007951937-0.004399195) *4/18;
+r_d = (12.01317-11.98591)/(0.006430684-0.006064976) *4/18
 
 %f= 50 Hz , w = 2*pi*f
 w = 100*pi;
@@ -236,6 +236,31 @@ v_mid1 = zeros(20001, 1); % fill v_mid1 vector with zeros (20001 is the size of 
 %g=sprintf("%f ", v_mid1);
 %fprintf("Answer: %s\n", g)
 
+
+%%%%%%%%%%%% Voltage Regulator %%%%%%%%%%%%%%%%%%%%%
+
+v_mid_DC = mean (v_mid1);
+v_mid_AC = v_mid1-v_mid_DC;
+
+v_out_DC = N_diodes_series * v_on;
+
+diode_total_res = N_diodes_series/N_diodes_parallel * r_d;
+  
+v_out_AC = v_mid_AC * diode_total_res/(diode_total_res + Rreg);
+
+
+DC_deviation = v_out_DC - 12
+  voltage_ripple = max(v_mid_AC) - min(v_mid_AC)
+  cost = 77*0.1 + (Rdet+Rreg)/1000 + C*10^6
+  theoretical_merit = 1/(cost * (voltage_ripple + DC_deviation + 10^(-6)))
+
+  ngspice_ripple = 12.01317 - 11.98591
+  ngspice_deviation = 12.00007 - 12
+  merit = 1/(cost * (ngspice_ripple + ngspice_deviation + 10^(-6)))
+
+
+%%%%%%%%%%%%%%%% Graph %%%%%%%%%%%%%%%
+
 v_fwout1_plot = figure ();
 plot (t, v_fwout1, "g");
 
@@ -250,25 +275,16 @@ xlabel ("t [s]");
 ylabel ("v_{mid1}(t) [V]");
 print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
 
-%plot(t, v_mid1);
-%hold on;
-
-
-v_mid_DC = mean (v_mid1);
-v_mid_AC = v_mid1-v_mid_DC;
-
-v_out_DC = N_diodes_series * v_on;
-
-diode_total_res = N_diodes_series/N_diodes_parallel * r_d
-  
-v_out_AC = v_mid_AC * diode_total_res/(diode_total_res + Rreg);
-
 
 v_out_plot = figure ();
-plot (t, v_out_DC+v_out_AC, "g");
+
+plot (t, v_out_DC+v_out_AC, "b");
+hold on;
+plot (t, v_mid1, "r");
 
 xlabel ("t [s]");
-ylabel ("v_{out}(t) [V]");
+ylabel ("v_{out}, v_{mid1} [V]");
+legenda= legend("v_{out}" , "v_{mid}");
 print (v_out_plot, "v_out_plot.eps", "-depsc");
   
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
