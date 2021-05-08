@@ -407,10 +407,10 @@ fclose(ngspice_input);
 
 merit_tab = fopen("merit_tab.tex", "w");
 
-fprintf(merit_tab, "$Average\\;DC\\;Deviation\\;(\\V)$ & %.12e & %.12e\\\\ \\hline\n", ngspice_deviation, DC_deviation);
-fprintf(merit_tab, "$Voltage\\;Ripple\\;(\\V)$ & %.12e & %.12e\\\\ \\hline\n", ngspice_ripple, voltage_ripple);
-fprintf(merit_tab, "$Cost\\;(\\MU)$ & %.12e\\\\ \\hline\n", cost);
-fprintf(merit_tab, "$Merit$ & %.12e & %.12e\\\\ \\hline\n", merit, theoretical_merit);
+fprintf(merit_tab, "$Average\\;DC\\;Deviation\\;(\\mu V)$ & %.6f & %.6f\\\\ \\hline\n", ngspice_deviation*1000000, DC_deviation*1000000);
+fprintf(merit_tab, "$Voltage\\;Ripple\\;(mV)$ & %.6f & %.6f\\\\ \\hline\n", ngspice_ripple*1000, voltage_ripple*1000);
+fprintf(merit_tab, "$Cost\\;(MU)$ & \\multicolumn{2}{|c|}{%.6f}\\\\ \\hline\n", cost);
+fprintf(merit_tab, "$Merit$ & %.6f & %.6f\\\\ \\hline\n", merit, theoretical_merit);
 
 fclose(merit_tab);
 
