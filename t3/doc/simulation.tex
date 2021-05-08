@@ -1,7 +1,7 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
-In this section, $ngspice$ results for the circuit shown above are presented. The AC/DC converter was simulated for 10 periods and the default model was used for the diodes.
+In this section, $ngspice$ results for the circuit shown above are presented. The AC-DC converter was simulated for 10 periods and the default model was used for the diodes.
 
 Since this laboratory assignment consisted of an optimization problem, to start off we used a more elementary model and after verifying it was working properly, modifications were made in order to improve the quality of the circuit. In this particular case, that meant having the smallest output voltage ripple and the smallest cost possible. Also we wanted to have an output voltage average as close as possible to  $12 V$.
 
@@ -9,11 +9,11 @@ Since this laboratory assignment consisted of an optimization problem, to start 
 
 
 \subsection{Average output voltage level}
-First and foremost, the average output voltage level was determined using Ngspice's $mean(vector)$ function. There was also another possible function for that $avg(vector)$, though the first one seemed more suitable. The average was calculated for over 1000 points.
+First and foremost, the average output voltage level was determined using ngspice's $mean()$ function. The average was calculated for over 1000 points.
 %confirmar isto
 
-The value obtained here for average output voltage is $12.01317 \ V$,
-which has a deviation of the ideal $12 V$ of $0.10975 \ \%$, which is indeed quite small.
+The value obtained here for average output voltage is $12.00007 \ V$,
+which has a deviation of the ideal $12 V$ of about $5.83*10^{-4} \ \%$, which is indeed quite small.
 %maybe refer number of significant diits
 
 
@@ -23,12 +23,12 @@ which has a deviation of the ideal $12 V$ of $0.10975 \ \%$, which is indeed qui
 Using Ngspice's $MIN$ and $MAX$ functions, the minimum and maximum values of the output voltage were obtained. Their values are, respectively, $11.98591 \ V$ and $12.01317 \ V$. The output voltage ripple, which is the difference between the two previous values, was then calculated. It had a value of $0.02726 \ V$, which is almost zero, as intended.
 
 
-This means that the output voltage signal, despite being sinusoidal, has a magnitude of almost $12 V$ and a ripple that is approximately null, therefore it is a pretty good approximantion of a DC output voltage signal with a magnitude of $12 V$.
+This means that the output voltage signal, despite being sinusoidal, has a magnitude of almost $12 V$ and a ripple that is approximately null, therefore it is a pretty good approximation of a DC output voltage signal with a magnitude of $12 V$.
 
 
 
 
-\subsection{Output voltages for the Envelope Detector and the Voltage Regulator circuits}
+\subsection{Output voltages for the Envelope Detector and Voltage Regulator circuits}
 In the graph below are the plots of the output voltages for the Envelope Detector and the Voltage Regulator circuits as a function of time.
 
 \begin{figure}[H] \centering
