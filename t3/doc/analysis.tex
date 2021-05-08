@@ -4,15 +4,37 @@
 
 % MUITO IMPORTANTE: LER OS COMENTÁRIOS
 
-In this part it was crucial to use an adequate theoretical model in order to predict the Envelope Detector and Voltage Regulator circuits. The circuit used here is the same as the one used in \textit{ngspice}. The only difference is that whereas in \textit{ngspice} there was a predefined model for the diodes here we had to choose the model we wanted to used for the diodes (i.e. diode plus a volatge source or resistor). The rest of the circuit was identical.
+In this part it was crucial to use an adequate theoretical model in order to predict the Envelope Detector and Voltage Regulator circuits. The circuit used here is the same as the one used in \textit{ngspice}. The only difference is that whereas in \textit{ngspice} there was a predefined model for the diodes here we had to choose the model we wanted to used for the diodes (i.e. diode plus a voltage source or resistor). The rest of the circuit was identical.
 
 The plots obtained are the same as in the simulation.
 
-We had to compute the output DC level and the voltage ripple
+Considering the transformer ideal, it can be seen as a voltage dependent source. The voltage between nodes $In1$ and $In2$ (that we named $V_2$) is given by : $1/n * Vs$.
 
+\subsection{Full-wave rectifier}
+The Full-wave rectifier would  compute the  absolute value of $V_2$ if one used the ideal diode model, but since we were using the model that associates the diode with a voltage source we obtain: $V_{fwout1} = |V_2|- 2*V_{on}$, where $V_{on}$ is the voltage associated with the diode. Depending on the direction of $V_2$ current will flow through diodes $Dfwout1$ and $Dfwout3$ or diodes $Dfwout2$ and $Dfwout4$.
+
+\subsection{Envelope detector}
+The Envelope detector consists of a diode , the resistor $Rdet$ and a capacitor with capitance C. We adapted the equations obtained during the theoretical classes to our circuit and found the time instant when the doide turns off ($t_{off}$) by solving the following equation:
+\begin{equation}
+  A*C*w*sin(w*t_{off})*|(cos(w*t_{offs})|/cos(w*t_{off}) =  A*|(cos(w*t_{off}))|/Rdet +(2*V_{on})/Rdet
+\end{equation}
+After the diode turns off , the capacitor discharges through resistor $Rdet$.
+After knowing the value of $t_{off}$, we were able to find the time instant when the diode turns on. We used the Newton iterative method to find the solution to this equation:
+\begin{equation}
+   A*|cos(w*t_{off}))|*exp((-t_{on}+t_{off})/(Rdet*C))=  A*|(cos(w*t_{on}))|
+\end{equation}
+Due to the periodic behavior of the circuit we found the following instants $t_{off}$ and $t_{on}$.  
+\subsection{Voltage regulator}
+Finally, we used a voltage regulator circuit in order to attenuate oscillations in the input signal without frequency dependence. This circuit is composed by 4 series of 18 diodes.
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{v_centered_output_plot.eps}
+\caption{Difference (im mV) between the Output Voltage and the desired 12V}
+\label{fig:phase_sim}
+\end{figure}
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.6\linewidth]{v_out_plot.eps}
 \caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
 \label{fig:octave_centered_output}
 \end{figure}
