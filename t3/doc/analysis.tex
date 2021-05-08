@@ -16,3 +16,19 @@ We had to compute the output DC level and the voltage ripple
 \caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
 \label{fig:phase_sim}
 \end{figure}
+
+Considering the transformer ideal, it can be seen as a voltage dependent source. The voltage between nodes In1 and In2 (that we named $V_2$) is given by : $1/n * Vs$.
+
+\subsection{Full-wave rectifier}
+The Full-wave rectifier would  compute the  absolute value of $V_2$ if one used the ideal diode model, but since we were using the modelthat associates the diode with a voltage source we obtain: $V_{fwout1} = |V_2|- 2*V_{on}$, where $V_{on}$ is the voltage associated with the diode. Depending on the direction of $V_2$ current will flow through diodes $Dfwout1$ and $Dfwout3$ or diodes $Dfwout2$ and $Dfwout4$.
+
+\subsection{Envelop detector}
+The Envelop detector consists on a diode , the resistance $Rdet$ and a capacitor with capitance C.First we found the time instant when the doide turns off ($t_{off}$) by solving the following equation:
+\begin{equation}
+  A*C*w*sin(w*t_{off})*|(cos(w*t_{offs})|/cos(w*toffs) =  A*|(cos(w*t_{off}))|/Rdet +(2*V_{on})/Rdet
+\end{equation}
+After the diode turns off , the capacitor discharges through resistance $Rdet$.
+After knowing the value of $t_{off}$, we were able to find the time instant when  the diode turns on. We used the Newton iterative method to find solution to this equation:
+\begin{equation}
+   A*|cos(w*t_{off}))|*exp((-t_{on}+t_{off})/(Rdet*C))=  A*|(cos(w*t_{on}))|;
+\end{equation}
