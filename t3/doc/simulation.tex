@@ -29,19 +29,19 @@ This means that the output voltage signal, despite being sinusoidal, has a magni
 
 
 \subsection{Output voltages for the Envelope Detector and Voltage Regulator circuits}
-In the graph below are the plots of the output voltages for the Envelope Detector and the Voltage Regulator circuits as a function of time.
+In the graph below are the plots of the output voltages for the Envelope Detector and Voltage Regulator circuits as a function of time.
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{../sim/trans_regulator.pdf}
 \caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
-\label{fig:phase_sim}
+\label{fig:ngspice_output}
 \end{figure}
 
 
-One can see that both voltages evolve sinusoidally over time, though this is more notorious for $v(mid1)$, since it has a larger amplitude. They have the same frequency and are in phase, as expected.
+One can see that both voltages evolve sinusoidally over time, though this is more notorious for $v(mid1)$, since it has a larger amplitude. %They have the same frequency and are in phase, as expected.
 
-From $v(mid1)$ to $v(out1)$ there is a clear reduction of the signal's amplitude ($v(out1)$ has such a small amplitude that it appears to be constant over time) as well as the value around which it oscillates ($v(out1)$ is centered around the $12 \ V$ we aimed at), which is a consequence of the voltage regulator's function.
-The fact that $v(mid1)$ is so much above $v(out1)$ has to do with the fact that the resistor between both has a high value to reduce the ripple value.
+From $v(mid1)$ to $v(out1)$ there is a clear reduction in the signal's amplitude ($v(out1)$ has such a small amplitude that it appears to be constant over time) as well as in its DC component ($v(out1)$ is centered around the $12 \ V$ we aimed at), which is a consequence of the voltage regulator's function.
+The fact that $v(mid1)$ is so much higher than $v(out1)$ has to do with the fact that the resistor between both has a high value (with the intention of reducing the ripple at the output).
 
 
 
@@ -52,7 +52,7 @@ Finally, there is the plot of $v_o - 12$, where $v_o$ is the circuit's output vo
 \begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{../sim/trans_centered_output.pdf}
 \caption{Difference (im mV) between the Output Voltage and the desired 12V}
-\label{fig:phase_sim}
+\label{fig:ngspice_centered_output}
 \end{figure}
 
 In this graphic we can verify that the output voltage ripple is indeed quite small (the units are in $mV$) and that it oscillates similarly to the previous voltages.
