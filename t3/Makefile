@@ -9,12 +9,13 @@ all:
 	make -C sim
 	make -C doc
 	cp doc/report.pdf AC_DC_converter_report.pdf
-	evince AC_DC_converter__report.pdf &
+	evince AC_DC_converter_report.pdf &
 
 clean:
 	make -C mat clean
 	make -C sim clean
 	make -C doc clean
+	rm -f AC_DC_converter_report.pdf
 
 .PHONY: all clean
 
