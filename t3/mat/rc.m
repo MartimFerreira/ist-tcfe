@@ -405,37 +405,14 @@ fclose(ngspice_input);
 %%%%%%%%%%%%%%%%%%%%%%%% TABLES %%%%%%%%%%%%%%%%%%%%%%
 
 
-%data_tab = fopen("octave_data_tab.tex", "w");
+merit_tab = fopen("merit_tab.tex", "w");
 
-%fprintf(data_tab, "$R_1\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR1);
-%fprintf(data_tab, "$R_2\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR2);
-%fprintf(data_tab, "$R_3\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR3);
-%fprintf(data_tab, "$R_4\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR4);
-%fprintf(data_tab, "$R_5\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR5);
-%fprintf(data_tab, "$R_6\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR6);
-%fprintf(data_tab, "$R_7\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fR7);
-%fprintf(data_tab, "$V_s\\;(V)$ & %.12e \\\\ \\hline\n", fVs);
-%fprintf(data_tab, "$C\\;(F)$ &   %.12e \\\\ \\hline\n", fC);
-%fprintf(data_tab, "$K_b\\;(S)$ & %.12e \\\\ \\hline\n", fKb);
-%fprintf(data_tab, "$K_d\\;(\\Omega)$ & %.12e \\\\ \\hline\n", fKd);
+fprintf(merit_tab, "$Average\\;DC\\;Deviation\\;(\\V)$ & %.12e & %.12e\\\\ \\hline\n", ngspice_deviation, DC_deviation);
+fprintf(merit_tab, "$Voltage\\;Ripple\\;(\\V)$ & %.12e & %.12e\\\\ \\hline\n", ngspice_ripple, voltage_ripple);
+fprintf(merit_tab, "$Cost\\;(\\MU)$ & %.12e\\\\ \\hline\n", cost);
+fprintf(merit_tab, "$Merit$ & %.12e & %.12e\\\\ \\hline\n", merit, theoretical_merit);
 
-%fclose(data_tab);
-
-
-%zero_time_tab = fopen("octave_zero_time_tab.tex", "w");
-
-%fprintf(zero_time_tab, "$V_1$ & %.12e \\\\ \\hline\n", 0);
-%fprintf(zero_time_tab, "$V_2$ & %.12e \\\\ \\hline\n", V20);
-%fprintf(zero_time_tab, "$V_3$ & %.12e \\\\ \\hline\n", V30);
-%fprintf(zero_time_tab, "$V_5$ & %.12e \\\\ \\hline\n", V50);
-%fprintf(zero_time_tab, "$V_6$ & %.12e \\\\ \\hline\n", V60);
-%fprintf(zero_time_tab, "$V_7$ & %.12e \\\\ \\hline\n", V70);
-%fprintf(zero_time_tab, "$V_8$ & %.12e \\\\ \\hline\n", V80);
-%fprintf(zero_time_tab, "$V_x$ & %.12e \\\\ \\hline\n", Vx);
-%fprintf(zero_time_tab, "$I_x$ & %.12e\\\\ \\hline\n", Ix);
-%fprintf(zero_time_tab, "$R_{eq}$ & %.12e \\\\ \\hline\n", Req);
-
-%fclose(zero_time_tab);
+fclose(merit_tab);
 
 
 
