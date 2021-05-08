@@ -250,7 +250,7 @@ v_out_AC = v_mid_AC * diode_total_res/(diode_total_res + Rreg);
 
 
 DC_deviation = v_out_DC - 12
-  voltage_ripple = max(v_mid_AC) - min(v_mid_AC)
+  voltage_ripple = max(v_out_AC) - min(v_out_AC)
   cost = 77*0.1 + (Rdet+Rreg)/1000 + C*10^6
   theoretical_merit = 1/(cost * (voltage_ripple + DC_deviation + 10^(-6)))
 
@@ -261,19 +261,19 @@ DC_deviation = v_out_DC - 12
 
 %%%%%%%%%%%%%%%% Graph %%%%%%%%%%%%%%%
 
-v_fwout1_plot = figure ();
-plot (t, v_fwout1, "g");
+%v_fwout1_plot = figure ();
+%plot (t, v_fwout1, "g");
 
-xlabel ("t [s]");
-ylabel ("v_{fwout1}(t) [V]");
-print (v_fwout1_plot, "v_fwout1_plot.eps", "-depsc");
+%xlabel ("t [s]");
+%ylabel ("v_{fwout1}(t) [V]");
+%print (v_fwout1_plot, "v_fwout1_plot.eps", "-depsc");
 
-v_mid1_plot = figure ();
-plot (t, v_mid1, "g");
+%v_mid1_plot = figure ();
+%plot (t, v_mid1, "g");
 
-xlabel ("t [s]");
-ylabel ("v_{mid1}(t) [V]");
-print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
+%xlabel ("t [s]");
+%ylabel ("v_{mid1}(t) [V]");
+%print (v_mid1_plot, "v_mid1_plot.eps", "-depsc");
 
 
 v_out_plot = figure ();
@@ -283,9 +283,19 @@ hold on;
 plot (t, v_mid1, "r");
 
 xlabel ("t [s]");
-ylabel ("v_{out}, v_{mid1} [V]");
-legenda= legend("v_{out}" , "v_{mid}");
+ylabel ("v_{OUT}, v_{MID1} [V]");
+legenda= legend("v_{OUT}" , "v_{MID1}");
 print (v_out_plot, "v_out_plot.eps", "-depsc");
+
+
+v_centered_output_plot = figure ();
+
+plot (t, v_out_AC*1000, "r");
+
+xlabel ("t [s]");
+ylabel ("v_{out} [mV]");
+legenda= legend("v_{out}");
+print (v_centered_output_plot, "v_centered_output_plot.eps", "-depsc");
   
 %%%%%%%%%%%%%%%%%%%%%%%%% NGSPICE INPUT %%%%%%%%%%%%%%%%%%%%%%%%%%%
 

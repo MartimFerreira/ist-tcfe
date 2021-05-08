@@ -12,6 +12,6 @@ ngspice.log: ./t3.net ./ngspice_input.txt
 
 
 clean:
-	@rm -f *.log *.tex *.pdf *.ps *~ *.txt
+	@rm -f *.log *.tex *.pdf *.ps *~ *.txt *#
 
 .PHONY: all clean
