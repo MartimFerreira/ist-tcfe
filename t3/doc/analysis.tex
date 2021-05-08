@@ -4,7 +4,7 @@
 
 % MUITO IMPORTANTE: LER OS COMENTÁRIOS
 
-The circuit used here is the same as the one used in \textit{ngspice}, the only difference being the diode model considered. In this analysis, we used the ``ideal diode plus voltage source'' model (with a voltage source $V_{on}$ and the incremental diode model (a resistor $r_d$). The rest of the circuit was identical.
+The circuit used here is the same as the one used in \textit{ngspice}, the only difference being the diode model considered. In this analysis, we used the ``ideal diode plus voltage source'' model (with a voltage source $V_{on}$) and the incremental diode model (a resistor $R_d$). The rest of the circuit was identical.
 
 \subsection{Full-wave rectifier}
 The Full-wave rectifier would  compute the  absolute value of $V_2$ if one used the ideal diode model, but since we were using the model that associates the diode with a voltage source we obtain: $V_{fwout1} = |V_2|- 2*V_{on}$, where $V_{on}$ is the voltage associated with the diode. Depending on the direction of $V_2$ current will flow through diodes $Dfwout1$ and $Dfwout3$ or diodes $Dfwout2$ and $Dfwout4$.

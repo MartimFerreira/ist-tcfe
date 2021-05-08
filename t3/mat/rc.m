@@ -418,15 +418,15 @@ fclose(merit_tab);
 
 resistance_tab = fopen("resistance_tab.tex", "w");
 
-fprintf(resistance_tab, "$Rdet$& %.1f\\\\ \\hline\n", Rdet);
-fprintf(resistance_tab, "$Rreg$& %.1f\\\\ \\hline\n", Rreg);
-fprintf(resistance_tab, "$C$& %.6f\\\\ \\hline\n", C);
+fprintf(resistance_tab, "$Rdet\\;(\\Omega)$& %.1f\\\\ \\hline\n", Rdet);
+fprintf(resistance_tab, "$Rreg\\;(\\Omega)$& %.1f\\\\ \\hline\n", Rreg);
+fprintf(resistance_tab, "$C\\;(\\mu F)$& %.6f\\\\ \\hline\n", C*1000000);
 fprintf(resistance_tab, "$n$& %.6f\\\\ \\hline\n", n);
-fprintf(resistance_tab, "$V_{on}$& %.6f\\\\ \\hline\n", v_on);
-fprintf(resistance_tab, "$R_d$& %.6f\\\\ \\hline\n", r_d);
+fprintf(resistance_tab, "$V_{on}\\;(V)$& %.6f\\\\ \\hline\n", v_on);
+fprintf(resistance_tab, "$R_d\\;(\\Omega)$& %.6f\\\\ \\hline\n", r_d);
 
 
-fclose(merit_tab);
+fclose(resistance_tab);
 
 
 

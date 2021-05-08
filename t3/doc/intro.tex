@@ -18,7 +18,7 @@ The aim of this laboratory assignment is to build an AC-DC converter circuit who
 % tentativa erro
 The circuit is made up of several parts. In the first one there is a voltage source $v_S$, then there is a transformer with $n$ loops on the left and 1 loop on the right, followed by a full-wave bridge rectifier, an envelope detector and a voltage regulator.
 
-The transformer was replaced by its ideal model, namely by a dependent voltage source between nodes $In1$ and $In2$ (that we named $V_2$) of value $1/n * v_S$,  and one dependent current source between nodes Begin1 and the left-side ground of value $1/n * I_2$, where $I_2$ is the current going from $In2$ to $In1$. In order to properly simulate this in ngspice, an imaginary voltage source of $O\;V$ was added in between $In2$ and the dependent voltage source.
+The transformer was replaced by its ideal model, namely by a dependent voltage source between nodes $In1$ and $In2$ (that we named $V_2$) of value $v_S/n$,  and one dependent current source between nodes Begin1 and the left-side ground of value $I_2/n$, where $I_2$ is the current going from $In2$ to $In1$. In order to properly simulate this in \textit{ngspice}, an imaginary voltage source of 0$\;V$ was added in between $In2$ and the dependent voltage source.
 
 The rectifier is composed of 4 diodes ($Dfw1$, $Dfw2$, $Dfw3$ and $Dfw4$). The two other parts were based on the examples explained in the theoretical lectures. The envelope detector has a rectifier with a diode $Ddet$ and a resistor $Rdet$ plus a capacitor $C$ in parallel with the resistor. Finally, there is the voltage regulator with a resistor $Rreg$ and a limiter made up of 4 series in parallel, each with 18 diodes (for a total of 72 diodes). The diodes in parallel help reduce the total resistance in this part of the circuit.
 
@@ -40,7 +40,7 @@ The main objectives were to obtain an average output voltage of $12 \ V$ with a 
     \hline
       \input{resistance_tab.tex}
   \end{tabular}
-  \caption{Resistances, n and voltage and resistance associated with the diode. .}
+  \caption{Circuit characteristics}
   \label{tab:resistance}
 \end{table}
 
