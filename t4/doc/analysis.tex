@@ -1,0 +1,36 @@
+\section{Theoretical Analysis}
+\label{sec:analysis}
+
+
+% MUITO IMPORTANTE: LER OS COMENTÁRIOS
+
+The circuit used here is the same as the one used in \textit{ngspice}, the only difference being the diode model considered. In this analysis, we used the ``ideal diode plus voltage source'' model (with a voltage source $V_{on}$) and the incremental diode model (a resistor $R_d$). The rest of the circuit was identical.
+
+\subsection{Full-wave rectifier}
+The Full-wave rectifier would  compute the  absolute value of $V_2$ if one used the ideal diode model, but since we were using the model that associates the diode with a voltage source we obtain: $V_{fwout1} = |V_2|- 2*V_{on}$, where $V_{on}$ is the voltage associated with the diode. Depending on the direction of $V_2$ current will flow through diodes $Dfwout1$ and $Dfwout3$ or diodes $Dfwout2$ and $Dfwout4$.
+
+\subsection{Envelope detector}
+The Envelope detector consists of a diode, the resistor $Rdet$ and a capacitor with capacitance C. We adapted the equations obtained during the theoretical classes to our circuit and found the time instant when the diode turns off ($t_{off}$) by solving the following equation:
+\begin{equation}
+  A*C*w*\sin{wt_{off}}*\frac{|\cos{wt_{offs}}|}{\cos{wt_{off}}} =  A*\frac{|\cos{wt_{off}}|+2*V_{on}}{Rdet}
+\end{equation}
+After the diode turns off , the capacitor discharges through resistor $Rdet$.
+After knowing the value of $t_{off}$, we were able to find the time instant when the diode turns on. We used the Newton iterative method to find the solution to this equation:
+\begin{equation}
+   A*|\cos{wt_{off}}|*e^{\frac{-t_{on}+t_{off}}{Rdet*C}}=  A*|\cos{wt_{on}}|
+\end{equation}
+Due to the periodic behavior of the circuit we found the following instants $t_{off}$ and $t_{on}$.  
+\subsection{Voltage regulator}
+Finally, we used a voltage regulator circuit in order to attenuate oscillations in the input signal without frequency dependence. This circuit is composed of 4 series of 18 diodes and a resistor $Rreg$.
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.6\linewidth]{v_centered_output_plot.eps}
+\caption{Difference (in mV) between the Output Voltage and the desired 12V}
+\label{fig:phase_sim}
+\end{figure}
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.6\linewidth]{v_out_plot.eps}
+\caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
+\label{fig:octave_centered_output}
+\end{figure}
