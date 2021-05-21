@@ -12,7 +12,7 @@ VCC=12
 RS=100
 
 RB=1/(1/RB1+1/RB2)
-VEQ=RB2/(RB1+RB2)*VCC
+VEQ=RB2/(RB1+RB2)*VCC % nos slides esta expressão é igual a -VEQ (terminais da fonte de tensão trocados)
 IB1=(VEQ-VBEON)/(RB+(1+BFN)*RE1)
 IC1=BFN*IB1
 IE1=(1+BFN)*IB1
@@ -48,7 +48,7 @@ BFP = 227.3
 VAFP = 37.2
 RE2 = 100
 VEBON = 0.7
-VI2 = VO1
+VI2 = VO1 % não devia ser VI2 = VO-VEBON ?
 IE2 = (VCC-VEBON-VI2)/RE2
 IC2 = BFP/(BFP+1)*IE2
 VO2 = VCC - RE2*IE2
@@ -66,3 +66,23 @@ AV2 = gm2/(gm2+gpi2+go2+ge2)
 ZI2 = (gm2+gpi2+go2+ge2)/gpi2/(gpi2+go2+ge2)
 
 ZO2 = 1/(gm2+gpi2+go2+ge2)
+
+
+
+% Point 2 explanation (why both stages can be connected without significant signal loss)
+
+% https://www.audioholics.com/audio-amplifier/amplifier-classes
+% Note: there are different types of audio amplifiers
+
+% https://www.youtube.com/watch?v=-fIpj2eHL0k
+% In the gain stage we have a NPN transistor.
+% In the output stage we have a PNP transistor.
+
+% https://www.electronics-tutorials.ws/amplifier/amp_1.html
+% In the Common Emitter Transistor, for the transistor to operate within its “Active Region” some form of “Base Biasing” was required. This small Base Bias voltage added to the input signal allowed the transistor to reproduce the full input waveform at its output with no loss of signal.
+
+% https://www.allaboutcircuits.com/worksheets/bjt-amplifier-troubleshooting/
+% https://www.electronics-tutorials.ws/amplifier/class-ab-amplifier.html
+% https://www.pearsonhighered.com/assets/samplechapter/0/1/3/4/0134420101.pdf
+% https://wiki.analog.com/university/courses/electronics/text/chapter-10
+% https://www.sciencedirect.com/topics/computer-science/amplifier-stage
