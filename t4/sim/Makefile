@@ -6,7 +6,7 @@ all: ngspice.log
 	$(eval NGSTABS=$(shell grep _TAB ngspice.log | sed 's/_TAB//g' | sed ':a;N;$!ba;s/\n/ /g'))
 	$(foreach i, $(NGSTABS), sed -n '/^$i_TAB/,/^$i_END/{p;/^$i_END/q}' ngspice.log | grep -v $i_TAB | grep -v $i_END | grep -v '#' | sed 's/\=/\&/g' | sed 's/$$/\\\\ \\hline/g' > $i_tab.tex;)
 
-ngspice.log: ./t4.net 
+ngspice.log: ./t4_inverter_test.net 
 	ngspice -b $< -o $@
 
 

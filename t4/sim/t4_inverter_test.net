@@ -23,9 +23,11 @@ Re emit 0 80
 * bypass capacitor
 Cb emit 0 0.5m
 
+Q2 interm coll vcc BC557A
+Q3 interm coll 0 BC547A
 
 * output stage
-Q2 0 coll emit2 BC557A
+Q8 0 interm2 emit2 BC557A
 Rout emit2 vcc 1000
 
 * output coupling capacitor
@@ -47,7 +49,7 @@ tran 1e-5 1e-2
 plot v(coll)
 hardcopy vo1.ps vdb(coll)
 plot v(out)
-hardcopy vo2.ps v(out) v(coll)
+hardcopy vo2.ps v(out) 
 
 * frequency analysis
 ac dec 10 10 100MEG

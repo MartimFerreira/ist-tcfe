@@ -21,7 +21,7 @@ Rc vcc coll 1000
 Re emit 0 80
 
 * bypass capacitor
-Cb emit 0 0.5m
+Cb emit 0 0.1m
 
 
 * output stage
@@ -47,13 +47,15 @@ tran 1e-5 1e-2
 plot v(coll)
 hardcopy vo1.ps vdb(coll)
 plot v(out)
-hardcopy vo2.ps v(out) v(coll)
+hardcopy vo2.ps v(out)
 
 * frequency analysis
 ac dec 10 10 100MEG
 plot vdb(coll)
 plot vp(coll)
 hardcopy vo1f.ps vdb(coll)
+
+
 
 plot vdb(out)
 plot vp(out)
