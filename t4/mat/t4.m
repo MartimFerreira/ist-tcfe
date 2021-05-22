@@ -27,11 +27,12 @@ gm1=IC1/VT
 rpi1=BFN/gm1
 ro1=VAFN/IC1
 
+% slide 8
 AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
 
 AV1simple = gm1*RC1/(1+gm1*RE1)
 
-% slide 8
+% slide 12
 RE1=0 % why are there two values for RE1 (0 and 100)? and why is there information repeated?
 AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
 % shouldn't it be: AV1 = RB/(RS+RB)*RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB*RS/(RB+RS)+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
