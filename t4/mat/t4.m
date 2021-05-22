@@ -1,57 +1,90 @@
 % ---- GAIN STAGE ----
 
 % values
+
 VT=25e-3
-BFN=178.7
-VAFN=69.7
-RE1=80
-RC1=1000
-RB1=80000
-RB2=20000
-VBEON=0.7
-VCC=12
-RS=100
+BFN=178.7     %parametro beta do modelo BC5474
+VAFN=69.7     %parametro Va do modelo BC5474 
+RE1=80        %resistencia do emissor
+RC1=1000      %resitencia do coletor
+RB1=80000     %resistencia bias 1
+RB2=20000     %resistencia bias 2
+VBEON=0.7     %tensao a partir da qual o transistor deixa passar
+VCC=12        %DC value da fonte
+RS=100        %Resistencia interna 
 
-% slide 6
-RB=1/(1/RB1+1/RB2)
-VEQ=RB2/(RB1+RB2)*VCC % in the slides this expression is equal to -VEQ (switch voltage source terminals)
-IB1=(VEQ-VBEON)/(RB+(1+BFN)*RE1)
-IC1=BFN*IB1
-IE1=(1+BFN)*IB1
-VE1=RE1*IE1
-VO1=VCC-RC1*IC1
-VCE=VO1-VE1
 
-% slide 7
+%%%%%%%%%%%%%%%%%%%%GAIN STAGE: INCREMENTAL CIRCUIT%%%%%%%%%%%%%%%%%%%%%%%
+			       
+RB=1/(1/RB1+1/RB2)                 %resistencia equivalente bias
+
+			           %pode haver erro de sinal no VEQ
+			       
+VEQ=RB2/(RB1+RB2)*VCC              %tensao equivalente thevnian
+IB1=(VEQ-VBEON)/(RB+(1+BFN)*RE1)   %corrente malha B
+IC1=BFN*IB1                        %corrente malha C
+
+
 gm1=IC1/VT
 rpi1=BFN/gm1
 ro1=VAFN/IC1
+			           
+IE1=(1+BFN)*IB1                   %corrente emissor
+VE1=RE1*IE1                       %tensao emissor
+VO1=VCC-RC1*IC1                   %tensao coletor -> tensao de saida do Gain Stage
+VCE=VO1-VE1                       %diferenca entre tensao do coletor e emissor
+                                
+				  %ver se VCE e maior que VBEON
+							       
 
+
+%gain without CE - bypass capacitor							       
 AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
-
 AV1simple = gm1*RC1/(1+gm1*RE1)
 
-% slide 8
-RE1=0 % why are there two values for RE1 (0 and 100)? and why is there information repeated?
+
+
+							       
+%gain with CE - bypass capacitor				       
+RE1=0
 AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
-% shouldn't it be: AV1 = RB/(RS+RB)*RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB*RS/(RB+RS)+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
 AV1simple = gm1*RC1/(1+gm1*RE1)
 
+							       
+
+
+							       
 RE1=100
-
-% slide 13
+%Impedance Calculations
 ZI1 = ((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)/(ro1+RC1+RE1)
 ZX = ro1*((RB+rpi1)*RE1/(RB+rpi1+RE1))/(1/(1/ro1+1/(rpi1+RB)+1/RE1+gm1*rpi1/(rpi1+RB)))
 ZO1 = 1/(1/ZX+1/RC1)
-% in the slides it is ZI1 = 1/(1/RB1+1/RB2+1/rpi1) and ZO1 = 1/(1/RC1+1/ro1)
+
+%in the slides it is ZI1 = 1/(1/RB1+1/RB2+1/rpi1) and ZO1 = 1/(1/RC1+1/ro1)
+%RE1 = 0
+ 
+ 
+% 8 decades and 10 points per decade => 80 points
 
 
-% slide 12
-% vo/vi=Ratio with RE1=0
-% we need to know VS!!! ---> Ration as a function of frequency
-% Ratio = - gm1 * (RC1*ro1)/(RC1+ro1) * ((RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) / (RS+(RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) * VS
+k1 = 80
+freq1=logspace(1,8, k);
 
 
+t1=1
+w1=2*pi*freq1
+VS1=sin(w1*t1)							       
+	   
+gain1 = - gm1 * (RC1*ro1)/(RC1+ro1) * ((RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) / (RS+(RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) * VS1
+
+
+vmag_plot1 = figure ();
+semilogx (freq1, gain1, "r");
+
+xlabel ("f[Hz]");
+ylabel ("Vo(f)/Vi(f)[dB]"); 
+legenda= legend("Frequency response Gain Stage"); 
+print (vmag_plot1, "vmag_plot1.eps", "-depsc");
 
 
 
@@ -65,42 +98,29 @@ VAFP = 37.2
 RE2 = 1000
 VEBON = 0.7
 
-% slide 14
 VI2 = VO1 % shouldn't it be VI2 = VO-VEBON ?
 IE2 = (VCC-VEBON-VI2)/RE2
 IC2 = BFP/(BFP+1)*IE2
 VO2 = VCC - RE2*IE2
 
-% slide 15
+
 gm2 = IC2/VT
 go2 = IC2/VAFP
 gpi2 = gm2/BFP
 ge2 = 1/RE2
-% in the slides it is gpi2=1/rpi2, ge1=1/RE2 and go2=1/ro2
-
-AV2 = gm2/(gm2+gpi2+go2+ge2) % it's the ratio vo/vi
 
 
-% slide 16
+AV2 = gm2/(gm2+gpi2+go2+ge2) 
+
+
+
 ZI2 = (gm2+gpi2+go2+ge2)/gpi2/(gpi2+go2+ge2)
 ZO2 = 1/(gm2+gpi2+go2+ge2)
 
 
-% 8 decades and 10 points per decade => 80 points
-k = 80
-freq=logspace(1,8, k);
 
-%vmag_plot = figure ();
-%semilogx (freq, mag2db(V6f_mag), "r");
-%hold on;
-%semilogx (freq, mag2db(V1f_mag), "b");
-%hold on;
-%semilogx (freq, mag2db(Vcf_mag), "g");
 
-%xlabel ("f[Hz]");
-%ylabel ("Vo(f)/Vi(f)[dB]"); % is it in dB?
-%legenda= legend("Frequency response "); 
-%print (vmag_plot, "vmag_plot.eps", "-depsc");
+
 
 
 
