@@ -44,9 +44,12 @@ AV1simple = gm1*RC1/(1+gm1*RE1)
 
 
 
+
 							       
 %gain with CE - bypass capacitor				       
 RE1=0
+
+							       
 AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
 AV1simple = gm1*RC1/(1+gm1*RE1)
 

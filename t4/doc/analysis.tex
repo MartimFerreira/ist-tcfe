@@ -4,24 +4,107 @@
 
 % MUITO IMPORTANTE: LER OS COMENTÁRIOS
 
-The circuit used here is the same as the one used in \textit{ngspice}, the only difference being the diode model considered. In this analysis, we used the ``ideal diode plus voltage source'' model (with a voltage source $V_{on}$) and the incremental diode model (a resistor $R_d$). The rest of the circuit was identical.
+For this part the circuit is the same as in \textit{ngspice}.
+% Há diferenças?
 
-\subsection{Full-wave rectifier}
-The Full-wave rectifier would  compute the  absolute value of $V_2$ if one used the ideal diode model, but since we were using the model that associates the diode with a voltage source we obtain: $V_{fwout1} = |V_2|- 2*V_{on}$, where $V_{on}$ is the voltage associated with the diode. Depending on the direction of $V_2$ current will flow through diodes $Dfwout1$ and $Dfwout3$ or diodes $Dfwout2$ and $Dfwout4$.
+\subsection{DC analysis}
+Using the theoretical DC model, the operating point was computed.
 
-\subsection{Envelope detector}
-The Envelope detector consists of a diode, the resistor $Rdet$ and a capacitor with capacitance C. We adapted the equations obtained during the theoretical classes to our circuit and found the time instant when the diode turns off ($t_{off}$) by solving the following equation:
+
+\subsubsection{Gain stage}
+Replacing resistors $R_{B1}$ and $R_{B2}$, which are in parallel, with an equivalent resistor $R_{B}$, we have
 \begin{equation}
-  A*C*w*\sin{wt_{off}}*\frac{|\cos{wt_{offs}}|}{\cos{wt_{off}}} =  A*\frac{|\cos{wt_{off}}|+2*V_{on}}{Rdet}
+R_B = \frac{R_{B1} R_{B2}}{R_{B1}+R_{B2}}
 \end{equation}
-After the diode turns off , the capacitor discharges through resistor $Rdet$.
-After knowing the value of $t_{off}$, we were able to find the time instant when the diode turns on. We used the Newton iterative method to find the solution to this equation:
+
+Looking at the circuit as a voltage divider, we have
 \begin{equation}
-   A*|\cos{wt_{off}}|*e^{\frac{-t_{on}+t_{off}}{Rdet*C}}=  A*|\cos{wt_{on}}|
+V_{eq} = \frac{R_{B2}}{R_{B1}+R_{B2}} V_{cc}
 \end{equation}
-Due to the periodic behavior of the circuit we found the following instants $t_{off}$ and $t_{on}$.  
-\subsection{Voltage regulator}
-Finally, we used a voltage regulator circuit in order to attenuate oscillations in the input signal without frequency dependence. This circuit is composed of 4 series of 18 diodes and a resistor $Rreg$.
+
+Using the mesh analysis for the mesh on the left side and assuming that the current is going clockwise,
+\begin{equation}
+V_{eq} + R_B I_{B1} + V_{BEON} + R_{E1} I_{E1} = 0
+\end{equation}
+
+Since $I_{E1} = (1 + \beta_F) I_{B1}$, that is equal to 
+\begin{equation}
+I_{B1} = \frac{V_{eq}-V_{BEON}}{R_B + (1+\beta_F) R_{E1}}
+\end{equation}
+
+Taking into account that $I_{C1} = \beta_F I_{B1}$, $V_{O1} = V_{cc} - R_{C1} I_{C1}$ (mesh analysis for the mesh on the right with current going counterclockwise), $V_{E1} = R_{E1} I_{E1}$ (Ohm's Law) and $V_{CE1} = V_{O1} - V_{E1}$, it is possible to determine $R_B$, $V_{eq}$, $I_{B1}$, $I_{C1}$, $I_{E1}$, $V_{O1}$, $V_{E1}$ and $V_{CE1}$ (all the currents and voltages in the circuit).
+
+% apresentar estes valores, assim como os que já são conhecidos (R_{B1}, R_{B2}, V_{cc}, V_{BEON}, \beta_F e resistências)
+
+
+
+\subsubsection{Output stage}
+Circulating in the outer mesh, one has
+\begin{equation}
+I_{E2} = \frac{V_{cc}-V_{BEON}-V_{I2}}{R_{E2}}
+\end{equation}
+
+For the mesh on the right,
+\begin{equation}
+V_{O2} = V_{cc} -R_{E2} I_{E2}
+\end{equation}
+
+Lastly, for the mesh on the left side,
+\begin{equation}
+V_{O2} = V_{I2} + V_{BEON}
+\end{equation}
+
+So it is possible to calculate $I_{E2}$, $V_{O2}$ and $V_{I2}$.
+
+% comparar com o Ngspice -----> FAZER!
+
+%----------------------------------------------------------------
+
+
+
+\subsection{AC analysis}
+The gain, input and output impedances were computed for each of the stages separately.
+
+\subsubsection{Gain stage}
+As shown in theretical classes, they are, respectively, equal to 
+\begin{equation}
+\begin{cases}
+Gain_{gain \ stage} = R_{C1} \times \frac{R_{E1}-g_{m1} \times r_{\pi 1} \times r_{o1}}{(r_{o1}+R_{C1}+R_{E1})\times(R_B+r_{\pi 1}+R_{E1})+g_{m1} \times R_{E1} \times r_{o1} \times r_{\pi 1} - R_{E1}^2} \\ %& \mbox{$(1)$}\\
+Z_{I1} = \frac{(r_{o1}+R_{C1}+R_{E1}) \times (R_B+r_{\pi 1}+R_{E1}) + g_{m1} \times R_{E1} \times r_{o1} \times r_{\pi 1} - R_{E1}^2}{r_{o1} + R_{C1} + R_{E1}} \\ %& \mbox{$(2)$}\\
+Z_{O1} = \frac{1}{\frac{1}{Z_X}+\frac{1}{R_{C1}}} \\ %& \mbox{$(3)$}\\
+\end{cases}
+\end{equation}
+
+With $g_{m1}=\frac{I_{C1}}{V_T}$, $r_{\pi 1}=\frac{\beta_F}{g_{m1}}$, $r_{o1}=\frac{V_A}{I_{C1}}$ and $Z_X = r_{o1} \times \frac{(R_B+r_{\pi 1}) \times \frac{R_{E1}}{(R_B+r_{\pi 1}+R_{E1})}}{\frac{1}{\frac{1}{r_{o1}}+\frac{1}{r_{\pi 1}+R_B}+\frac{1}{R_{E1}}+ g_{m1} \times \frac{r_{\pi 1}}{r_{\pi 1}+R_B})}$.
+
+
+\subsubsection{Output stage}
+As for the output stage, those same quantities are equal to
+\begin{equation}
+\begin{cases}
+Gain_2 = \frac{g_{m2}}{g_{m2}+g_{\pi 2}+g_{o2}+g_{e2}} \\ %& \mbox{$(1)$}\\
+Z_{I2}= \frac{g_{m2}+g_{\pi 2}+g_{o2}+g_{e2}}{g_{\pi 2} \times (g_{\pi 2}+g_{o2}+g_{e2})} \\ %& \mbox{$(2)$}\\
+Z_{O2} = \frac{1}{g_{m2}+g_{\pi 2}+g_{o2}+g_{e2}} \\ %& \mbox{$(3)$}\\
+\end{cases}
+\end{equation}
+
+Where $g_{m2} = \frac{I_{C2}}{V_T}$, $g_{o2} = \frac{I_{C2}}{V_A}$, $g_{\pi 2} = \frac{g_{m2}}{\beta_F}$ and $g_{e2} = \frac{1}{R_{E2}}$.
+
+% explain why they can be connected without signal loss -----> EXPLAIN!
+In the Common Emitter Transistor (Gain Stage), it was necessary to have some form of "Base Biasing" for the transistor to operate within its “Active Region”. The small Base Bias voltage added to the input signal allowed the transistor to reproduce the full input wave at its output without there being a loss of signal.
+
+The gain stage output impedance and the output stage input impedance are both high, though the latter is an order of magnitude greater than the former, which prevents there being a signal loss and therefore allows both stages to be connected without any problem.
+% rewatch lecture?
+
+%----------------------------------------------------------------
+
+
+
+\subsection{Frequency response}
+%----------------------------------------------------------------
+
+
+
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{v_centered_output_plot.eps}
