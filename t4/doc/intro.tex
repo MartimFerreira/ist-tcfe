@@ -10,23 +10,19 @@
 % sections
 
 % state the learning objective 
-The aim of this laboratory assignment is to build an AC-DC converter circuit whose input is AC voltage with frequency $50 \ Hz$ and amplitude $230 \ V$ and whose output is DC voltage $12 \; V$.
+With this laboratory assignment we aimed to build an audio amplifier, while maximizing its gain and bandwidth and minimizing both its cost and the value of the lower cutoff frequency.
 
+The input voltage, $V_s$, is sinusoidal and has a maximum amplitude of $10 mV$ and it is in series with resistor $R_s=100 \Omega$. Then there are the gain and output stages, whose architecture was based on lectures 16 and, mainly, 17. Finally, there is the $8 \Omega$ speaker. In this circuit, the supply voltage source is $Vcc=12 V$.
 
-% corrigir, porque provavelmente há coisas que não estão certas, por causa das alterações que fizemos depois de falar com o stor na última aula de laboratório (especialmente na parte da esquerda, antes do transformador)
-% modelos usados para os díodos
-% tentativa erro
-The circuit is made up of several parts. In the first one there is a voltage source $v_S$, then there is a transformer with $n$ loops on the left and 1 loop on the right, followed by a full-wave bridge rectifier, an envelope detector and a voltage regulator.
+In the gain stage a degenerated common emitter amplifier with a bias circuit and a bypass capaciotr was used. In this part there is an NPN transistor.
 
-The transformer was replaced by its ideal model, namely by a dependent voltage source between nodes $In1$ and $In2$ (that we named $V_2$) of value $v_S/n$,  and one dependent current source between nodes Begin1 and the left-side ground of value $I_2/n$, where $I_2$ is the current going from $In2$ to $In1$. In order to properly simulate this in \textit{ngspice}, an imaginary voltage source of 0$\;V$ was added in between $In2$ and the dependent voltage source.
+In the output stage we used a common collector amplifier with a PNP transistor, which will then feed the load with $8 \Omega$.
 
-The rectifier is composed of 4 diodes ($Dfw1$, $Dfw2$, $Dfw3$ and $Dfw4$). The two other parts were based on the examples explained in the theoretical lectures. The envelope detector has a rectifier with a diode $Ddet$ and a resistor $Rdet$ plus a capacitor $C$ in parallel with the resistor. Finally, there is the voltage regulator with a resistor $Rreg$ and a limiter made up of 4 series in parallel, each with 18 diodes (for a total of 72 diodes). The diodes in parallel help reduce the total resistance in this part of the circuit.
+% modelos usados?
+% descrever mais o circuito?
+% falar dos componentes e dos valores das grandezas que os caracterizam
+% esquema do circuito ------> IMAGEM!
 
-% componentes - done
-% falta falar dos nós, maybe?
-% esquema do circuito
-
-The main objectives were to obtain an average output voltage of $12 \ V$ with a very small ripple while having the cheapest possible circuit.
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.9\linewidth]{rc.pdf}
@@ -44,5 +40,4 @@ The main objectives were to obtain an average output voltage of $12 \ V$ with a 
   \label{tab:resistance}
 \end{table}
 
-
-In Section~\ref{sec:analysis}, there is the theoretical analysis of the circuit (all the necessary calculations were made with \textit{Octave}). In Section~\ref{sec:simulation}, the circuit is simulated with \textit{ngspice}. The theoretical and simulation results are then compared. Lastly,  Section~\ref{sec:conclusion} is the conclusion of the report. 
+In sections~\ref{sec:analysis}, ~\ref{sec:simulation} and ~\ref{sec:conclusion}, there are, respectively, the theoretical analysis of the circuit in question (made with the help of \textit{Octave}), the simulation of that same circuit (in which \textit{ngspice} was used) and the conclusion of the report.
