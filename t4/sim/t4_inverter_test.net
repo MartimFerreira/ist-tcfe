@@ -57,9 +57,12 @@ plot vdb(coll)
 plot vp(coll)
 hardcopy vo1f.ps vdb(coll)
 
+plot vdb(interm)
+hardcopy vo2f.ps vdb(interm)
+
 plot vdb(out)
 plot vp(out)
-hardcopy vo2f.ps vdb(out)
+hardcopy vo4f.ps vdb(out)
 
 meas ac maxdbgain MAX vdb(out)
 let cutoff_db=maxdbgain-3
