@@ -4,7 +4,7 @@
 VT=25e-3
 BFN=178.7
 VAFN=69.7
-RE1=100
+RE1=80
 RC1=1000
 RB1=80000
 RB2=20000
@@ -62,7 +62,7 @@ ZO1 = 1/(1/ZX+1/RC1)
 % values
 BFP = 227.3
 VAFP = 37.2
-RE2 = 100
+RE2 = 1000
 VEBON = 0.7
 
 % slide 14

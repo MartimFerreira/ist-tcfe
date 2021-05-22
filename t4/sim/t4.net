@@ -17,7 +17,7 @@ R2 base 0 20k
 
 * gain stage
 Q1 coll base emit BC547A
-Rc vcc coll 1000
+Rc vcc coll 1k
 Re emit 0 80
 
 * bypass capacitor
@@ -26,7 +26,7 @@ Cb emit 0 0.5m
 
 * output stage
 Q2 0 coll emit2 BC557A
-Rout emit2 vcc 1000
+Rout emit2 vcc 1k
 
 * output coupling capacitor
 Co emit2 out 0.5m
@@ -44,10 +44,12 @@ print all
 
 * time analysis
 tran 1e-5 1e-2
+plot v(in2)
+hardcopy vin.ps v(in2)
 plot v(coll)
-hardcopy vo1.ps vdb(coll)
+hardcopy vo1.ps v(coll)
 plot v(out)
-hardcopy vo2.ps v(out) v(coll)
+hardcopy vo2.ps v(out)
 
 * frequency analysis
 ac dec 10 10 100MEG
@@ -59,15 +61,29 @@ plot vdb(out)
 plot vp(out)
 hardcopy vo2f.ps vdb(out)
 
+plot vdb(in)
+hardcopy vinf.ps vdb(in2)
+
+let gain=vm(out)/vm(in2)
+
 meas ac maxdbgain MAX vdb(out)
+meas ac maxgain MAX gain
 let cutoff_db=maxdbgain-3
+let cost=(1+0.5+0.5)*1000+(80+20+1+0.080+1)*1+2*0.1
 meas ac lowfreq WHEN vdb(out)=cutoff_db rise=1
 meas ac highfreq WHEN vdb(out)=cutoff_db fall=1
 
-print highfreq-lowfreq
+let bandwidth=highfreq-lowfreq
+
+print bandwidth
 
 *input impedance in kohm
-print v(in2)[40]/vin#branch[40]/(-1000)
+let input_impedance= v(in2)[40]/vin#branch[40]/(-1000)
+print input_impedance
+
+let merit = maxgain*bandwidth/(lowfreq*cost)
+
+print merit
 
 *need a different setup to measure output impedance
 
