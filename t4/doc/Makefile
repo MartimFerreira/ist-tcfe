@@ -10,13 +10,13 @@ LODFIGS = $(patsubst %.odg,%.pdf,$(wildcard *.odg))
 
 all: $(FILE).pdf
 
-$(FILE).pdf: $(wildcard *.tex) $(LODFIGS) $(wildcard ../mat/*.tex) $(wildcard ../mat/*.eps)
+$(FILE).pdf: $(wildcard *.tex) $(LODFIGS) $(wildcard ../mat/*.tex) $(wildcard ../mat/*.eps) $(wildcard ../sim/*.tex)
 	cp -f ../mat/*.eps .
 	cp -f ../mat/*.tex .
+	cp -f ../sim/*.tex .
 	pdflatex  $(FILE).tex
 	pdflatex  $(FILE).tex
 	pdflatex  $(FILE).tex
-
 
 
 #convert libreoffice draw figures to pdf
