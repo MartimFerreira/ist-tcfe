@@ -4,12 +4,12 @@
 
 Overall, the objectives defined for this laboratory were successfully met.
 
-We were able to improve the circuit managing the coupling capacitor to extend the bandwidth ,managing the bypass capacitor to reduce the lost of gain on the resistor RE and improve the gain using the resistor RC.
+We were able to improve the circuit managing the coupling capacitor to extend the bandwidth, managing the bypass capacitor to reduce the lost of gain on the resistor RE and improve the gain using the resistor RC.
 
 
-Our goal was to achieve an equilibrium between the quality of the output signal , so it doesn't have the visible distortion of the input sines waves , and the cost of all the components. We obtained a merit of 1186.634.
+Our goal was to achieve an equilibrium between the quality of the output signal, so it doesn't have the visible distortion of the input sines waves, and the cost of all the components. We obtained a merit of 1186.634.
 
-The simulation analysis , using ngspice, gave us more precise results than the theoretical analysis using Octave because ngspice used more complex models. Some approximation were made on the theoretical analysis. For example, we considered that the capacitors behaved as short-circuits so that we had  cutoff frequencies fL=0 and fH= $\infty$ This gave us a constant frequency response of the gain when actually this gain only corresponds to a limited interval of frequencies.  Another approximation that we took into consideration was to count only with the dominant resistor when we had several resistors in parallel.  
+The simulation analysis, using ngspice, gave us more precise results than the theoretical analysis using Octave because ngspice used more complex models. Some approximations were made on the theoretical analysis. For example, we considered that the capacitors behaved as short-circuits so that we had cutoff frequencies fL=0 and fH= $\infty$ This gave us a constant frequency response of the gain when actually this gain only corresponds to a limited interval of frequencies.  Another approximation that we took into consideration was to count only with the dominant resistor when we had several resistors in parallel.  
 
 Comparing the results obtained in the simulation and theoretical analysis, the maximum gain obtained on ngspice was 40.08315 db, the gain obtained on Octave was 50.220 db. This diference occurs due to the less sensitive model used on Octave which results in an overrated value of gain. 
 
