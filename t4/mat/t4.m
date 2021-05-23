@@ -151,7 +151,7 @@ print (vmag_plot2, "vmag_plot2.eps", "-depsc");
 final_gain= AV1simple2*AV2
 final_gaindb= mag2db(abs(final_gain))
 
-final_impedance = ZO1*ZO2  
+%final_impedance = ZO1*ZO2  
 	      
 		     
 vmag_plot3 = figure ();
@@ -240,6 +240,18 @@ fprintf(resultsAC2_tab, "$Z_{I2}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", ZI2);
 fprintf(resultsAC2_tab, "$Z_{O2}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", ZO2);
 
 fclose(resultsAC2_tab);
+
+
+
+
+final_tab = fopen("final_tab.tex", "w");
+
+fprintf(final_tab, "$Gain$ & %.6e\\\\ \\hline\n", AV1simple2*AV2);
+fprintf(final_tab, "$Z_I\\;(\\Omega)$ & %.6e\\\\ \\hline\n", ZI1);
+fprintf(final_tab, "$Z_O\\;(\\Omega)$ & %.6e\\\\ \\hline\n", ZO2);
+
+fclose(final_tab);
+
 
 
 % Point 2 explanation (why both stages can be connected without significant signal loss)
