@@ -130,7 +130,9 @@ The gain stage output impedance and the output stage input impedance are both hi
 
 
 \subsection{Total gain, input and output impedances}
-The results for the total gain, and input and ouput impedances of the circuit are presented in the table below.
+
+The results for the total gain, and input and ouput impedances of the circuit are presented in the table below. The total gain of the circuit is approximately given by the product of the two stage gains, which is the value presented in the table. The input impedance of the circuit corresponds to the input impedance of the first stage and the output impedance of the whole circuit approximately corresponds to the output impedance of the output stage.
+This last approximation can be done because the output impedance of the whole circuit can be calculated in the same way it was calculated just for the output stage, but with a Thevenin equivalent of the gain stage as its input (the Thevenin equivalent is done with the assumption that the capacitors are working as short-circuits). For the calculations of the output impedance, all this does, effectively, is add an extra resistance in series with $r_{\pi2}$, and since the output impedance of the output stage is given by a parallel of resistances where $r_{\pi2}$ is already clearly not the smallest resistance, increasing that term barely changes the result.
 
 \begin{table}[H]
   \centering
@@ -145,7 +147,7 @@ The results for the total gain, and input and ouput impedances of the circuit ar
 %----------------------------------------------------------------
 
 \subsection{Frequency response}
-Using the incremental circuit and solving the circuit for frequencies ranging from $10 Hz$ to $100 MHz$, the frequency response $\frac{V_o(f)}{V_i(f)}$.
+Using the incremental circuit and solving the circuit for frequencies ranging from $10 Hz$ to $100 MHz$, the following graph was obtained. It was assumed that the frequency was such that the capacitors always behaved as short-circuits, meaning the lower and higher cuttoff frequencies are, respectively, $f_{low} = 0 \;Hz$ and $f_{high} = \infty \;Hz$. Therefore, the graph is constant and shows the gain expected in the bandwidth of the amplifier.
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.7\linewidth]{vmag_plot3.eps}
