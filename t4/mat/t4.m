@@ -213,7 +213,7 @@ resultsDC2_tab = fopen("resultsDC2_tab.tex", "w");
 fprintf(resultsDC2_tab, "$V_{I2}\\;(V)$ & %.6e\\\\ \\hline\n", VI2);
 fprintf(resultsDC2_tab, "$I_{E2}\\;(A)$ & %.6e\\\\ \\hline\n", IE2);
 fprintf(resultsDC2_tab, "$I_{C2}\\;(A)$ & %.6e\\\\ \\hline\n", IC2);
-fprintf(resultsDC2_tab, "$V_{O2}\;(V)$ & %.6e\\\\ \\hline\n", VO2);
+fprintf(resultsDC2_tab, "$V_{O2}\\(V)$ & %.6e\\\\ \\hline\n", VO2);
 
 fclose(resultsDC2_tab);
 
@@ -222,8 +222,9 @@ fclose(resultsDC2_tab);
 
 resultsAC1_tab = fopen("resultsAC1_tab.tex", "w");
 
-fprintf(resultsAC1_tab, "$Gain_1\\;(without \ C_E)$ & %.6e\\\\ \\hline\n", AV1simplew);
-fprintf(resultsAC1_tab, "$Gain_1\\;(with \ C_E)$ & %.6e\\\\ \\hline\n", AV1simple2);
+%fprintf(resultsAC1_tab, "$Gain_1\\;(without \ C_E)$ & %.6e\\\\ \\hline\n", AV1simplew);
+%fprintf(resultsAC1_tab, "$Gain_1\\;(with \ C_E)$ & %.6e\\\\ \\hline\n", AV1simple2);
+fprintf(resultsAC1_tab, "$Gain_1\\$ & %.6e\\\\ \\hline\n", AV1simple2);
 fprintf(resultsAC1_tab, "$Z_{I1}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", ZI1);
 fprintf(resultsAC1_tab, "$Z_{O1}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", ZO1);
 
