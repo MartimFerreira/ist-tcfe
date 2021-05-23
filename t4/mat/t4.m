@@ -42,7 +42,7 @@ VCE=VO1-VE1                       %diferenca entre tensao do coletor e emissor
 AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
 AV1simple = gm1*RC1/(1+gm1*RE1)
 
-
+AVsem = AV1
 
 
 							       
@@ -53,6 +53,7 @@ RE1=0
 AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
 AV1simple = gm1*RC1/(1+gm1*RE1)
 
+AVcom = AV1
 							       
 
 
@@ -125,6 +126,76 @@ ZO2 = 1/(gm2+gpi2+go2+ge2)
 
 
 
+
+%%%%%%%%%%%%%% TABLE WITH VALUES (FOR LATEX) %%%%%%%%%%%%%%%%%%%%
+resistance_tab = fopen("resistance_tab.tex", "w");
+
+fprintf(resistance_tab, "$V_T\\;(\\V)$& %.1f\\\\ \\hline\n", VT);
+fprintf(resistance_tab, "$\beta_{FN}\\;(\\Omega)$& %.1f\\\\ \\hline\n", BFN);
+fprintf(resistance_tab, "$V_{AFN}\\;(\\V)$& %.6f\\\\ \\hline\n", VAFN);
+fprintf(resistance_tab, "$R_{E1}\\;(\\\Omega)$& %.6f\\\\ \\hline\n", RE1);
+fprintf(resistance_tab, "$R_{C1}\\;(\\Omega)$& %.6f\\\\ \\hline\n", RC1);
+fprintf(resistance_tab, "$R_{B1}\\;(\\Omega)$& %.6f\\\\ \\hline\n", RB1);
+fprintf(resistance_tab, "$R_{B2}\\;(\\Omega)$& %.6f\\\\ \\hline\n", RB2);
+fprintf(resistance_tab, "$V_{EBON}\\;(\\V)$& %.6f\\\\ \\hline\n", VEBON);
+fprintf(resistance_tab, "$V_{CC}\\;(\\V)$& %.6f\\\\ \\hline\n", VCC);
+fprintf(resistance_tab, "$R_{S}\\;(\\V)$& %.6f\\\\ \\hline\n", RS);
+fprintf(resistance_tab, "$\beta_{FP}\\;(\\Omega)$& %.6f\\\\ \\hline\n", BFP);
+fprintf(resistance_tab, "$V_{AFP}\\;(\\V)$& %.6f\\\\ \\hline\n", VAFP);
+fprintf(resistance_tab, "$R_{E2}\\;(\\Omega)$& %.6f\\\\ \\hline\n", RE2);
+
+fclose(resistance_tab);
+
+
+
+
+resultsDC1_tab = fopen("resultsDC1_tab.tex", "w");
+
+fprintf(resultsDC1_tab, "$R_B\\;(\\Omega)$& %.1f\\\\ \\hline\n", RB);
+fprintf(resultsDC1_tab, "$V_{eq}\\;(\\V)$& %.1f\\\\ \\hline\n", VEQ);
+fprintf(resultsDC1_tab, "$I_{B1}\\;(\\A)$& %.1f\\\\ \\hline\n", IB1);
+fprintf(resultsDC1_tab, "$I_{C1}\\;(\\A)$& %.1f\\\\ \\hline\n", IC1);
+fprintf(resultsDC1_tab, "$I_{E1}\\;(\\A)$& %.1f\\\\ \\hline\n", IE1);
+fprintf(resultsDC1_tab, "$V_{E1}\\;(\\V)$& %.1f\\\\ \\hline\n", VE1);
+fprintf(resultsDC1_tab, "$V_{O1}\\;(\\V)$& %.1f\\\\ \\hline\n", VO1);
+fprintf(resultsDC1_tab, "$V_{CE}\\;(\\V)$& %.1f\\\\ \\hline\n", VCE);
+
+fclose(resultsDC1_tab);
+
+
+
+
+resultsDC2_tab = fopen("resultsDC2_tab.tex", "w");
+
+fprintf(resultsDC2_tab, "$V_{I2}\\;(\\V)$& %.1f\\\\ \\hline\n", VI2);
+fprintf(resultsDC2_tab, "$I_{E2}\\;(\\A)$& %.1f\\\\ \\hline\n", IE2);
+fprintf(resultsDC2_tab, "$I_{C2}\\;(\\A)$& %.1f\\\\ \\hline\n", IC2);
+fprintf(resultsDC2_tab, "$V_{O2}\;(\\V)$& %.1f\\\\ \\hline\n", VO2);
+
+fclose(resultsDC2_tab);
+
+
+
+
+resultsAC1_tab = fopen("resultsAC1_tab.tex", "w");
+
+fprintf(resultsAC1_tab, "$Gain_1\\;(without C_E)$& %.1f\\\\ \\hline\n", AVsem);
+fprintf(resultsAC1_tab, "$Gain_1\\;(with C_E)$& %.1f\\\\ \\hline\n", AVcom);
+fprintf(resultsAC1_tab, "$Z_{I1}\\;(\\Omega)$& %.1f\\\\ \\hline\n", ZI1);
+fprintf(resultsAC1_tab, "$Z_{O1}\\;(\\Omega)$& %.1f\\\\ \\hline\n", ZO1);
+
+fclose(resultsAC1_tab);
+
+
+
+
+resultsAC2_tab = fopen("resultsAC2_tab.tex", "w");
+
+fprintf(resultsAC2_tab, "$Gain_2\\$& %.1f\\\\ \\hline\n", AV2);
+fprintf(resultsAC2_tab, "$Z_{I2}\\;(\\Omega)$& %.1f\\\\ \\hline\n", ZI2);
+fprintf(resultsAC2_tab, "$Z_{O2}\\;(\\Omega)$& %.1f\\\\ \\hline\n", ZO2);
+
+fclose(resultsAC2_tab);
 
 
 

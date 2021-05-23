@@ -27,18 +27,30 @@ Using the mesh analysis for the mesh on the left side and assuming that the curr
 V_{eq} + R_B I_{B1} + V_{BEON} + R_{E1} I_{E1} = 0
 \end{equation}
 
-Since $I_{E1} = (1 + \beta_F) I_{B1}$, that is equal to 
+Since $I_{E1} = (1 + \beta_{FN}) I_{B1}$, that is equal to 
 \begin{equation}
-I_{B1} = \frac{V_{eq}-V_{BEON}}{R_B + (1+\beta_F) R_{E1}}
+I_{B1} = \frac{V_{eq}-V_{BEON}}{R_B + (1+\beta_{FN}) R_{E1}}
 \end{equation}
 
-Taking into account that $I_{C1} = \beta_F I_{B1}$, $V_{O1} = V_{cc} - R_{C1} I_{C1}$ (mesh analysis for the mesh on the right with current going counterclockwise), $V_{E1} = R_{E1} I_{E1}$ (Ohm's Law) and $V_{CE1} = V_{O1} - V_{E1}$, it is possible to determine $R_B$, $V_{eq}$, $I_{B1}$, $I_{C1}$, $I_{E1}$, $V_{O1}$, $V_{E1}$ and $V_{CE1}$ (all the currents and voltages in the circuit).
+Taking into account that $I_{C1} = \beta_{FN} I_{B1}$, $V_{O1} = V_{cc} - R_{C1} I_{C1}$ (mesh analysis for the mesh on the right with current going counterclockwise), $V_{E1} = R_{E1} I_{E1}$ (Ohm's Law) and $V_{CE1} = V_{O1} - V_{E1}$, it is possible to determine $R_B$, $V_{eq}$, $I_{B1}$, $I_{C1}$, $I_{E1}$, $V_{O1}$, $V_{E1}$ and $V_{CE1}$ (all the currents and voltages in the circuit).
 
 % apresentar estes valores, assim como os que já são conhecidos (R_{B1}, R_{B2}, V_{cc}, V_{BEON}, \beta_F e resistências)
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{resultsDC1_tab.tex}
+  \end{tabular}
+  \caption{Values obtained}
+  \label{tab:resultsDC1}
+\end{table}
 
 
 
 \subsubsection{Output stage}
+We know that $V_{I2}=V_{O1}$.
+
 Circulating in the outer mesh, one has
 \begin{equation}
 I_{E2} = \frac{V_{cc}-V_{BEON}-V_{I2}}{R_{E2}}
@@ -54,7 +66,19 @@ Lastly, for the mesh on the left side,
 V_{O2} = V_{I2} + V_{BEON}
 \end{equation}
 
-So it is possible to calculate $I_{E2}$, $V_{O2}$ and $V_{I2}$.
+Also $I_{C2} = \beta_{FP}/(\beta_{FP}+1)\times IE2$.
+
+So it is possible to calculate $I_{E2}$, $I_{C2}$, $V_{O2}$ and $V_{I2}$.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{resultsDC2_tab.tex}
+  \end{tabular}
+  \caption{Values obtained}
+  \label{tab:resultsDC2}
+\end{table}
 
 % comparar com o Ngspice -----> FAZER!
 
@@ -75,7 +99,17 @@ Z_{O1} = \frac{1}{\frac{1}{Z_X}+\frac{1}{R_{C1}}} \\ %& \mbox{$(3)$}\\
 \end{cases}
 \end{equation}
 
-With $g_{m1}=\frac{I_{C1}}{V_T}$, $r_{\pi 1}=\frac{\beta_F}{g_{m1}}$, $r_{o1}=\frac{V_A}{I_{C1}}$ and $Z_X = r_{o1} \times \frac{(R_B+r_{\pi 1}) \times \frac{R_{E1}}{(R_B+r_{\pi 1}+R_{E1})}}{\frac{1}{\frac{1}{r_{o1}}+\frac{1}{r_{\pi 1}+R_B}+\frac{1}{R_{E1}}+ g_{m1} \times \frac{r_{\pi 1}}{r_{\pi 1}+R_B})}$.
+With $g_{m1}=\frac{I_{C1}}{V_T}$, $r_{\pi 1}=\frac{\beta_{FN}}{g_{m1}}$, $r_{o1}=\frac{V_A}{I_{C1}}$ and $Z_X = r_{o1} \times \frac{(R_B+r_{\pi 1}) \times \frac{R_{E1}}{(R_B+r_{\pi 1}+R_{E1})}}{\frac{1}{\frac{1}{r_{o1}}+\frac{1}{r_{\pi 1}+R_B}+\frac{1}{R_{E1}}+ g_{m1} \times \frac{r_{\pi 1}}{r_{\pi 1}+R_B})}$.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{resultsAC1_tab.tex}
+  \end{tabular}
+  \caption{Values obtained}
+  \label{tab:resultsAC1}
+\end{table}
 
 
 \subsubsection{Output stage}
@@ -88,7 +122,17 @@ Z_{O2} = \frac{1}{g_{m2}+g_{\pi 2}+g_{o2}+g_{e2}} \\ %& \mbox{$(3)$}\\
 \end{cases}
 \end{equation}
 
-Where $g_{m2} = \frac{I_{C2}}{V_T}$, $g_{o2} = \frac{I_{C2}}{V_A}$, $g_{\pi 2} = \frac{g_{m2}}{\beta_F}$ and $g_{e2} = \frac{1}{R_{E2}}$.
+Where $g_{m2} = \frac{I_{C2}}{V_T}$, $g_{o2} = \frac{I_{C2}}{V_A}$, $g_{\pi 2} = \frac{g_{m2}}{\beta_{FP}}$ and $g_{e2} = \frac{1}{R_{E2}}$.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{resultsAC2_tab.tex}
+  \end{tabular}
+  \caption{Values obtained}
+  \label{tab:resultsAC2}
+\end{table}
 
 % explain why they can be connected without signal loss -----> EXPLAIN!
 In the Common Emitter Transistor (Gain Stage), it was necessary to have some form of "Base Biasing" for the transistor to operate within its “Active Region”. The small Base Bias voltage added to the input signal allowed the transistor to reproduce the full input wave at its output without there being a loss of signal.
@@ -101,19 +145,23 @@ The gain stage output impedance and the output stage input impedance are both hi
 
 
 \subsection{Frequency response}
-%----------------------------------------------------------------
-
-
-
+Using the incremental circuit and solving the circuit for frequencies ranging from $10 Hz$ to $100 MHz$, the frequency response $\frac{V_o(f)}{V_i(f)}$.
 
 \begin{figure}[H] \centering
-\includegraphics[width=0.6\linewidth]{v_centered_output_plot.eps}
-\caption{Difference (in mV) between the Output Voltage and the desired 12V}
-\label{fig:phase_sim}
+\includegraphics[width=0.7\linewidth]{vmag_plot1.eps}
+\caption{Frequency response $\frac{V_o(f)}{V_i(f)}$}
+\label{fig:freq_response}
 \end{figure}
 
-\begin{figure}[H] \centering
-\includegraphics[width=0.6\linewidth]{v_out_plot.eps}
-\caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
-\label{fig:octave_centered_output}
-\end{figure}
+
+% ainda falta.... bandwidth and cut off frequencies (com base no gráfico? como na simulação)  + voltage gain + cost -----> FAZER!
+
+
+
+
+
+%\begin{figure}[H] \centering
+%\includegraphics[width=0.6\linewidth]{v_out_plot.eps}
+%\caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
+%\label{fig:octave_centered_output}
+%\end{figure}
