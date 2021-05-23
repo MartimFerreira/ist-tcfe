@@ -12,11 +12,11 @@
 % state the learning objective 
 With this laboratory assignment we aimed to build an audio amplifier, while maximizing its gain and bandwidth and minimizing both its cost and the value of the lower cutoff frequency.
 
-The input voltage, $V_s$, is sinusoidal and has an amplitude of $10 mV$ and it is in series with resistor $R_s=100 \Omega$, meant to simulate the internal resistance of a voltage source. Then there are the gain and output stages, whose architecture was based on lectures 16 and, mainly, 17. Finally, there is the $8 \Omega$ speaker. In this circuit, the supply voltage source is $V_{cc}=12 V$.
+The input voltage, $V_s$, is sinusoidal, has an amplitude of $10 mV$ and is in series with resistor $R_s=100 \Omega$, meant to simulate the internal resistance of a voltage source. Then there are the gain and output stages, whose architecture was based on lectures 16 and, mainly, 17. Finally, there is the $8 \Omega$ speaker. In this circuit, the supply voltage source is $V_{cc}=12 V$.
 
-In the gain stage a degenerated common emitter amplifier with a bias circuit and a bypass capacitor were used. In this part there is an NPN transistor.
+In the gain stage a degenerated common emitter amplifier and a bypass capacitor were used.  It was necessary to have some form of base biasing for the transistor to operate within the Forward Active Region, so the small base bias voltage and the two resistances were added. A capacitor was also used to block the DC component of the input voltage. In this part there is an NPN transistor.
 
-In the output stage we used a common collector amplifier with a PNP transistor, which will then feed the $8 \Omega$ load.
+In the output stage we used a common collector amplifier with a PNP transistor and a coupling capacitor, which will then feed the $8 \Omega$ load.
 
 % modelos usados?
 % descrever mais o circuito?
@@ -36,7 +36,7 @@ In the output stage we used a common collector amplifier with a PNP transistor, 
     \hline
       \input{resistance_tab.tex}
   \end{tabular}
-  \caption{Circuit characteristics (voltage source and resistors)}
+  \caption{Circuit characteristics (voltages, resistances and capacitances)}
   \label{tab:resistance}
 \end{table}
 

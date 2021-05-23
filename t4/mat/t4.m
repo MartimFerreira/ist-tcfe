@@ -155,11 +155,11 @@ final_gaindb= mag2db(abs(final_gain))
 	      
 		     
 vmag_plot3 = figure ();
-semilogx (freq1, final_gaindb, "g");
+semilogx (freq1, final_gaindb, "r");
 
 xlabel ("f[Hz]");
 ylabel ("Vo(f)/Vi(f)[dB]"); 
-legenda= legend("Frequency response"); 
+%legenda= legend("Frequency response"); 
 print (vmag_plot3, "vmag_plot3.eps", "-depsc");
 
 
@@ -175,6 +175,9 @@ fprintf(resistance_tab, "$R_{C1}\\;(\\Omega)$ & %.1e\\\\ \\hline\n", RC1);
 fprintf(resistance_tab, "$R_{B1}\\;(\\Omega)$ & %.1e\\\\ \\hline\n", RB1);
 fprintf(resistance_tab, "$R_{B2}\\;(\\Omega)$ & %.1e\\\\ \\hline\n", RB2);
 fprintf(resistance_tab, "$R_{E2}\\;(\\Omega)$ & %.1e\\\\ \\hline\n", RE2);
+fprintf(resistance_tab, "$C_{i}\\;(mF)$ & %.1e\\\\ \\hline\n", 1);
+fprintf(resistance_tab, "$C_{e}\\;(mF)$ & %.1e\\\\ \\hline\n", 0.5);
+fprintf(resistance_tab, "$C_{o}\\;(mF)$ & %.1e\\\\ \\hline\n", 0.5);
 
 fclose(resistance_tab);
 
