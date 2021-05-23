@@ -1,3 +1,5 @@
+pkg load control
+
 % ---- GAIN STAGE ----
 
 % values
@@ -39,10 +41,10 @@ VCE=VO1-VE1                       %diferenca entre tensao do coletor e emissor
 
 
 %gain without CE - bypass capacitor							       
-AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
-AV1simple = gm1*RC1/(1+gm1*RE1)
+AV1w = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
+AV1simplew = gm1*RC1/(1+gm1*RE1)
 
-AVsem = AV1
+
 
 
 							       
@@ -50,10 +52,10 @@ AVsem = AV1
 RE1=0
 
 							       
-AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
+AV1= RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
 AV1simple = gm1*RC1/(1+gm1*RE1)
-
-AVcom = AV1
+							       
+AV1simple2 = gm1*RC1/(1+gm1*RE1) * rpi1/ (RS + rpi1)
 							       
 
 
@@ -72,22 +74,34 @@ ZO1 = 1/(1/ZX+1/RC1)
 
 
 k1 = 80
-freq1=logspace(1, 8, k1);
+
+freq1=logspace(1,8, k1);
 
 
-t1=1
-w1=2*pi*freq1
-VS1=sin(w1*t1)							       
+
+%t1=1
+%w1=2*pi*freq1
+VS1=0.01							       
 	   
 gain1 = - gm1 * (RC1*ro1)/(RC1+ro1) * ((RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) / (RS+(RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) % * VS1
 
 
+%%%%%%%%%%%%%%%   MAG TO DB   %%%%%%%%%%%%%%%%%%%%%%%%
+AV1wdb = mag2db(abs(AV1w))
+AV1simplewdb = mag2db(abs(AV1simplew))
+  
+AV1db = mag2db(abs(AV1))
+gain1db = mag2db(abs(gain1))
+AV1simpledb= mag2db(abs(AV1simple))
+AV1simple2db= mag2db(abs(AV1simple2))
+  
+
 vmag_plot1 = figure ();
-semilogx (freq1, gain1, "r");
+semilogx (freq1, abs(AV1simple2db), "r");
 
 xlabel ("f[Hz]");
 ylabel ("Vo(f)/Vi(f)[dB]"); 
-legenda= legend("Frequency response Gain Stage"); 
+legenda= legend("Frequency response"); 
 print (vmag_plot1, "vmag_plot1.eps", "-depsc");
 
 
@@ -114,15 +128,39 @@ gpi2 = gm2/BFP
 ge2 = 1/RE2
 
 
-AV2 = gm2/(gm2+gpi2+go2+ge2) 
+AV2 = gm2/(gm2+gpi2+go2+ge2)
+
+
 
 
 
 ZI2 = (gm2+gpi2+go2+ge2)/gpi2/(gpi2+go2+ge2)
 ZO2 = 1/(gm2+gpi2+go2+ge2)
 
+AV22= mag2db(abs(AV2))
+
+vmag_plot2 = figure ();
+semilogx (freq1, AV2, "b");
+
+xlabel ("f[Hz]");
+ylabel ("Vo(f)/Vi(f)[dB]"); 
+legenda= legend("Frequency response"); 
+print (vmag_plot2, "vmag_plot2.eps", "-depsc");
 
 
+final_gain= AV1simple2*AV2
+final_gaindb= mag2db(abs(final_gain))
+
+final_impedance = ZO1*ZO2  
+	      
+		     
+vmag_plot3 = figure ();
+semilogx (freq1, final_gaindb, "g");
+
+xlabel ("f[Hz]");
+ylabel ("Vo(f)/Vi(f)[dB]"); 
+legenda= legend("Frequency response"); 
+print (vmag_plot3, "vmag_plot3.eps", "-depsc");
 
 
 
@@ -130,19 +168,19 @@ ZO2 = 1/(gm2+gpi2+go2+ge2)
 %%%%%%%%%%%%%% TABLE WITH VALUES (FOR LATEX) %%%%%%%%%%%%%%%%%%%%
 resistance_tab = fopen("resistance_tab.tex", "w");
 
-fprintf(resistance_tab, "$V_T\\;(\\V)$& %.1f\\\\ \\hline\n", VT);
-fprintf(resistance_tab, "$\beta_{FN}\\;(\\Omega)$& %.1f\\\\ \\hline\n", BFN);
-fprintf(resistance_tab, "$V_{AFN}\\;(\\V)$& %.6f\\\\ \\hline\n", VAFN);
-fprintf(resistance_tab, "$R_{E1}\\;(\\\Omega)$& %.6f\\\\ \\hline\n", RE1);
-fprintf(resistance_tab, "$R_{C1}\\;(\\Omega)$& %.6f\\\\ \\hline\n", RC1);
-fprintf(resistance_tab, "$R_{B1}\\;(\\Omega)$& %.6f\\\\ \\hline\n", RB1);
-fprintf(resistance_tab, "$R_{B2}\\;(\\Omega)$& %.6f\\\\ \\hline\n", RB2);
-fprintf(resistance_tab, "$V_{EBON}\\;(\\V)$& %.6f\\\\ \\hline\n", VEBON);
-fprintf(resistance_tab, "$V_{CC}\\;(\\V)$& %.6f\\\\ \\hline\n", VCC);
-fprintf(resistance_tab, "$R_{S}\\;(\\V)$& %.6f\\\\ \\hline\n", RS);
-fprintf(resistance_tab, "$\beta_{FP}\\;(\\Omega)$& %.6f\\\\ \\hline\n", BFP);
-fprintf(resistance_tab, "$V_{AFP}\\;(\\V)$& %.6f\\\\ \\hline\n", VAFP);
-fprintf(resistance_tab, "$R_{E2}\\;(\\Omega)$& %.6f\\\\ \\hline\n", RE2);
+fprintf(resistance_tab, "$V_T\\;(V)$ & %.1f\\\\ \\hline\n", VT);
+fprintf(resistance_tab, "$\\beta_{FN}\\;(\\Omega)$ & %.1f\\\\ \\hline\n", BFN);
+fprintf(resistance_tab, "$V_{AFN}\\;(V)$ & %.6f\\\\ \\hline\n", VAFN);
+fprintf(resistance_tab, "$R_{E1}\\;(\\Omega)$ & %.6f\\\\ \\hline\n", RE1);
+fprintf(resistance_tab, "$R_{C1}\\;(\\Omega)$ & %.6f\\\\ \\hline\n", RC1);
+fprintf(resistance_tab, "$R_{B1}\\;(\\Omega)$ & %.6f\\\\ \\hline\n", RB1);
+fprintf(resistance_tab, "$R_{B2}\\;(\\Omega)$ & %.6f\\\\ \\hline\n", RB2);
+fprintf(resistance_tab, "$V_{EBON}\\;(V)$ & %.6f\\\\ \\hline\n", VEBON);
+fprintf(resistance_tab, "$V_{CC}\\;(V)$ & %.6f\\\\ \\hline\n", VCC);
+fprintf(resistance_tab, "$R_{S}\\;(V)$ & %.6f\\\\ \\hline\n", RS);
+fprintf(resistance_tab, "$\\beta_{FP}\\;(\\Omega)$ & %.6f\\\\ \\hline\n", BFP);
+fprintf(resistance_tab, "$V_{AFP}\\;(V)$ & %.6f\\\\ \\hline\n", VAFP);
+fprintf(resistance_tab, "$R_{E2}\\;(\\Omega)$ & %.6f\\\\ \\hline\n", RE2);
 
 fclose(resistance_tab);
 
@@ -151,14 +189,14 @@ fclose(resistance_tab);
 
 resultsDC1_tab = fopen("resultsDC1_tab.tex", "w");
 
-fprintf(resultsDC1_tab, "$R_B\\;(\\Omega)$& %.1f\\\\ \\hline\n", RB);
-fprintf(resultsDC1_tab, "$V_{eq}\\;(\\V)$& %.1f\\\\ \\hline\n", VEQ);
-fprintf(resultsDC1_tab, "$I_{B1}\\;(\\A)$& %.1f\\\\ \\hline\n", IB1);
-fprintf(resultsDC1_tab, "$I_{C1}\\;(\\A)$& %.1f\\\\ \\hline\n", IC1);
-fprintf(resultsDC1_tab, "$I_{E1}\\;(\\A)$& %.1f\\\\ \\hline\n", IE1);
-fprintf(resultsDC1_tab, "$V_{E1}\\;(\\V)$& %.1f\\\\ \\hline\n", VE1);
-fprintf(resultsDC1_tab, "$V_{O1}\\;(\\V)$& %.1f\\\\ \\hline\n", VO1);
-fprintf(resultsDC1_tab, "$V_{CE}\\;(\\V)$& %.1f\\\\ \\hline\n", VCE);
+fprintf(resultsDC1_tab, "$R_B\\;(\\Omega)$ & %.1f\\\\ \\hline\n", RB);
+fprintf(resultsDC1_tab, "$V_{eq}\\;(V)$ & %.1f\\\\ \\hline\n", VEQ);
+fprintf(resultsDC1_tab, "$I_{B1}\\;(A)$ & %.1f\\\\ \\hline\n", IB1);
+fprintf(resultsDC1_tab, "$I_{C1}\\;(A)$ & %.1f\\\\ \\hline\n", IC1);
+fprintf(resultsDC1_tab, "$I_{E1}\\;(A)$ & %.1f\\\\ \\hline\n", IE1);
+fprintf(resultsDC1_tab, "$V_{E1}\\;(V)$ & %.1f\\\\ \\hline\n", VE1);
+fprintf(resultsDC1_tab, "$V_{O1}\\;(V)$ & %.1f\\\\ \\hline\n", VO1);
+fprintf(resultsDC1_tab, "$V_{CE}\\;(V)$ & %.1f\\\\ \\hline\n", VCE);
 
 fclose(resultsDC1_tab);
 
@@ -167,10 +205,10 @@ fclose(resultsDC1_tab);
 
 resultsDC2_tab = fopen("resultsDC2_tab.tex", "w");
 
-fprintf(resultsDC2_tab, "$V_{I2}\\;(\\V)$& %.1f\\\\ \\hline\n", VI2);
-fprintf(resultsDC2_tab, "$I_{E2}\\;(\\A)$& %.1f\\\\ \\hline\n", IE2);
-fprintf(resultsDC2_tab, "$I_{C2}\\;(\\A)$& %.1f\\\\ \\hline\n", IC2);
-fprintf(resultsDC2_tab, "$V_{O2}\;(\\V)$& %.1f\\\\ \\hline\n", VO2);
+fprintf(resultsDC2_tab, "$V_{I2}\\;(V)$ & %.1f\\\\ \\hline\n", VI2);
+fprintf(resultsDC2_tab, "$I_{E2}\\;(A)$ & %.1f\\\\ \\hline\n", IE2);
+fprintf(resultsDC2_tab, "$I_{C2}\\;(A)$ & %.1f\\\\ \\hline\n", IC2);
+fprintf(resultsDC2_tab, "$V_{O2}\;(V)$ & %.1f\\\\ \\hline\n", VO2);
 
 fclose(resultsDC2_tab);
 
@@ -179,10 +217,10 @@ fclose(resultsDC2_tab);
 
 resultsAC1_tab = fopen("resultsAC1_tab.tex", "w");
 
-fprintf(resultsAC1_tab, "$Gain_1\\;(without C_E)$& %.1f\\\\ \\hline\n", AVsem);
-fprintf(resultsAC1_tab, "$Gain_1\\;(with C_E)$& %.1f\\\\ \\hline\n", AVcom);
-fprintf(resultsAC1_tab, "$Z_{I1}\\;(\\Omega)$& %.1f\\\\ \\hline\n", ZI1);
-fprintf(resultsAC1_tab, "$Z_{O1}\\;(\\Omega)$& %.1f\\\\ \\hline\n", ZO1);
+fprintf(resultsAC1_tab, "$Gain_1\\;(without C_E)$ & %.1f\\\\ \\hline\n", AV1simplew);
+fprintf(resultsAC1_tab, "$Gain_1\\;(with C_E)$ & %.1f\\\\ \\hline\n", AV1simple2);
+fprintf(resultsAC1_tab, "$Z_{I1}\\;(\\Omega)$ & %.1f\\\\ \\hline\n", ZI1);
+fprintf(resultsAC1_tab, "$Z_{O1}\\;(\\Omega)$ & %.1f\\\\ \\hline\n", ZO1);
 
 fclose(resultsAC1_tab);
 
@@ -191,14 +229,11 @@ fclose(resultsAC1_tab);
 
 resultsAC2_tab = fopen("resultsAC2_tab.tex", "w");
 
-fprintf(resultsAC2_tab, "$Gain_2\\$& %.1f\\\\ \\hline\n", AV2);
-fprintf(resultsAC2_tab, "$Z_{I2}\\;(\\Omega)$& %.1f\\\\ \\hline\n", ZI2);
-fprintf(resultsAC2_tab, "$Z_{O2}\\;(\\Omega)$& %.1f\\\\ \\hline\n", ZO2);
+fprintf(resultsAC2_tab, "$Gain_2$ & %.1f\\\\ \\hline\n", AV2);
+fprintf(resultsAC2_tab, "$Z_{I2}\\;(\\Omega)$ & %.1f\\\\ \\hline\n", ZI2);
+fprintf(resultsAC2_tab, "$Z_{O2}\\;(\\Omega)$ & %.1f\\\\ \\hline\n", ZO2);
 
 fclose(resultsAC2_tab);
-
-
-
 
 
 % Point 2 explanation (why both stages can be connected without significant signal loss)

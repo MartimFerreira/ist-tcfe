@@ -93,13 +93,14 @@ The gain, input and output impedances were computed for each of the stages separ
 As shown in theretical classes, they are, respectively, equal to 
 \begin{equation}
 \begin{cases}
-Gain_{gain \ stage} = R_{C1} \times \frac{R_{E1}-g_{m1} \times r_{\pi 1} \times r_{o1}}{(r_{o1}+R_{C1}+R_{E1})\times(R_B+r_{\pi 1}+R_{E1})+g_{m1} \times R_{E1} \times r_{o1} \times r_{\pi 1} - R_{E1}^2} \\ %& \mbox{$(1)$}\\
+Gain_1 = R_{C1} \times \frac{R_{E1}-g_{m1} \times r_{\pi 1} \times r_{o1}}{(r_{o1}+R_{C1}+R_{E1})\times(R_B+r_{\pi 1}+R_{E1})+g_{m1} \times R_{E1} \times r_{o1} \times r_{\pi 1} - R_{E1}^2} \\ %& \mbox{$(1)$}\\
 Z_{I1} = \frac{(r_{o1}+R_{C1}+R_{E1}) \times (R_B+r_{\pi 1}+R_{E1}) + g_{m1} \times R_{E1} \times r_{o1} \times r_{\pi 1} - R_{E1}^2}{r_{o1} + R_{C1} + R_{E1}} \\ %& \mbox{$(2)$}\\
 Z_{O1} = \frac{1}{\frac{1}{Z_X}+\frac{1}{R_{C1}}} \\ %& \mbox{$(3)$}\\
 \end{cases}
 \end{equation}
 
-With $g_{m1}=\frac{I_{C1}}{V_T}$, $r_{\pi 1}=\frac{\beta_{FN}}{g_{m1}}$, $r_{o1}=\frac{V_A}{I_{C1}}$ and $Z_X = r_{o1} \times \frac{(R_B+r_{\pi 1}) \times \frac{R_{E1}}{(R_B+r_{\pi 1}+R_{E1})}}{\frac{1}{\frac{1}{r_{o1}}+\frac{1}{r_{\pi 1}+R_B}+\frac{1}{R_{E1}}+ g_{m1} \times \frac{r_{\pi 1}}{r_{\pi 1}+R_B})}$.
+With $g_{m1}=\frac{I_{C1}}{V_T}$, $r_{\pi 1}=\frac{\beta_{FN}}{g_{m1}}$, $r_{o1}=\frac{V_A}{I_{C1}}$ and $Z_X = r_{o1} \times \frac{(R_B+r_{\pi 1}) \times \frac{R_{E1}}{R_B+r_{\pi 1}+R_{E1}}}{\frac{1}{\frac{1}{r_{o1}}+\frac{1}{r_{\pi 1}+R_B}+\frac{1}{R_{E1}}+ g_{m1} \times \frac{r_{\pi 1}}{r_{\pi 1}+R_B}}}$.
+
 
 \begin{table}[H]
   \centering
