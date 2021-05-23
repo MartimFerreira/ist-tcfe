@@ -51,39 +51,61 @@ hardcopy vo1.ps v(coll)
 plot v(out)
 hardcopy vo2.ps v(out)
 
+
+let V_{CE} = v(coll)[0]-v(emit)[0]
+let V_{BE} = v(base)[0]-v(emit)[0]
+let V_{EC} = v(emit2)[0]
+let V_{EB} = v(emit2)[0]-v(coll)[0]
+print V_{CE}
+print V_{BE}
+print V_{EC}
+print V_{EB}
+
 * frequency analysis
 ac dec 10 10 100MEG
 plot vdb(coll)
 plot vp(coll)
 hardcopy vo1f.ps vdb(coll)
 
+plot vdb(coll)
+plot vp(coll)
+hardcopy vo1m.ps vm(coll)
+
 plot vdb(out)
 plot vp(out)
 hardcopy vo2f.ps vdb(out)
+
+*let outputgain=vm(out)/vm(coll)
+*plot outputgain
+*hardcopy outputstagegain.ps outputgain
 
 plot vdb(in)
 hardcopy vinf.ps vdb(in2)
 
 let gain=vm(out)/vm(in2)
 
-meas ac maxdbgain MAX vdb(out)
+echo "op_TAB"
 meas ac maxgain MAX gain
+meas ac maxdbgain MAX vdb(out)
 let cutoff_db=maxdbgain-3
 let cost=(1+0.5+0.5)*1000+(80+20+1+0.080+1)*1+2*0.1
 meas ac lowfreq WHEN vdb(out)=cutoff_db rise=1
 meas ac highfreq WHEN vdb(out)=cutoff_db fall=1
+
 
 let bandwidth=highfreq-lowfreq
 
 print bandwidth
 
 *input impedance in kohm
-let input_impedance= v(in2)[40]/vin#branch[40]/(-1000)
-print input_impedance
+let inputimpedance= v(in2)[40]/vin#branch[40]/(-1000)
+print inputimpedance
+
 
 let merit = maxgain*bandwidth/(lowfreq*cost)
 
 print merit
+echo "op_END"
 
 *need a different setup to measure output impedance
 

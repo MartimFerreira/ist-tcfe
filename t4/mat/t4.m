@@ -72,14 +72,14 @@ ZO1 = 1/(1/ZX+1/RC1)
 
 
 k1 = 80
-freq1=logspace(1,8, k);
+freq1=logspace(1, 8, k1);
 
 
 t1=1
 w1=2*pi*freq1
 VS1=sin(w1*t1)							       
 	   
-gain1 = - gm1 * (RC1*ro1)/(RC1+ro1) * ((RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) / (RS+(RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) * VS1
+gain1 = - gm1 * (RC1*ro1)/(RC1+ro1) * ((RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) / (RS+(RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) % * VS1
 
 
 vmag_plot1 = figure ();

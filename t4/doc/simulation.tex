@@ -1,75 +1,34 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
-In this section, $ngspice$ results for the circuit shown above are presented. The AC-DC converter was simulated for 10 periods and the default model was used for the diodes.
+In this section, $ngspice$ simulation results for the circuit shown above are presented.
 
 
+\subsection{Gain Response with Frequency}
 
-
-\subsection{Average output voltage level}
-First and foremost, the average output voltage level was determined using ngspice's $mean()$ function. The average was calculated for over 1000 points.
-%confirmar isto
-
-The value obtained here for the average output voltage was $12.00007 \ V$,
-which has a deviation from the ideal $12 V$ of about $5.83*10^{-4} \ \%$, which is indeed quite small.
-%maybe refer number of significant diits
-
-
-
-
-\subsection{Output voltage ripple}
-Using \textit{ngspice}'s $MIN$ and $MAX$ functions, the minimum and maximum values of the output voltage were obtained, being $11.98591 \ V$ and $12.01317 \ V$, respectively. The output voltage ripple, which is the difference between the two previous values, was then calculated. It had a value of $0.02726 \ V$, which is almost zero, as intended.
-
-
-This means that the output voltage signal, despite being sinusoidal, has a magnitude of almost $12 V$ and a ripple that is approximately null, therefore being a pretty good approximation of a DC output voltage signal with a magnitude of $12 V$.
-
-
-
-
-\subsection{Output voltages for the Envelope Detector and Voltage Regulator circuits}
-In the graph below are the plots of the output voltages for the Envelope Detector and Voltage Regulator circuits as functions of time.
+An AC analysis of the circuit was performed in order to figure out how the gain of the circuit varied with frequency. The resulting graph can be seen in \ref{fig:gain_freq}.
 
 \begin{figure}[H] \centering
-\includegraphics[width=0.6\linewidth]{../sim/trans_regulator.pdf}
-\caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
-\label{fig:ngspice_output}
+\includegraphics[width=0.6\linewidth]{../sim/vo2f.pdf}
+\caption{Circuit Gain variation with frequency (in dB)}
+\label{fig:gain_freq}
 \end{figure}
 
-
-One can see that both voltages evolve sinusoidally over time, though this is more notorious for $v(mid1)$, since it has a larger amplitude. %They have the same frequency and are in phase, as expected.
-
-From $v(mid1)$ to $v(out1)$ there is a clear reduction in the signal's amplitude ($v(out1)$ has such a small amplitude that it appears to be constant over time) as well as in its DC component ($v(out1)$ is centered around the $12 \ V$ we aimed at), which is a consequence of the voltage regulator's function.
-The fact that $v(mid1)$ is so much higher than $v(out1)$ has to do with the fact that the resistor between them has a high resistance (with the intention of reducing the ripple at the output).
-
-
-
-
-\subsection{Output AC component and DC deviation}
-Finally, there is the plot of $v_o - 12$, where $v_o$ is the circuit's output voltage.
-
-\begin{figure}[H] \centering
-\includegraphics[width=0.6\linewidth]{../sim/trans_centered_output.pdf}
-\caption{Difference (in mV) between the Output Voltage and the desired 12V}
-\label{fig:ngspice_centered_output}
-\end{figure}
-
-In this graphic we can verify that the output voltage ripple is indeed quite small (the units are in $mV$) and that it oscillates similarly to the previous voltages.
-
-
-
-
-\subsection{Merit figure calculation}
-Given all the aforementioned points, it is now possible to calculate the merit figure, which is in the table below.
-%develop further??
+This type of analysis allows us to determine the maximum gain of the circuit, both cutoff frequencies (frequencies at which the gain becomes 3dB lower than the maximum) and the maximum gain bandwidth. These values, together with the cost of the circuit, can also be used to calculate the merit figure. In order to perform these measurements, the ngspice functions ``MAX'' and ``WHEN'' were used.
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{|c|c|c|}
-    \hline    
-    {\bf Name} & {\bf ngspice Values} & {\bf Theoretically Predicted Values} \\ \hline
-    \input{merit_tab.tex}
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{../sim/op_tab.tex}
   \end{tabular}
-  \caption{Values determined as part of the merit calculation procedure.}
-  \label{tab:merit}
+  \caption{Values obtained}
+  \label{tab:resultssim}
 \end{table}
+
+A separate analysis was run, with a different script, in order to determine the circuit's output impedance. In this script, the input voltage source was set to have 0 amplitude and the load at the end of the circuit was replace with a 1V amplitude test voltage source. The output impedance obtained was $Z_o = 8.727404 \Omega$.
+
+
+
+
 
