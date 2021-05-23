@@ -31,7 +31,7 @@ Through mesh analysis, and keeping in mind the relations between transistor curr
     \hline
       \input{resultsDC1_tab.tex}
   \end{tabular}
-  \caption{Values obtained}
+  \caption{Values obtained in OP analysis}
   \label{tab:resultsDC1}
 \end{table}
 
@@ -46,7 +46,7 @@ Knowing that $V_{I2}=V_{O1}$ (the input of the output stage is the output of the
     \hline
       \input{resultsDC2_tab.tex}
   \end{tabular}
-  \caption{Values obtained}
+  \caption{Values obtained in OP analysis}
   \label{tab:resultsDC2}
 \end{table}
 
@@ -76,7 +76,7 @@ Z_X = r_{o1} \times (R_B+r_{\pi 1}) \times \frac{R_{E1}}{R_B+r_{\pi 1}+R_{E1}} \
 
 Where we used the gain expression with a bypass capacitor, which assumes that $R_{E1} = 0$, since for sufficiently high frequencies (namely the ones at which the gain is maximum) the capacitor behaves approximately like a short circuit, which is equivalent to $R_{E1}$ being a short-circuit since they are in parallel. Also note that $g_{m1}=\frac{I_{C1}}{V_T}$, $r_{\pi 1}=\frac{\beta_{FN}}{g_{m1}}$, $r_{o1}=\frac{V_A}{I_{C1}}$.
 
-Furthermore, since $R_{B1}, R_{B2} \ll r_{\pi1}$ and $r_{o1} \ll R_C$, we have that the equivalent resistance for the parallel of resistors $R_{B1} || R_{B2} || r_{\pi1}$ and $r_{o1} || R_C$ are approximately equal to $r_{\pi1}$ and $R_C$, respectively. Therefore, the gain expression we actually used for the gain stage is:
+Furthermore, since $R_{B1}, R_{B2} \gg r_{\pi1}$ and $r_{o1} \gg R_C$, we have that the equivalent resistance for the parallel of resistors $R_{B1} || R_{B2} || r_{\pi1}$ and $r_{o1} || R_C$ are approximately equal to $r_{\pi1}$ and $R_C$, respectively. Therefore, the gain expression we actually used for the gain stage is:
 
 
 $Gain_1 = -g_{m1} \times R_{C1} \times \frac{r_{\pi1}}{R_S+r_{\pi1}}$
@@ -88,7 +88,7 @@ $Gain_1 = -g_{m1} \times R_{C1} \times \frac{r_{\pi1}}{R_S+r_{\pi1}}$
     \hline
       \input{resultsAC1_tab.tex}
   \end{tabular}
-  \caption{Values obtained}
+  \caption{Values obtained for gain, input and output impedances of gain stage}
   \label{tab:resultsAC1}
 \end{table}
 
@@ -111,7 +111,7 @@ Where $g_{m2} = \frac{I_{C2}}{V_T}$, $g_{o2} = \frac{I_{C2}}{V_A}$, $g_{\pi 2} =
     \hline
       \input{resultsAC2_tab.tex}
   \end{tabular}
-  \caption{Values obtained}
+  \caption{Values obtained for gain, input and output impedances of output stage}
   \label{tab:resultsAC2}
 \end{table}
 
@@ -127,7 +127,7 @@ The gain stage output impedance and the output stage input impedance are both hi
 \subsection{Total gain, input and output impedances}
 
 The results for the total gain, and input and ouput impedances of the circuit are presented in the table below. The total gain of the circuit is approximately given by the product of the two stage gains, which is the value presented in the table. The input impedance of the circuit corresponds to the input impedance of the first stage and the output impedance of the whole circuit approximately corresponds to the output impedance of the output stage.
-This last approximation can be done because the output impedance of the whole circuit can be calculated in the same way it was calculated just for the output stage, but with a Thevenin equivalent of the gain stage as its input (the Thevenin equivalent is done with the assumption that the capacitors are working as short-circuits). For the calculations of the output impedance, all this does, effectively, is add an extra resistance in series with $r_{\pi2}$, and since the output impedance of the output stage is given by a parallel of resistances where $r_{\pi2}$ is already clearly not the smallest resistance, increasing that term barely changes the result.
+This last approximation can be done because the output impedance of the whole circuit can be calculated in the same way it was calculated just for the output stage, but with a Thévenin equivalent of the gain stage as its input (the Thévenin equivalent is done with the assumption that the capacitors are working as short-circuits). For the calculations of the output impedance, all this does, effectively, is add an extra resistance in series with $r_{\pi2}$, and since the output impedance of the output stage is given by a parallel of resistances where $r_{\pi2}$ is already clearly not the smallest resistance, increasing that term barely changes the result.
 
 \begin{table}[H]
   \centering
@@ -135,7 +135,7 @@ This last approximation can be done because the output impedance of the whole ci
     \hline
       \input{final_tab.tex}
   \end{tabular}
-  \caption{Results obtained for the circuit as a whole}
+  \caption{Values obtained for gain, input and output impedances of the entire circuit}
   \label{tab:resultsAC2}
 \end{table}
 
