@@ -54,7 +54,8 @@ RE1=0
 							       
 AV1= RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
 AV1simple = gm1*RC1/(1+gm1*RE1)
-
+							       
+AV1simple2 = gm1*RC1/(1+gm1*RE1) * rpi1/ (RS + rpi1)
 							       
 
 
@@ -90,10 +91,11 @@ AV1simplewdb = mag2db(abs(AV1simplew))
 AV1db = mag2db(abs(AV1))
 gain1db = mag2db(abs(gain1))
 AV1simpledb= mag2db(abs(AV1simple))
+AV1simple2db= mag2db(abs(AV1simple2))
   
 
 vmag_plot1 = figure ();
-semilogx (freq1, abs(gain1db), "r");
+semilogx (freq1, abs(AV1simple2db), "r");
 
 xlabel ("f[Hz]");
 ylabel ("Vo(f)/Vi(f)[dB]"); 
@@ -144,7 +146,19 @@ legenda= legend("Frequency response");
 print (vmag_plot2, "vmag_plot2.eps", "-depsc");
 
 
+final_gain= AV1simple2*AV2
+final_gaindb= mag2db(abs(final_gain))
 
+final_impedance = ZO1*ZO2  
+	      
+		     
+vmag_plot3 = figure ();
+semilogx (freq1, final_gaindb, "g");
+
+xlabel ("f[Hz]");
+ylabel ("Vo(f)/Vi(f)[dB]"); 
+legenda= legend("Frequency response"); 
+print (vmag_plot3, "vmag_plot3.eps", "-depsc");
 
 
 
