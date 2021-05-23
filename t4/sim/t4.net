@@ -26,7 +26,7 @@ Cb emit 0 0.5m
 
 * output stage
 Q2 0 coll emit2 BC557A
-Rout emit2 vcc 1k
+Rout emit2 vcc 300
 
 * output coupling capacitor
 Co emit2 out 0.5m
@@ -98,7 +98,7 @@ meas ac gaindb MAX vdb(out)
 echo "op_TAB"
 print gaindb
 let cutoff_db=gaindb-3
-let cost=(1+0.5+0.5)*1000+(80+20+1+0.080+1)*1+2*0.1
+let cost=(1+0.5+0.5)*1000+(80+20+1+0.080+0.3)*1+2*0.1
 meas ac lowfreq WHEN vdb(out)=cutoff_db rise=1
 meas ac highfreq WHEN vdb(out)=cutoff_db fall=1
 

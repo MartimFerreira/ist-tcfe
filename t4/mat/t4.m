@@ -113,7 +113,7 @@ print (vmag_plot1, "vmag_plot1.eps", "-depsc");
 % values
 BFP = 227.3
 VAFP = 37.2
-RE2 = 1000
+RE2 = 300
 VEBON = 0.7
 
 VI2 = VO1 % shouldn't it be VI2 = VO-VEBON ?

@@ -26,7 +26,7 @@ Cb emit 0 0.5m
 
 * output stage
 Q2 0 coll emit2 BC557A
-Rout emit2 vcc 1k
+Rout emit2 vcc 500
 
 * output coupling capacitor
 Co emit2 out 0.5m
