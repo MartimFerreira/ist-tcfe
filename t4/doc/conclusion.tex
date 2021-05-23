@@ -5,20 +5,20 @@
 Overall, the objectives defined for this laboratory were successfully met.
 
 
-We were able to improve the circuit managing the coupling capacitor to extend the bandwidth ,managing the bypass capacitor to reduce the lost of gain on the resistor RE and improve the gain using the resistor RC.
+We were able to improve the circuit managing the coupling capacitor to extend the bandwidth, managing the bypass capacitor to reduce the loss of gain on the resistor R_E and improve the gain using resistor R_C.
 
 
 
-Our goal was to achieve an equilibrium between the quality of the output signal , so it doesn't have the visible distortion of the input sines waves , and the cost of all the components. We obtained a merit of 118.6634
+Our goal was to achieve an equilibrium between the quality of the output signal , so it doesn't have visible distortion of the input sine waves, the gain of the ciurcuit, its cutoff frequencies and the cost of all components. We obtained a merit of 1186.634.
 
 
 
-The simulation analysis , using ngspice, gave us more precise results than the theoretical analysis using Octave because ngspice used more complex models. For example, we considered the cutoff frequencies fL=0 and fH= infinity on the theoretical analysis. This gave us a constant frequency response of the gain when actually this gain only corresponds to a limited interval of frequencies. 
+The simulation analysis, using ngspice, gave us more precise results than the theoretical analysis using Octave because ngspice used more complex models. For example, we considered the cutoff frequencies $f_{low}=0$ and $f_{high}=\infty$ on the theoretical analysis. This gave us a constant frequency response for the gain when actually this gain is only obtained for a limited interval of frequencies. 
 
 
-Comparing the results obtained in the simulation and theoretical analysis, the maximum gain obtained on ngspice was , the gain obtained on Octave was 50.220. This diference occurs due to the less sensible model used on Octave which results  in an overrated value of gain. 
+Comparing the results obtained in the simulation and theoretical analysis, the maximum gain obtained on ngspice was , while the gain obtained on Octave was 50.220. This diference occurs due to the less sensitive model used on Octave which results  in an overrated value of gain. 
 
 
-The input impedance calculated by ngspice was 498.0704 $\Omega$, on the other hand, the theoretical value  given by Octave was 31979.45 $\Omega$.These values differ by an order of magnitude. The output impedances calculated respectively by ngspice and Octave were 7.932271 and 0.80367 $\Omega$. Both these values are compatible with a 8 $\Omega$ load. 
+The input impedance calculated by ngspice was 498.0704 $\Omega$, on the other hand, the theoretical value  given by Octave was 31979.45 $\Omega$.These values differ by two orders of magnitude. The output impedances calculated respectively by ngspice and Octave were 7.932271 and 0.80367 $\Omega$. Both these values are compatible with a 8 $\Omega$ load. 
 
 
