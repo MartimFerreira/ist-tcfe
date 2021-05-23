@@ -224,7 +224,7 @@ resultsAC1_tab = fopen("resultsAC1_tab.tex", "w");
 
 %fprintf(resultsAC1_tab, "$Gain_1\\;(without \ C_E)$ & %.6e\\\\ \\hline\n", AV1simplew);
 %fprintf(resultsAC1_tab, "$Gain_1\\;(with \ C_E)$ & %.6e\\\\ \\hline\n", AV1simple2);
-fprintf(resultsAC1_tab, "$Gain_1\\$ & %.6e\\\\ \\hline\n", AV1simple2);
+fprintf(resultsAC1_tab, "$Gain_1$ & %.6e\\\\ \\hline\n", AV1simple2);
 fprintf(resultsAC1_tab, "$Z_{I1}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", ZI1);
 fprintf(resultsAC1_tab, "$Z_{O1}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", ZO1);
 
