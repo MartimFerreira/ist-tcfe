@@ -213,7 +213,7 @@ resultsDC2_tab = fopen("resultsDC2_tab.tex", "w");
 fprintf(resultsDC2_tab, "$V_{I2}\\;(V)$ & %.6e\\\\ \\hline\n", VI2);
 fprintf(resultsDC2_tab, "$I_{E2}\\;(A)$ & %.6e\\\\ \\hline\n", IE2);
 fprintf(resultsDC2_tab, "$I_{C2}\\;(A)$ & %.6e\\\\ \\hline\n", IC2);
-fprintf(resultsDC2_tab, "$V_{O2}\\(V)$ & %.6e\\\\ \\hline\n", VO2);
+fprintf(resultsDC2_tab, "$V_{O2}\\;(V)$ & %.6e\\\\ \\hline\n", VO2);
 
 fclose(resultsDC2_tab);
 
