@@ -1,3 +1,5 @@
+pkg load control
+
 % ---- GAIN STAGE ----
 
 % values
@@ -39,8 +41,8 @@ VCE=VO1-VE1                       %diferenca entre tensao do coletor e emissor
 
 
 %gain without CE - bypass capacitor							       
-AV1 = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
-AV1simple = gm1*RC1/(1+gm1*RE1)
+AV1w = RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
+AV1simplew = gm1*RC1/(1+gm1*RE1)
 
 
 
@@ -71,22 +73,31 @@ ZO1 = 1/(1/ZX+1/RC1)
 
 
 k1 = 80
-freq1=logspace(1,8, k);
+freq1=logspace(1,8, k1);
 
 
-t1=1
-w1=2*pi*freq1
-VS1=sin(w1*t1)							       
+%t1=1
+%w1=2*pi*freq1
+VS1=0.01							       
 	   
 gain1 = - gm1 * (RC1*ro1)/(RC1+ro1) * ((RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) / (RS+(RB1*RB2+rpi1*RB2+rpi1*RB1)/(rpi1*RB1*RB2)) * VS1
 
 
+%%%%%%%%%%%%%%%   MAG TO DB   %%%%%%%%%%%%%%%%%%%%%%%%
+AV1wdb = mag2db(abs(AV1w))
+AV1simplewdb = mag2db(abs(AV1simplew))
+  
+AV1db = mag2db(abs(AV1))
+gain1db = mag2db(abs(gain1))
+AV1simpledb= mag2db(abs(AV1simple))
+  
+
 vmag_plot1 = figure ();
-semilogx (freq1, gain1, "r");
+semilogx (freq1, abs(gain1db), "r");
 
 xlabel ("f[Hz]");
 ylabel ("Vo(f)/Vi(f)[dB]"); 
-legenda= legend("Frequency response Gain Stage"); 
+legenda= legend("Frequency response"); 
 print (vmag_plot1, "vmag_plot1.eps", "-depsc");
 
 
@@ -113,14 +124,24 @@ gpi2 = gm2/BFP
 ge2 = 1/RE2
 
 
-AV2 = gm2/(gm2+gpi2+go2+ge2) 
+AV2 = gm2/(gm2+gpi2+go2+ge2)
+
+
 
 
 
 ZI2 = (gm2+gpi2+go2+ge2)/gpi2/(gpi2+go2+ge2)
 ZO2 = 1/(gm2+gpi2+go2+ge2)
 
+AV22= mag2db(abs(AV2))
 
+vmag_plot2 = figure ();
+semilogx (freq1, AV2, "b");
+
+xlabel ("f[Hz]");
+ylabel ("Vo(f)/Vi(f)[dB]"); 
+legenda= legend("Frequency response"); 
+print (vmag_plot2, "vmag_plot2.eps", "-depsc");
 
 
 
