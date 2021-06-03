@@ -1,0 +1,164 @@
+\section{Theoretical Analysis}
+\label{sec:analysis}
+
+
+% MUITO IMPORTANTE: LER OS COMENTÁRIOS
+
+
+\subsection{DC analysis}
+Using the theoretical DC model, and keeping in mind that the input voltage has a DC component of $0V$ and that capacitors behave like open circuits for very low frequencies, the operating point was computed.
+
+
+\subsubsection{Gain stage}
+Replacing resistors $R_{B1}$ and $R_{B2}$, which are in parallel, with an equivalent resistor $R_{B}$, we have
+\begin{equation}
+R_B = \frac{R_{B1} R_{B2}}{R_{B1}+R_{B2}}
+\end{equation}
+
+Looking at the circuit as a voltage divider, we have
+\begin{equation}
+V_{eq} = \frac{R_{B2}}{R_{B1}+R_{B2}} V_{cc}
+\end{equation}
+
+
+Through mesh analysis, and keeping in mind the relations between transistor currents, it is possible to determine $R_B$, $V_{eq}$, $I_{B1}$, $I_{C1}$, $I_{E1}$, $V_{O1}$, $V_{E1}$ and $V_{CE1}$ (all the currents and voltages in the circuit), where $I_{B1}$ and $I_{C1}$ are the current flowing into the base and collector of the first transistor, respectively, and $I_{E1}$ is the current flowing out of the emitter of the first transistor.
+
+% apresentar estes valores, assim como os que já são conhecidos (R_{B1}, R_{B2}, V_{cc}, V_{BEON}, \beta_F e resistências)
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{resultsDC1_tab.tex}
+  \end{tabular}
+  \caption{Values obtained in OP analysis}
+  \label{tab:resultsDC1}
+\end{table}
+
+
+
+\subsubsection{Output stage}
+Knowing that $V_{I2}=V_{O1}$ (the input of the output stage is the output of the gain stage), one can apply mesh analysis to the output stage and calculate $I_{E2}$, $I_{C2}$, $V_{O2}$ and $V_{I2}$.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{resultsDC2_tab.tex}
+  \end{tabular}
+  \caption{Values obtained in OP analysis}
+  \label{tab:resultsDC2}
+\end{table}
+
+% comparar com o Ngspice -----> FAZER!
+
+%----------------------------------------------------------------
+
+
+
+\subsection{AC analysis}
+The gain, input and output impedances were computed for each of the stages separately.
+
+\subsubsection{Gain stage}
+The gain, input impedance and output impedance of the gain stage are given by the following equations derived in the theoretical classes:
+\begin{equation}
+\begin{cases}
+%Gain_1 = R_{C1} \times \frac{R_{E1}-g_{m1} \times r_{\pi 1} \times r_{o1}}{(r_{o1}+R_{C1}+R_{E1})\times(R_B+r_{\pi 1}+R_{E1})+g_{m1} \times R_{E1} \times r_{o1} \times r_{\pi 1} - R_{E1}^2} \\
+%AV1= RC1*(RE1-gm1*rpi1*ro1)/((ro1+RC1+RE1)*(RB+rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)
+%AV1simple = gm1*RC1/(1+gm1*RE1)						       
+%AV1simple2 = gm1*RC1/(1+gm1*RE1) * rpi1/ (RS + rpi1)
+Gain_1 = -g_{m1} \times (R_{C1} || R_{o}) \times \frac{r_{\pi1} || R_{B1} || R_{B2}}{R_S+r_{\pi1} || R_{B1} || R_{B2}}\\
+Z_{I1} = \frac{(r_{o1}+R_{C1}+R_{E1}) \times (R_B+r_{\pi 1}+R_{E1}) + g_{m1} \times R_{E1} \times r_{o1} \times r_{\pi 1} - R_{E1}^2}{r_{o1} + R_{C1} + R_{E1}} \\
+Z_{O1} = \frac{1}{\frac{1}{Z_X}+\frac{1}{R_{C1}}} \\
+Z_X = r_{o1} \times (R_B+r_{\pi 1}) \times \frac{R_{E1}}{R_B+r_{\pi 1}+R_{E1}} \times (\frac{1}{r_{o1}}+\frac{1}{r_{\pi 1}+R_B}+\frac{1}{R_{E1}}+  \frac{g_{m1} r_{\pi 1}}{r_{\pi 1}+R_B}) \\
+\end{cases}
+\end{equation}
+
+Where we used the gain expression with a bypass capacitor, which assumes that $R_{E1} = 0$, since for sufficiently high frequencies (namely the ones at which the gain is maximum) the capacitor behaves approximately like a short circuit, which is equivalent to $R_{E1}$ being a short-circuit since they are in parallel. Also note that $g_{m1}=\frac{I_{C1}}{V_T}$, $r_{\pi 1}=\frac{\beta_{FN}}{g_{m1}}$, $r_{o1}=\frac{V_A}{I_{C1}}$.
+
+Furthermore, since $R_{B1}, R_{B2} \gg r_{\pi1}$ and $r_{o1} \gg R_C$, we have that the equivalent resistance for the parallel of resistors $R_{B1} || R_{B2} || r_{\pi1}$ and $r_{o1} || R_C$ are approximately equal to $r_{\pi1}$ and $R_C$, respectively. Therefore, the gain expression we actually used for the gain stage is:
+
+
+$Gain_1 = -g_{m1} \times R_{C1} \times \frac{r_{\pi1}}{R_S+r_{\pi1}}$
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{resultsAC1_tab.tex}
+  \end{tabular}
+  \caption{Values obtained for gain, input and output impedances of gain stage}
+  \label{tab:resultsAC1}
+\end{table}
+
+
+\subsubsection{Output stage}
+As for the output stage, those same quantities are equal to
+\begin{equation}
+\begin{cases}
+Gain_2 = \frac{g_{m2}}{g_{m2}+g_{\pi 2}+g_{o2}+g_{e2}} \\ %& \mbox{$(1)$}\\
+Z_{I2}= \frac{g_{m2}+g_{\pi 2}+g_{o2}+g_{e2}}{g_{\pi 2} \times (g_{\pi 2}+g_{o2}+g_{e2})} \\ %& \mbox{$(2)$}\\
+Z_{O2} = \frac{1}{g_{m2}+g_{\pi 2}+g_{o2}+g_{e2}} \\ %& \mbox{$(3)$}\\
+\end{cases}
+\end{equation}
+
+Where $g_{m2} = \frac{I_{C2}}{V_T}$, $g_{o2} = \frac{I_{C2}}{V_A}$, $g_{\pi 2} = \frac{g_{m2}}{\beta_{FP}}$ and $g_{e2} = \frac{1}{R_{E2}}$.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{resultsAC2_tab.tex}
+  \end{tabular}
+  \caption{Values obtained for gain, input and output impedances of output stage}
+  \label{tab:resultsAC2}
+\end{table}
+
+% explain why they can be connected without signal loss -----> EXPLAIN!
+
+
+The gain stage output impedance and the output stage input impedance are both high, though the latter is an order of magnitude greater than the former, which prevents there being a loss of voltage and therefore allows both stages to be connected without any problem.
+% rewatch lecture?
+
+%----------------------------------------------------------------
+
+
+\subsection{Total gain, input and output impedances}
+
+The results for the total gain, and input and ouput impedances of the circuit are presented in the table below. The total gain of the circuit is approximately given by the product of the two stage gains, which is the value presented in the table. The input impedance of the circuit corresponds to the input impedance of the first stage and the output impedance of the whole circuit approximately corresponds to the output impedance of the output stage.
+This last approximation can be done because the output impedance of the whole circuit can be calculated in the same way it was calculated just for the output stage, but with a Thévenin equivalent of the gain stage as its input (the Thévenin equivalent is done with the assumption that the capacitors are working as short-circuits). For the calculations of the output impedance, all this does, effectively, is add an extra resistance in series with $r_{\pi2}$, and since the output impedance of the output stage is given by a parallel of resistances where $r_{\pi2}$ is already clearly not the smallest resistance, increasing that term barely changes the result.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+      \input{final_tab.tex}
+  \end{tabular}
+  \caption{Values obtained for gain, input and output impedances of the entire circuit}
+  \label{tab:resultsAC2}
+\end{table}
+
+%----------------------------------------------------------------
+
+\subsection{Frequency response}
+Using the incremental circuit and solving the circuit for frequencies ranging from $10 Hz$ to $100 MHz$, the following graph was obtained. It was assumed that the frequency was such that the capacitors always behaved as short-circuits, meaning the lower and higher cuttoff frequencies are, respectively, $f_{low} = 0 \;Hz$ and $f_{high} = \infty \;Hz$. Therefore, the graph is constant and shows the gain expected in the bandwidth of the amplifier.
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.7\linewidth]{vmag_plot3.eps}
+\caption{Frequency response $\frac{V_o(f)}{V_i(f)}$}
+\label{fig:freq_response}
+\end{figure}
+
+
+% ainda falta.... bandwidth and cut off frequencies (com base no gráfico? como na simulação)  + voltage gain + cost -----> FAZER!
+
+
+
+
+
+%\begin{figure}[H] \centering
+%\includegraphics[width=0.6\linewidth]{v_out_plot.eps}
+%\caption{Output voltage for Envelope Detector (v(mid1), in red) and Voltage Regulator (v(out1), in blue)}
+%\label{fig:octave_centered_output}
+%\end{figure}

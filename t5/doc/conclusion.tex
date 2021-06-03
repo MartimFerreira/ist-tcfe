@@ -1,0 +1,15 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+
+Overall, the objectives defined for this laboratory were successfully met.
+
+We were able to improve the circuit managing the coupling capacitor to extend the bandwidth, managing the bypass capacitor to reduce the loss of gain on the resistor $R_E$ and improve the gain using resistor $R_C$.
+
+Our goal was to achieve an equilibrium between the quality of the output signal , so it doesn't have visible distortion of the input sine waves, the gain of the circuit, its cutoff frequencies and the cost of all components. We obtained a merit of 1186.634.
+
+The simulation analysis, using ngspice, gave us more precise results than the theoretical analysis using Octave, as was to be expected. This is because not only the ngspice uses more complex transistor models but also due to the approximations that were made in the theoretical analysis. For example, we considered that the capacitors behaved as short-circuits, meaning we had cutoff frequencies $f_{low}=0$ and $f_{high}= \infty$. This gave us a constant frequency response for the gain when actually this gain is only obtained in a limited interval of frequencies.  In several calculations we also approximated parallels of resistances to just the smallest of them all, which also slightly changes the results.
+
+Comparing the results obtained in the simulation and theoretical analysis, the maximum gain obtained on ngspice was about $20\%$ lower than the one obtained on Octave. The input impedance calculated by ngspice, meanwhile, was two orders of magnitude lower than that calculated in Octave, while the output impedance calculated in ngspice was approximately 10 times larger than the one calculated in octave. Both values were still compatible with an 8 $\Omega$ load, though the value obtained in ngspice is considerably less desireable since it was so close to $8 \Omega$. These very significant differences might be due, again, to the approximations made (that the capacitors always behave like short-circuits, for example) as well as due to the theoretical transistor model being significantly less detailed than the ngspice one, but these explanations don't seem fully satisfactory.
+
+
