@@ -10,19 +10,15 @@
 % sections
 
 % state the learning objective 
-With this laboratory assignment we aimed to build an audio amplifier, while maximizing its gain and bandwidth and minimizing both its cost and the value of the lower cutoff frequency.
+In this laboratory assignment it was our aim to implement a bandpass filter with specific characteristics: a central frequency of 1kHz and a gain at central frequency of 40dB. In order to do that, we had available one 741 OPAMP and a maximum of three of each of the following components: 1k$\Omega$, 10k$\Omega$ and 100k$\Omega$ resistors, and 220nF and 1$\mu$F capacitors. Our objective was also to have the lowest cost and gain and central frequency deviations.
 
-The input voltage, $V_s$, is sinusoidal, has an amplitude of $10 mV$ and is in series with resistor $R_s=100 \Omega$, meant to simulate the internal resistance of a voltage source. Then there are the gain and output stages, whose architecture was based on lectures 16 and, mainly, 17. Finally, there is the $8 \Omega$ speaker. In this circuit, the supply voltage source is $V_{cc}=12 V$.
-
-In the gain stage a degenerated common emitter amplifier and a bypass capacitor were used.  It was necessary to have some form of base biasing for the transistor to operate within the Forward Active Region, so the small base bias voltage and the two resistances were added. A capacitor was also used to block the DC component of the input voltage. In this part there is an NPN transistor.
-
-In the output stage we used a common collector amplifier with a PNP transistor and a coupling capacitor, which will then feed the $8 \Omega$ load.
+The circuit used was the one in Figure \ref{fig:circuit}.
 
 % modelos usados?
 % descrever mais o circuito?
 % falar dos componentes e dos valores das grandezas que os caracterizam
 
-
+% PÔR O CIRCUITO
 \begin{figure}[H] \centering
 \includegraphics[width=1.0\linewidth]{rc.pdf}
 \caption{The circuit in analysis}
@@ -50,4 +46,7 @@ In the output stage we used a common collector amplifier with a PNP transistor a
   \label{tab:resistance1}
 \end{table}
 
-In sections~\ref{sec:analysis}, ~\ref{sec:simulation} and ~\ref{sec:conclusion}, there are, respectively, the theoretical analysis of the circuit in question (made with the help of Octave), the simulation of that same circuit (in which ngspice was used) and the conclusion of the report.
+The ~\ref{sec:analysis} and ~\ref{sec:simulation} sections have the theoretical analysis and the ngspice simulation of the circuit. In ~\ref{sec:conclusion} there is the conclusion of the report.
+
+
+~\ref{sec:conclusion}
