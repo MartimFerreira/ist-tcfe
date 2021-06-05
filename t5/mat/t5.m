@@ -16,7 +16,7 @@ Zo = 0;
 % Zi = Vi/Ii quando Zl = inf
 % Zo = Vo/Io quando Vi = 0
 
-
+freq=logspace(1,8, k1);
 
 
 % sites que acho que podem dar jeito
