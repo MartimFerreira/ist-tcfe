@@ -1,48 +1,79 @@
-C1=220e-9;
-C2=220e-9;
-R1=1e3;
+
+
+%Componentes
+
+R1=10e3;
 R2=1e3;
 R3=100e3;
 R4=1e3;
+R5=100e3; 
+C1=220e-9;
+C2=220e-9;
+C3=220e-9;
+
+%modelo nao ideal
+
+Vos=5e-3
+Ios=7.975e-8
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Exercicio 1 
 
 f=1000;
 
 w=2*pi*f;
 
-Zc1=1/(j*w*C1);
-Zc2=1/(j*w*C2);
+%Impedancias condensadores
+ZC1=1/(j*w*C1);
+ZC2=1/(j*w*C2);
+ZC3=1/(j*w*C3);
 
-Zin=abs(Zc1+R1)
-Zout=abs(1/(1/R2+1/Zc2))
 
-vp=R1/(R1+Zc1);
-amp=(1+R3/R4)*vp;
-gain=abs(Zc2/(Zc2+R2)*amp)
+%Impedancia in & out 
+Zin=abs(ZC1+R1)
+
+
+Zout=abs(ZC2)
+
+%low pass filter
+
+Vi=1; 
+Vl=R1/(R1+ZC1)*Vi;
+wl=1/(R1*C1);       %low cut off frequency
+
+
+
+%Amplification
+Va=(1+R3/R4)*Vl;
+
+
+
+%High pass filter
+Vh= Va;
+wh=1/(R2*C2);      %high cut off frequency
+
+
+gain=abs(Vh)
+
+
 gain_db=20*log10(gain)
 
 
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Exercicio 2
 
 t=1:0.1:8;
-
-
-
 w=2*pi*power(10,t);
 
-Zc1=1./(j*w*C1);
-Zc2=1./(j*w*C2);
+ZC1=1./(j*w*C1);
+ZC2=1./(j*w*C2);
 
-vp=R1./(R1+Zc1);
-amp=(1+R3/R4).*vp;
-fgain=abs(Zc2./(Zc2+R2).*amp);
+Vl=R1./(R1+ZC1);
+A=(1+R3/R4).*Vl;
+Vh= A;
+fgain=abs(Vh);
 fgain_db=20*log10(fgain);
 
-[max_gain,index_freq_central]=max(fgain_db)
-
-
-
-
+max_gain=max(fgain_db)
 
 
 freq_graph = figure();
@@ -51,25 +82,4 @@ legend("Gain");
 xlabel ("log_{10}(f) [Hz]");
 ylabel ("dB");
 print (freq_graph, "graph.eps", "-depsc");
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-  
-% para o circuito que o professor pôs inicialmente no ngspice
-%Gain = -R2/R1;
-%Zi = R1;
-%Zo = 0;
-% queremos ter um Gain e Zi elevados e uma Zo baixa
-
-
-% para o circuito que eu tinha visto
-% Gain = 1 + R3/R4
-% Zi = Vi/Ii quando Zl = inf
-% Zo = Vo/Io quando Vi = 0
-
-% sites que acho que podem dar jeito
-%https://www.electronics-tutorials.ws/filter/filter_7.html
-%http://www.learningaboutelectronics.com/Articles/Active-op-amp-bandpass-filter-circuit.php
-
 
