@@ -51,7 +51,7 @@
 
 Vcc vcc 0 5.0
 Vee vee 0 -5.0
-Vin in 0 0 ac 1.0 sin(0 10m 1k)
+Vin in 0 0 ac 0.0 sin(0 10m 1k)
 
 X1 non_in inv_in vcc vee out uA741
 
@@ -69,7 +69,7 @@ R5 mid 0 100000
 
 
 * load
-*RL out 0 8
+Vload out 0 0 ac 1.0 sin(0 10m 1k)
 
 .op
 .end
@@ -80,40 +80,11 @@ print all
 
 * time analysis
 tran 1e-5 1e-2
-plot v(out)
-hardcopy vo1.ps vdb(out)
-
 
 * frequency analysis
 ac dec 1000 10 100MEG
-plot vdb(out)
-plot vp(out)
-hardcopy vo1f.ps vdb(out)
 
-meas ac maxfreq MAX_AT vdb(out)
-meas ac maxgain MAX vdb(out)
-let cutoff_db=maxgain-3
-
-let ampop_cost = 2*0.1 + (8.661+30)*10^(-6)*1 + (100+5.305*2+1.836*2+13190+0.050+0.1+18.16)*1 + 5*0.1
-let cost=(1+10+100*2)*1+(0.220*3)*1 + ampop_cost
-
-meas ac lowfreq WHEN vdb(out)=cutoff_db rise=1
-meas ac highfreq WHEN vdb(out)=cutoff_db fall=1
-let centralfreq = sqrt(lowfreq*highfreq)
-print centralfreq
-meas ac centralgain FIND vm(out) WHEN frequency=1000
-
-let freqdev = abs(centralfreq - 1000)
-let gaindev = abs(100-centralgain)
-let merit = 1/(cost* (freqdev + gaindev + 10^(-6)))
-
-*input impedance in kohm
-print v(in)[4000]/vin#branch[4000]/-1000
-print freqdev
-print gaindev
-print ampop_cost
-print cost
-print merit
+print v(out)[4000]/vload#branch[4000]/(-1000)
 
 *need a different setup to measure output impedance
 

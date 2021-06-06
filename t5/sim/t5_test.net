@@ -53,20 +53,10 @@ Vcc vcc 0 5.0
 Vee vee 0 -5.0
 Vin in 0 0 ac 1.0 sin(0 10m 1k)
 
-X1 non_in inv_in vcc vee out uA741
+X1 non_in 0 vcc vee out uA741
 
-C1 in non_in 220n
-R1 non_in 0 10000
-
-R4 0 inv_in 1000
-
-R3 inv_in out 100000
-*R2 amp_out out 0
-
-C2 out mid 220n
-C3 mid 0 220n
-R5 mid 0 100000
-
+R1 non_in in2 1
+V2 in2 in 0
 
 * load
 *RL out 0 8
@@ -88,7 +78,7 @@ hardcopy vo1.ps vdb(out)
 ac dec 1000 10 100MEG
 plot vdb(out)
 plot vp(out)
-hardcopy vo1f.ps vdb(out)
+hardcopy vo1f.ps vm(out)
 
 meas ac maxfreq MAX_AT vdb(out)
 meas ac maxgain MAX vdb(out)
@@ -105,7 +95,7 @@ meas ac centralgain FIND vm(out) WHEN frequency=1000
 
 let freqdev = abs(centralfreq - 1000)
 let gaindev = abs(100-centralgain)
-let merit = 1/(cost* (freqdev + gaindev + 10^(-6)))
+let merit = 1/(freqdev * gaindev * cost + 10^(-6))
 
 *input impedance in kohm
 print v(in)[4000]/vin#branch[4000]/-1000
