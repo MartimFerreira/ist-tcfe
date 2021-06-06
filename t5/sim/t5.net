@@ -60,12 +60,14 @@ R1 non_in 0 10000
 
 R4 0 inv_in 1000
 
-R3 inv_in out 100000
-*R2 amp_out out 0
+R3 inv_in out 100k
+R2 amp_out out 1k
+R6 amp_out out 1k
+
 
 C2 out mid 220n
 C3 mid 0 220n
-R5 mid 0 100000
+R5 mid 0 100k
 
 
 * load
