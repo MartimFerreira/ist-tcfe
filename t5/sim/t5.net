@@ -63,6 +63,7 @@ R6 lpf2 0 1000
 
 R4 0 inv_in 1000
 
+
 R3 inv_in amp_out 100000
 R2 amp_out out 100000
 C3 amp_out out 0.001m
@@ -71,7 +72,6 @@ C5 amp_out out 220n
 
 C2 out mid 0.001m
 R5 mid 0 100000
-
 
 
 * load
