@@ -10,6 +10,6 @@ Overall, the results obtained in the analysis and simulation parts were quite cl
 
 The frequency response graphs for the gain of the circuit were very similar in theoretical and simulation analysis, while the phase graphs bear some crucial but expected differences: first, the simulation phase graph has a discontinuity due to ngspice keeping the phase in the $[-180; 180]$ degrees range, meaning if this wasn't the case the phase would stabilize in $-270$ degrees; second, is, precisely, the fact that the octave graph does not stabilize at $-270$ degrees but at $-90$, due to the fact that the ngspice OPAMP model has two more poles than the ideal one.
 
-Lastly, the input and output impedances computed yielded very similar values. The output impedance, is of approximately $450 \Omega$, obviously higher than the ideal (if impossible) $0 \Omega$ - this was a compromise in order to improve the circuit in other areas. Meanwhile, the input impedance is close to $5 k\Omega$, which is very good.
+Lastly, the input and output impedances computed at $f = 1000 Hz$ yielded very similar values. The output impedance, is of approximately $450 \Omega$, obviously higher than the ideal (if impossible) $0 \Omega$ - this was a compromise in order to improve the circuit in other areas. Meanwhile, the input impedance is close to $5 k\Omega$, which is very good.
 
 All in all, our circuit accomplishes, for the most part, what was requested.
