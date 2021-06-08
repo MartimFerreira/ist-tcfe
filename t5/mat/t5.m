@@ -42,8 +42,13 @@ fh=1/(R2*C2*2*pi)
 fo=sqrt(fh*fl)
 
 
-Zi=abs(ZC1+R1eq)
-Zo=abs(1/(1/R2+1/ZC2))
+Zi=(ZC1+R1eq)
+Zireal=real(Zi)
+Ziimag=imag(Zi)
+Zo=(1/(1/R2+1/ZC2))
+Zoreal=real(Zo)
+Zoimag=imag(Zo)
+
 
 Vl=R1eq/(R1eq+ZC1)
 A=(1+R3/R4)*Vl
@@ -111,8 +116,8 @@ fclose(components_tab);
 
 results_tab = fopen("results_tab.tex", "w");
 
-fprintf(results_tab, "$Z_{in}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", Zi);
-fprintf(results_tab, "$Z_{out}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", Zo);
+fprintf(results_tab, "$Z_{in}\\;(\\Omega)$ & %.6e %.6e i\\\\ \\hline\n", Zireal, Ziimag);
+fprintf(results_tab, "$Z_{out}\\;(\\Omega)$ & %.6e  %.6e i\\\\ \\hline\n", Zoreal, Zoimag);
 fprintf(results_tab, "$Gain$ & %.6e\\\\ \\hline\n", gain);
 fprintf(results_tab, "$f_{low \\ cut \\ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fl);
 fprintf(results_tab, "$f_{high\\ cut \\ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fh);
