@@ -72,17 +72,17 @@ ZC2=1./(j*w*C2);
 
 Vl=R1eq./(R1eq+ZC1);
 A=(1+R3/R4).*Vl;
-fgain=abs(ZC2./(ZC2+R2).*A);
-fgain_db=20*log10(fgain);
+fgain_freq=abs(ZC2./(ZC2+R2).*A);
+fgain_db_freq=20*log10(fgain_freq);
 
-max_gain=max(fgain_db)
+max_gain=max(fgain_db_freq)
 
 aux=1
 
 
 
 freq = figure();
-plot (t, fgain_db, "m");
+plot (t, fgain_db_freq, "m");
 legend("Gain");
 xlabel ("log_{10}(f) [Hz]");
 ylabel ("dB");
@@ -116,7 +116,7 @@ results_tab = fopen("results_tab.tex", "w");
 
 fprintf(results_tab, "$Z_{in}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", Zi);
 fprintf(results_tab, "$Z_{out}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", Zo);
-fprintf(results_tab, "$Gain$ & %.6e\\\\ \\hline\n", fgain);
+fprintf(results_tab, "$Gain$ & %.6e\\\\ \\hline\n", gain);
 fprintf(results_tab, "$f_{low \ cut \ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fl);
 fprintf(results_tab, "$f_{high\ cut \ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fh);
 fprintf(results_tab, "$f_{central}\\;(Hz)$ & %.6e\\\\ \\hline\n", fo);
