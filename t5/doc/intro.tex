@@ -12,11 +12,9 @@
 % state the learning objective 
 In this laboratory assignment it was our aim to implement a bandpass filter with specific characteristics: a central frequency of 1kHz and a gain at central frequency of 40dB. In order to do that, we had available one 741 OPAMP and a maximum of three of each of the following components: 1k$\Omega$, 10k$\Omega$ and 100k$\Omega$ resistors, and 220nF and 1$\mu$F capacitors. Our objective was also to have the lowest cost and gain and central frequency deviations.
 
-The circuit used was the one in Figure \ref{fig:circuit}.
+The circuit used was the one in Figure \ref{fig:circuit}. Its characteristics are in \ref{tab:circuit}.
 
-% modelos usados?
 % descrever mais o circuito?
-% falar dos componentes e dos valores das grandezas que os caracterizam
 
 % PÔR O CIRCUITO
 \begin{figure}[H] \centering
@@ -30,21 +28,23 @@ The circuit used was the one in Figure \ref{fig:circuit}.
   \centering
   \begin{tabular}{|c|c|}
     \hline
-      \input{resistance_tab.tex}
+      \input{components_tab.tex}
   \end{tabular}
-  \caption{Circuit characteristics (voltages, resistances and capacitances)}
-  \label{tab:resistance}
+  \caption{Circuit characteristics (resistances and capacitances)}
+  \label{tab:circuit}
 \end{table}
 
-\begin{table}[H]
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-      \input{resistance1_tab.tex}
-  \end{tabular}
-  \caption{Transistors' characteristics}
-  \label{tab:resistance1}
-\end{table}
+
+
+%\begin{table}[H]
+%  \centering
+%  \begin{tabular}{|c|c|}
+%    \hline
+%      \input{resistance1_tab.tex}
+%  \end{tabular}
+%  \caption{Transistors' characteristics}
+%  \label{tab:resistance1}
+%\end{table}
 
 The ~\ref{sec:analysis} and ~\ref{sec:simulation} sections have the theoretical analysis and the ngspice simulation of the circuit. In ~\ref{sec:conclusion} there is the conclusion of the report.
 
