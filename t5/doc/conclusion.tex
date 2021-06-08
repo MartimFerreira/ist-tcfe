@@ -2,12 +2,14 @@
 \label{sec:conclusion}
 
 
-Overall, the goals defined for this laboratory were achieved.
+Overall, the goals defined for this laboratory were mostly achieved.
 
-We were able to implement a BandPass Filter using a restricted list of components, as well as to modify the circuit in order to have the inteded central frequency of $1kHz$ and gain at the central frequency of $40 dB$ while having the lowest possible cost.
+We were able to, using the restricted list of components available, implement a Bandpass Filter with a gain in the passband of approximately $40 dB$ and which included the $1000 Hz$ frequency in its passband. Our central frequency was approximately $627 Hz$, but the entire passband had virtually the same gain, so our gain at $1000 Hz$ was what was requested.
 
-Overall, the results obtained in the analysis and simulation parts were quite close, though they were slightly better in the former, as expected. In terms of the central frequency and the gain at that same frequency, the values obtained in Octave had deviations of $35.29431 \%$ and $5.77685 \%$. In ngspice, these were $37.32302\%$ and $5.52312 \%$, respectively. With respect to the results from the simulation, the ones in the analysis had a deviation of $3.23677\%$ and $0.26929\%$.
+Overall, the results obtained in the analysis and simulation parts were quite close. In terms of the central frequency and the gain obtained at $f = 1 kHz$, the values obtained in Octave had deviations of $35.29 \%$ and $5.78 \%$, while in ngspice, these were $37.32\%$ and $5.52 \%$, respectively, and all were lower than what was requested.
 
-% gain e phase?
+The frequency response graphs for the gain of the circuit were very similar in theoretical and simulation analysis, while the phase graphs bear some crucial but expected differences: first, the simulation phase graph has a discontinuity due to ngspice keeping the phase in the $[-180; 180]$ degrees range, meaning if this wasn't the case the phase would stabilize in $-270$ degrees; second, is, precisely, the fact that the octave graph does not stabilize at $-270$ degrees but at $-90$, due to the fact that the ngspice OPAMP model has two more poles than the ideal one.
 
-In both cases, one can see that, even though the central frequency is not very close to the one we aimed at, it is still within the passaband range.
+Lastly, the input and output impedances computed yielded very similar values. The output impedance, is of approximately $450 \Omega$, obviously higher than the ideal (if impossible) $0 \Omega$ - this was a compromise in order to improve the circuit in other areas. Meanwhile, the input impedance is close to $5 k\Omega$, which is very good.
+
+All in all, our circuit accomplishes, for the most part, what was requested.
