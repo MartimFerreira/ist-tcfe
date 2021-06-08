@@ -118,7 +118,7 @@ let gaindev = abs(100-centralgain)
 let merit = 1/(cost* (freqdev + gaindev + 10^(-6)))
 
 *input impedance in kohm
-let inputimpedance = v(in)[4000]/vin#branch[4000]/-1000
+let inputimpedance = v(in)[2000]/vin#branch[2000]/-1000
 print freqdev
 print gaindev
 echo "op_TAB"
