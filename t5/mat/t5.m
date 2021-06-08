@@ -114,15 +114,15 @@ print (angle, "angle.eps", "-depsc");
 
 components_tab = fopen("components_tab.tex", "w");
 
-fprintf(components_tab, "$C_1\\;(F)$ & %.1e\\\\ \\hline\n", C1);
-fprintf(components_tab, "$C_2\\;(F)$ & %.1e\\\\ \\hline\n", C2tab);
-fprintf(components_tab, "$C_3\\;(F)$ & %.1e\\\\ \\hline\n", C3tab);
-fprintf(components_tab, "$R_1\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R1);
-fprintf(components_tab, "$R_2\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R2tab);
-fprintf(components_tab, "$R_3\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R3);
-fprintf(components_tab, "$R_4\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R4);
-fprintf(components_tab, "$R_5\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R5tab);
-fprintf(components_tab, "$R_6\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R8);
+fprintf(components_tab, "$C_1\\;(nF)$ & %.0f\\\\ \\hline\n", C1*10^9);
+fprintf(components_tab, "$C_2\\;(nF)$ & %.0f\\\\ \\hline\n", C2tab*10^9);
+fprintf(components_tab, "$C_3\\;(nF)$ & %.0f\\\\ \\hline\n", C3tab*10^9);
+fprintf(components_tab, "$R_1\\;(k\\Omega)$ & %.0f\\\\ \\hline\n", R1/1000);
+fprintf(components_tab, "$R_2\\;(k\\Omega)$ & %.0f\\\\ \\hline\n", R2tab/1000);
+fprintf(components_tab, "$R_3\\;(k\\Omega)$ & %.0f\\\\ \\hline\n", R3/1000);
+fprintf(components_tab, "$R_4\\;(k\\Omega)$ & %.0f\\\\ \\hline\n", R4/1000);
+fprintf(components_tab, "$R_5\\;(k\\Omega)$ & %.0f\\\\ \\hline\n", R5tab/1000);
+fprintf(components_tab, "$R_6\\;(k\\Omega)$ & %.0f\\\\ \\hline\n", R8/1000);
 
 
 fclose(components_tab);
