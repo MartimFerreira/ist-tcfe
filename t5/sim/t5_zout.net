@@ -90,7 +90,12 @@ tran 1e-5 1e-2
 * frequency analysis
 ac dec 1000 10 100MEG
 
-print v(out)[4000]/vload#branch[4000]/(-1)
+let output_impedance = v(out)/vload#branch/(-1)
+
+plot output_impedance
+hardcopy zo.ps output_impedance
+
+print v(out)[2000]/vload#branch[2000]/(-1)
 
 *need a different setup to measure output impedance
 
