@@ -99,15 +99,15 @@ print (freq, "freq.eps", "-depsc");
 
 components_tab = fopen("components_tab.tex", "w");
 
-fprintf(components_tab, "$C_1\\;(F)$ & %.6e\\\\ \\hline\n", C1);
-fprintf(components_tab, "$C_2\\;(F)$ & %.6e\\\\ \\hline\n", C2tab);
-fprintf(components_tab, "$C_3\\;(F)$ & %.6e\\\\ \\hline\n", C3tab);
-fprintf(components_tab, "$R_1\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R1);
-fprintf(components_tab, "$R_2\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R2tab);
-fprintf(components_tab, "$R_3\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R3);
-fprintf(components_tab, "$R_4\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R4);
-fprintf(components_tab, "$R_5\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R5tab);
-fprintf(components_tab, "$R_6\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R8);
+fprintf(components_tab, "$C_1\\;(F)$ & %.1e\\\\ \\hline\n", C1);
+fprintf(components_tab, "$C_2\\;(F)$ & %.1e\\\\ \\hline\n", C2tab);
+fprintf(components_tab, "$C_3\\;(F)$ & %.1e\\\\ \\hline\n", C3tab);
+fprintf(components_tab, "$R_1\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R1);
+fprintf(components_tab, "$R_2\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R2tab);
+fprintf(components_tab, "$R_3\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R3);
+fprintf(components_tab, "$R_4\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R4);
+fprintf(components_tab, "$R_5\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R5tab);
+fprintf(components_tab, "$R_6\\;(\\Omega)$ & %.1e\\\\ \\hline\n", R8);
 
 
 fclose(components_tab);
