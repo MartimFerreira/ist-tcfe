@@ -8,6 +8,9 @@
 
 One should first note that the capacitors' impedances are given by $Z_{C_1} = \frac{1}{j \omega C_1}$ and $Z_{C_2} = \frac{1}{j \omega C_2}$.
 
+
+% ------------------------ NÃO SEI SE AS IMPEDÂNCIAS E A EXPLICAÇÃO DAS EXPRESSÕES ESTÃO BEM ---------------------------------
+
 From the input, capacitor $C_1$ and resistor $R_1$ are seen as being in series. Meanwhile, from the output, resistor $R_2$ and capacitor $C_2$ are seen as being in parallel for intermediate frequencies, which is the range used in this assignment. Therefore, one has
 
 \begin{equation}
@@ -15,30 +18,63 @@ Z_{in} = |Z_{C_1} + R_1|
 \end{equation}
 
 \begin{equation}
-Z_{out} = |\frac{1}{\frac{1}{R_2} + \frac{1}{Z_{C_2}}}|
+Z_{out} = |\frac{1}{\frac{1}{R_2} + \frac{1}{Z_{C_2} + Z_{par}}}| \ , \ Z_{par} = \frac{1}{\frac{1}{R_5} + \frac{1}{Z_{C_3}}}
 \end{equation}
+
+These are the impedances at the central frequency.
+
+
 
 %As for the gain, from the input of the amplification part of the circuit, we have $V_p = \frac{R_1}{R_1 + Z_{C_1}}$, whereas, for the non-inverting amplifier alone, the gain would be equal to $1 + \frac{R_3}{R_4}$, multiplying these two, $amp = \left(1 + \frac{R_3}{R_4}\right) V_p$.
-As for the gain, one should remember that the circuit is made up of three parts: a high pass filter, a non-inverting amplifier and a low pass filter, each which a certain gain, given by the ration $\frac{V_{out}}{V_in}$, where $V_{out}$ and $V_{in}$ are the output and input voltages for each stage. That being said, their gains are, respectivelly: $Gain_{HPF} = \frac{R_1}{R_1 + Z_{C_1}}$, $Gain_{amp} = 1+\frac{R_3}{R_4}$ and $Gain_{LPF} = \frac{Z_{C_2}}{Z_{C_2}+R_2}$, as studied in theoretical lectures. Multiplying these three values, one obtains the total gain for the circuit:
+
+As for the gain, one should remember that the circuit is made up of three parts: a high pass filter, a non-inverting amplifier and a low pass filter, each which a certain gain, given by the ratio $\frac{V_{out}}{V_in}$, where $V_{out}$ and $V_{in}$ are the output and input voltages for each stage. That being said, their gains are, respectivelly: $Gain_{HPF} = \frac{R_1}{R_1 + Z_{C_1}}$, $Gain_{amp} = 1+\frac{R_3}{R_4}$ and $Gain_{LPF} = \frac{Z_{C_2}}{Z_{C_2}+R_2}$, as studied in theoretical lectures. Multiplying these three values, one obtains the total gain for the circuit:
 
 \begin{equation}
-Gain = \frac{R_1}{R_1 + Z_{C_1}} \times  \left(1+\frac{R_3}{R_4}\right) \times \frac{Z_{C_2}}{Z_{C_2}+R_2}
+Gain = \left| \frac{R_1}{R_1 + Z_{C_1}} \times  \left(1+\frac{R_3}{R_4}\right) \times \frac{Z_{C_2}}{Z_{C_2}+R_2} \right|
 \end{equation}
 
 
-\subsection{Frequency response}
+% ------------------------ NÃO SEI SE AS FREQUÊNCIAS E A EXPLICAÇÃO DAS EXPRESSÕES ESTÃO BEM ---------------------------------
 
+In respect to the low and high cut off frequencies, they are given by 
 
+\begin{equation}
+f_{low \ cut \ off} = \frac{1}{R_1 C_1}
+\end{equation}
+
+\begin{equation}
+f_{high \ cut \ off} = \frac{1}{R_2 \frac {C_2}{2}}
+\end{equation}
+
+In the table below we have the results obtained in Octave for this part:
 
 \begin{table}[H]
   \centering
   \begin{tabular}{|c|c|}
     \hline
-     % \input{resultsDC1_tab.tex}
+      \input{results_tab.tex}
   \end{tabular}
-  \caption{Values obtained in OP analysis}
-  \label{tab:resultsDC1}
+  \caption{Results obtained in the theoretical analysis}
+  \label{tab:results}
 \end{table}
+
+It is important to mention that non-ideal characteristics from the OPAMP based on the real model were used. Ideally the OPAMP would have $Z_{in} = \infty$ and $Z_{out} = 0$. However, if we assume that these parameters as well as the gain are finite, it is possible to determine them by taking measures in the frequency. The gain should be real and quite high and $Z_{in}$ and $Z_{out}$ should both be complex impedances.
+
+
+
+
+\subsection{Frequency response}
+
+In \ref{fig:freq_response} there is the frquency with the gain in dB as a function of frequency.
+
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.7\linewidth]{graph.eps}
+\caption{Frequency response - \frac{V_o(f)}{V_i(f)}}
+\label{fig:freq_response}
+\end{figure}
+
+Here we can confirm that the circuit is indeed a bandpass filter and that its requirements were met. 
 
 
 

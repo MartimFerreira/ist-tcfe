@@ -143,3 +143,39 @@ print (freq_graph, "graph.eps", "-depsc");
 %fgain=abs(Vout/Vi);
 %fgain_db=20*log10(fgain);
 
+
+
+
+
+
+% ---- Tabela com as constantes do circuito ----
+
+components_tab = fopen("components_tab.tex", "w");
+
+fprintf(components_tab, "$C_1\\;(F)$ & %.6e\\\\ \\hline\n", C1);
+fprintf(components_tab, "$C_2\\;(F)$ & %.6e\\\\ \\hline\n", C2);
+fprintf(components_tab, "$C_3\\;(F)$ & %.6e\\\\ \\hline\n", C3);
+%fprintf(components_tab, "$C_4\\;(F)$ & %.6e\\\\ \\hline\n", C4);
+fprintf(components_tab, "$R_1\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R1);
+fprintf(components_tab, "$R_2\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R2);
+fprintf(components_tab, "$R_3\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R3);
+fprintf(components_tab, "$R_4\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R4);
+fprintf(components_tab, "$R_5\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R5);
+%fprintf(components_tab, "$R_6\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R6);
+%fprintf(components_tab, "$R_7\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R7);
+%fprintf(components_tab, "$R_8\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R8);
+%fprintf(components_tab, "$R_9\\;(\\Omega)$ & %.6e\\\\ \\hline\n", R9);
+
+fclose(components_tab);
+
+
+
+results_tab = fopen("results_tab.tex", "w");
+
+fprintf(results_tab, "$Z_{in}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", Zin);
+fprintf(results_tab, "$Z_{out}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", Zout);
+fprintf(results_tab, "$Gain$ & %.6e\\\\ \\hline\n", fgain);  % pôr também em dB???
+fprintf(results_tab, "$f_{low \ cut \ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", wl);
+fprintf(results_tab, "$f_{high \ cut \ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", wh);
+
+fclose(results_tab);
