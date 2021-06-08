@@ -131,8 +131,8 @@ fclose(components_tab);
 
 results_tab = fopen("results_tab.tex", "w");
 
-fprintf(results_tab, "$Z_{in}\\;(\\Omega)$ & %.6e %.6e i\\\\ \\hline\n", Zireal, Ziimag);
-fprintf(results_tab, "$Z_{out}\\;(\\Omega)$ & %.6e  %.6e i\\\\ \\hline\n", Zoreal, Zoimag);
+fprintf(results_tab, "$Z_{in}\\;(K\\Omega)$ & %.6e %.6e i\\\\ \\hline\n", Zireal/1000, Ziimag/1000);
+fprintf(results_tab, "$Z_{out}\\;(K\\Omega)$ & %.6e  %.6e i\\\\ \\hline\n", Zoreal/1000, Zoimag/1000);
 fprintf(results_tab, "$Gain$ & %.6e\\\\ \\hline\n", gain);
 fprintf(results_tab, "$f_{low \\ cut \\ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fl);
 fprintf(results_tab, "$f_{high\\ cut \\ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fh);
