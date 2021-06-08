@@ -56,22 +56,22 @@ Vin in 0 0 ac 0.0 sin(0 10m 1k)
 X1 non_in inv_in vcc vee amp_out uA741
 
 C1 in non_in 220n
-R1 non_in lpf 10000
-R8 non_in lpf 10000
-R9 lpf lpf2 1000
-R6 lpf2 0 1000
+R1 non_in 0 10000
+R8 non_in 0 10000
+*R9 lpf 0 1000
+*R6 lpf2 0 1000
 
 R4 0 inv_in 1000
 
 
 R3 inv_in amp_out 100000
-R2 amp_out out 100000
-C3 amp_out out 0.001m
-C4 amp_out out 220n
-C5 amp_out out 220n
+R2 amp_out out 500
+*C3 amp_out out 0.001m
+*C4 amp_out out 220n
+*C5 amp_out out 220n
 
-C2 out mid 0.001m
-R5 mid 0 100000
+C2 out 0 110n
+*R5 mid 0 100000
 
 
 * load
