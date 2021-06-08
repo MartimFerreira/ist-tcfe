@@ -1,3 +1,6 @@
+pkg load control
+
+
 %Componentes
 
 
@@ -54,6 +57,7 @@ Vl=R1eq/(R1eq+ZC1)
 A=(1+R3/R4)*Vl
 hpass=abs(ZC2/(ZC2+R2))
 gain=abs(ZC2/(ZC2+R2)*A)
+phase_1=arg(ZC2/(ZC2+R2)*A)
 gain_db=20*log10(gain)
 
 
@@ -75,11 +79,13 @@ ZC2=1./(j*w*C2);
 Vl=R1eq./(R1eq+ZC1);
 A=(1+R3/R4).*Vl;
 fgain_freq=abs(ZC2./(ZC2+R2).*A);
+fgain_phase_rad=arg(ZC2./(ZC2+R2).*A);
+fgain_phase= rad2deg(fgain_phase_rad);
 fgain_db_freq=20*log10(fgain_freq);
 
 max_gain=max(fgain_db_freq)
 
-aux=1
+
 
 
 
@@ -89,6 +95,15 @@ legend("Gain");
 xlabel ("log_{10}(f) [Hz]");
 ylabel ("dB");
 print (freq, "freq.eps", "-depsc");
+
+
+angle = figure();
+plot (t, fgain_phase, "b");
+legend("Phase");
+xlabel ("log_{10}(f) [Hz]");
+ylabel ("[Degree]");
+print (angle, "angle.eps", "-depsc");
+
 
 
 
