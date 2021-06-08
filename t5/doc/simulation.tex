@@ -1,7 +1,7 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
-In this section, ngspice simulation results for the circuit shown above are presented. It was confirmed that the form of the output matched the form of the input and that the transistor functioned in the forward active region.
+In this section, ngspice simulation results for the circuit shown above are presented.
 
 
 \subsection{Gain Response with Frequency}
@@ -9,12 +9,12 @@ In this section, ngspice simulation results for the circuit shown above are pres
 An AC analysis of the circuit was performed in order to figure out how the gain of the circuit varied with frequency. The resulting graph can be seen in \ref{fig:gain_freq}.
 
 \begin{figure}[H] \centering
-\includegraphics[width=0.6\linewidth]{../sim/vo2f.pdf}
+\includegraphics[width=0.6\linewidth]{../sim/vo1f.pdf}
 \caption{Circuit Gain variation with frequency (in dB)}
 \label{fig:gain_freq}
 \end{figure}
 
-This type of analysis allows us to determine the maximum gain of the circuit, both cutoff frequencies (frequencies at which the gain becomes 3dB lower than the maximum) and the maximum gain bandwidth. These values, together with the cost of the circuit, can also be used to calculate the merit figure. In order to perform these measurements, the ngspice functions ``MAX'' and ``WHEN'' were used.
+This type of analysis allows us to determine the maximum gain of the circuit and its cutoff frequencies, with which we can calculate the central frequency ($f_{central}$) of the passband filter. These values, together with the cost of the circuit, can also be used to calculate the merit figure. In order to perform these measurements, the ngspice functions ``MAX'' and ``WHEN'' were used.
 
 \begin{table}[H]
   \centering
@@ -22,11 +22,11 @@ This type of analysis allows us to determine the maximum gain of the circuit, bo
     \hline
       \input{../sim/op_tab.tex}
   \end{tabular}
-  \caption{Values obtained for $f_{low}$, $f_{high}$ and bandwidth in $Hz$, Input Impedance in $k\Omega$}
+  \caption{Values obtained: $f_{central}$ (centralfreq) is in Hz, the gain at $f = 1 kHz$ (centralgain) is in linear units and the input impedance, which has real and imaginary parts, is in $k\Omega$}
   \label{tab:resultssim}
 \end{table}
 
-A separate analysis was run, with a different script, in order to determine the circuit's output impedance. In this script, the input voltage source was set to have 0 amplitude and the load at the end of the circuit was replaced with a 1V amplitude test voltage source. The output impedance obtained was $Z_o = 7.932271 \Omega$.
+A separate analysis was run, with a different script, in order to determine the circuit's output impedance. In this script, the input voltage source was set to have 0 amplitude and at the end of the circuit a 1V amplitude test voltage source was placed. The output impedance obtained was $Z_o = (49.76 + 3.81j) \Omega$.
 
 
 

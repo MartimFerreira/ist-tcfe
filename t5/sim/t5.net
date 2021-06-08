@@ -1,4 +1,4 @@
-*-----------------------------------------------------------------------------
+*----------------------------------------------------------------------------
 *
 * To use a subcircuit, the name must begin with 'X'.  For example:
 * X1 1 2 3 4 5 uA741
@@ -88,6 +88,7 @@ print all
 tran 1e-5 1e-2
 plot v(out)
 hardcopy vo1.ps v(out)
+echo vo1_FIG
 
 
 * frequency analysis
@@ -95,18 +96,19 @@ ac dec 1000 10 100MEG
 plot vdb(out)
 plot vp(out)
 hardcopy vo1f.ps vdb(out)
+echo vo1f_FIG
 
 meas ac maxfreq MAX_AT vdb(out)
 meas ac maxgain MAX vdb(out)
 let cutoff_db=maxgain-3
 
-let ampop_cost = 2*0.1 + (8.661+30)*10^(-6)*1 + (100+5.305*2+1.836*2+13190+0.050+0.1+18.16)*1 + 5*0.1
-let cost=(1*3+10+100*2)*1+(0.220*3)*1 + ampop_cost
+let ampopcost = 2*0.1 + (8.661+30)*10^(-6)*1 + (100+5.305*2+1.836*2+13190+0.050+0.1+18.16)*1 + 5*0.1
+let cost=(1*3+10*2+100*3)*1+(0.220*3+2*1)*1 + ampopcost
 
 meas ac lowfreq WHEN vdb(out)=cutoff_db rise=1
 meas ac highfreq WHEN vdb(out)=cutoff_db fall=1
 let centralfreq = sqrt(lowfreq*highfreq)
-print centralfreq
+
 meas ac centralgain FIND vm(out) WHEN frequency=1000
 
 let freqdev = abs(centralfreq - 1000)
@@ -114,12 +116,17 @@ let gaindev = abs(100-centralgain)
 let merit = 1/(cost* (freqdev + gaindev + 10^(-6)))
 
 *input impedance in kohm
-print v(in)[4000]/vin#branch[4000]/-1000
+let inputimpedance = v(in)[4000]/vin#branch[4000]/-1000
 print freqdev
 print gaindev
-print ampop_cost
+echo "op_TAB"
+print centralfreq
+print centralgain
+print inputimpedance
+print ampopcost
 print cost
 print merit
+echo "op_END"
 
 *need a different setup to measure output impedance
 

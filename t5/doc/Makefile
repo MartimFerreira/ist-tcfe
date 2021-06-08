@@ -10,9 +10,9 @@ LODFIGS = $(patsubst %.odg,%.pdf,$(wildcard *.odg))
 
 all: $(FILE).pdf
 
-$(FILE).pdf: $(wildcard *.tex) $(LODFIGS) $(wildcard ../mat/*.tex) $(wildcard ../mat/*.eps) $(wildcard ../sim/*.tex)
+$(FILE).pdf: $(wildcard *.tex) $(LODFIGS) $(wildcard ../mat/*.eps) $(wildcard ../sim/*.tex) #$(wildcard ../mat/*.tex)
 	cp -f ../mat/*.eps .
-	cp -f ../mat/*.tex .
+	#cp -f ../mat/*.tex .
 	cp -f ../sim/*.tex .
 	pdflatex  $(FILE).tex
 	pdflatex  $(FILE).tex
