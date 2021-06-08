@@ -18,7 +18,7 @@ Z_{in} = |Z_{C_1} + R_1|
 \end{equation}
 
 \begin{equation}
-Z_{out} = |\frac{1}{\frac{1}{R_2} + \frac{1}{Z_{C_2} + Z_{par}}}| \ , \ Z_{par} = \frac{1}{\frac{1}{R_5} + \frac{1}{Z_{C_3}}}
+Z_{out} = \left|\frac{1}{\frac{1}{R_2} + \frac{1}{Z_{C_2} + Z_{par}}}\right| \ , \ Z_{par} = \frac{1}{\frac{1}{R_5} + \frac{1}{Z_{C_3}}}
 \end{equation}
 
 These are the impedances at the central frequency.
@@ -27,7 +27,7 @@ These are the impedances at the central frequency.
 
 %As for the gain, from the input of the amplification part of the circuit, we have $V_p = \frac{R_1}{R_1 + Z_{C_1}}$, whereas, for the non-inverting amplifier alone, the gain would be equal to $1 + \frac{R_3}{R_4}$, multiplying these two, $amp = \left(1 + \frac{R_3}{R_4}\right) V_p$.
 
-As for the gain, one should remember that the circuit is made up of three parts: a high pass filter, a non-inverting amplifier and a low pass filter, each which a certain gain, given by the ratio $\frac{V_{out}}{V_in}$, where $V_{out}$ and $V_{in}$ are the output and input voltages for each stage. That being said, their gains are, respectivelly: $Gain_{HPF} = \frac{R_1}{R_1 + Z_{C_1}}$, $Gain_{amp} = 1+\frac{R_3}{R_4}$ and $Gain_{LPF} = \frac{Z_{C_2}}{Z_{C_2}+R_2}$, as studied in theoretical lectures. Multiplying these three values, one obtains the total gain for the circuit:
+As for the gain, one should remember that the circuit is made up of three parts: a high pass filter, a non-inverting amplifier and a low pass filter, each which a certain gain, given by the ratio $\frac{V_{out}}{V_{in}}$, where $V_{out}$ and $V_{in}$ are the output and input voltages for each stage. That being said, their gains are, respectivelly: $Gain_{HPF} = \frac{R_1}{R_1 + Z_{C_1}}$, $Gain_{amp} = 1+\frac{R_3}{R_4}$ and $Gain_{LPF} = \frac{Z_{C_2}}{Z_{C_2}+R_2}$, as studied in theoretical lectures. Multiplying these three values, one obtains the total gain for the circuit:
 
 \begin{equation}
 Gain = \left| \frac{R_1}{R_1 + Z_{C_1}} \times  \left(1+\frac{R_3}{R_4}\right) \times \frac{Z_{C_2}}{Z_{C_2}+R_2} \right|
@@ -54,7 +54,7 @@ In the table below we have the results obtained in Octave for this part:
     \hline
       \input{results_tab.tex}
   \end{tabular}
-  \caption{Results obtained in the theoretical analysis}
+  \caption{Results obtained in the theoretical analysis.The Gain is given in linear units}
   \label{tab:results}
 \end{table}
 
