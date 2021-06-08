@@ -42,9 +42,6 @@ fh=1/(R2*C2*2*pi)
 fo=sqrt(fh*fl)
 
 
-
-
-
 Zi=abs(ZC1+R1eq)
 Zo=abs(1/(1/R2+1/ZC2))
 
