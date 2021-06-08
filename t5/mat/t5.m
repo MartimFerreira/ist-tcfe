@@ -117,8 +117,8 @@ results_tab = fopen("results_tab.tex", "w");
 fprintf(results_tab, "$Z_{in}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", Zi);
 fprintf(results_tab, "$Z_{out}\\;(\\Omega)$ & %.6e\\\\ \\hline\n", Zo);
 fprintf(results_tab, "$Gain$ & %.6e\\\\ \\hline\n", gain);
-fprintf(results_tab, "$f_{low \ cut \ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fl);
-fprintf(results_tab, "$f_{high\ cut \ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fh);
+fprintf(results_tab, "$f_{low \\ cut \\ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fl);
+fprintf(results_tab, "$f_{high\\ cut \\ off}\\;(Hz)$ & %.6e\\\\ \\hline\n", fh);
 fprintf(results_tab, "$f_{central}\\;(Hz)$ & %.6e\\\\ \\hline\n", fo);
 
 
