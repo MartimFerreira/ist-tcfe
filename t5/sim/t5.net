@@ -97,6 +97,8 @@ plot vdb(out)
 plot vp(out)
 hardcopy vo1f.ps vdb(out)
 echo vo1f_FIG
+hardcopy vo1p.ps 180/pi*vp(out)
+echo vo1p_FIG
 
 meas ac maxfreq MAX_AT vdb(out)
 meas ac maxgain MAX vdb(out)

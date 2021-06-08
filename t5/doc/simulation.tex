@@ -6,12 +6,18 @@ In this section, ngspice simulation results for the circuit shown above are pres
 
 \subsection{Gain Response with Frequency}
 
-An AC analysis of the circuit was performed in order to figure out how the gain of the circuit varied with frequency. The resulting graph can be seen in \ref{fig:gain_freq}.
+An AC analysis of the circuit was performed in order to figure out how the gain and phase of the circuit varied with frequency. The resulting graphs can be seen in figures \ref{fig:gain_freq} and \ref{fig:phase_freq}.
 
 \begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{../sim/vo1f.pdf}
-\caption{Circuit Gain variation with frequency (in dB)}
+\caption{Circuit gain variation with frequency (in dB)}
 \label{fig:gain_freq}
+\end{figure}
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.6\linewidth]{../sim/vo1p.pdf}
+\caption{Circuit phase variation with frequency (in degrees)}
+\label{fig:phase_freq}
 \end{figure}
 
 This type of analysis allows us to determine the maximum gain of the circuit and its cutoff frequencies, with which we can calculate the central frequency ($f_{central}$) of the passband filter. These values, together with the cost of the circuit, can also be used to calculate the merit figure. In order to perform these measurements, the ngspice functions ``MAX'' and ``WHEN'' were used.
